@@ -10,12 +10,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="427.0" prefWidth="722.0" style="-fx-background-color: #E9E9E9;"
-            stylesheets="@../css/login.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="427.0" prefWidth="722.0" style="-fx-background-color: #E9E9E9;" stylesheets="@../css/login.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.LoginController">
    <children>
-      <ImageView fitHeight="366.0" fitWidth="317.0" layoutX="36.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="loginImageImageView" fitHeight="366.0" fitWidth="317.0" layoutX="36.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../image/loginImage.png" />
          </image>
@@ -27,12 +24,21 @@
                   <Font name="System Bold" size="27.0" />
                </font>
             </Label>
-            <Button layoutX="172.0" layoutY="346.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="131.0" style="-fx-background-color: #388e3c; -fx-border-radius: 5; -fx-background-radius: 25;" text="Log in" textFill="WHITE">
+            <Button fx:id="login_button" layoutX="172.0" layoutY="346.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="131.0" text="Log in" textFill="WHITE">
                <font>
                   <Font name="System Bold" size="17.0" />
                </font>
             </Button>
-            <TextField layoutX="12.0" layoutY="97.0" prefHeight="39.0" prefWidth="294.0" promptText="Phone number" style="-fx-border-color: white  white #388e3c white; -fx-background-insets: 0 0 0 0; -fx-faint-focus-color: transparent;">
+            <TextField id="textField" fx:id="phoneNumberTextField" layoutX="12.0" layoutY="97.0" prefHeight="39.0" prefWidth="294.0" promptText="Phone number">
+               <font>
+                  <Font size="15.0" />
+                  <Font size="15.0" />
+               </font>
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
+            </TextField>
+            <TextField id="textField" fx:id="passwordTextField" layoutX="11.0" layoutY="162.0" prefHeight="39.0" prefWidth="294.0" promptText="Password">
                <font>
                   <Font size="15.0" />
                </font>
@@ -40,15 +46,7 @@
                   <Insets left="30.0" />
                </padding>
             </TextField>
-            <TextField layoutX="11.0" layoutY="162.0" prefHeight="39.0" prefWidth="294.0" promptText="Password" style="-fx-border-color: white  white #388e3c white; -fx-faint-focus-color: transparent; -fx-background-insets: 0 0 0 0; -fx-control-inner: background;">
-               <font>
-                  <Font size="15.0" />
-               </font>
-               <padding>
-                  <Insets left="30.0" />
-               </padding>
-            </TextField>
-            <Label layoutX="197.0" layoutY="225.0" prefHeight="19.0" prefWidth="106.0" text="Forgot password?">
+            <Label id="cursor_hand" layoutX="197.0" layoutY="225.0" onMouseClicked="#openWebForgotPasswordPage" prefHeight="19.0" prefWidth="106.0" text="Forgot password?">
                <font>
                   <Font size="13.0" />
                </font>
@@ -58,13 +56,14 @@
                   <Font size="13.0" />
                </font>
             </CheckBox>
-            <ImageView fitHeight="25.0" fitWidth="23.0" layoutX="12.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="phoneNumberImageView" fitHeight="20.0" fitWidth="25.0" layoutX="14.0" layoutY="107.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../image/phone_icon.png" />
                </image>
             </ImageView>
+
             <Label layoutX="62.0" layoutY="48.0" prefHeight="17.0" prefWidth="210.0" text="Log in to your own account and enjoy!" />
-            <ImageView fitHeight="25.0" fitWidth="23.0" layoutX="12.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="passwordImageView" fitHeight="20.0" fitWidth="61.0" layoutX="12.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../image/password_icon.png" />
                </image>

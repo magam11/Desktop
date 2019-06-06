@@ -1,6 +1,30 @@
 .check-box .box {
     -fx-background-color: white;
-    -fx-border-color: #388e3c;
-     -fx-mark-color: #388e3c
-    /*-fx-border-radius:3px;*/
+    -fx-border-color: #E9E9E9;
+    -fx-mark-color: #388e3c
 }
+
+
+
+.check-box:selected .box {
+    -fx-border-color: #388e3c;
+}
+
+
+#login_button {
+    -fx-cursor: hand;
+    -fx-background-color: #388e3c;
+    -fx-border-radius: 5;
+    -fx-background-radius: 25;
+}
+#textField{
+    -fx-border-color: white  white #388e3c white;
+    -fx-faint-focus-color: transparent;
+    -fx-background-insets: 0 0 0 0;
+    -fx-control-inner: background;
+}
+#cursor_hand{
+    -fx-cursor: hand;
+
+}
+/*style="-fx-border-color: white  white #388e3c white; -fx-faint-focus-color: transparent; -fx-background-insets: 0 0 0 0; -fx-control-inner: background;"*/
