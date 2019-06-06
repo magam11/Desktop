@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="427.0" prefWidth="722.0" style="-fx-background-color: #E9E9E9;"
+            stylesheets="@../css/login.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ImageView fitHeight="366.0" fitWidth="317.0" layoutX="36.0" layoutY="40.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../image/loginImage.png" />
+         </image>
+      </ImageView>
+      <AnchorPane layoutX="361.0" layoutY="15.0" prefHeight="391.0" prefWidth="317.0" style="-fx-background-color: #FFFFFF;" AnchorPane.leftAnchor="361.0">
+         <children>
+            <Label layoutX="118.0" layoutY="6.0" prefHeight="39.0" prefWidth="82.0" text="Log in" textFill="#388e3c">
+               <font>
+                  <Font name="System Bold" size="27.0" />
+               </font>
+            </Label>
+            <Button layoutX="172.0" layoutY="346.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="131.0" style="-fx-background-color: #388e3c; -fx-border-radius: 5; -fx-background-radius: 25;" text="Log in" textFill="WHITE">
+               <font>
+                  <Font name="System Bold" size="17.0" />
+               </font>
+            </Button>
+            <TextField layoutX="12.0" layoutY="97.0" prefHeight="39.0" prefWidth="294.0" promptText="Phone number" style="-fx-border-color: white  white #388e3c white; -fx-background-insets: 0 0 0 0; -fx-faint-focus-color: transparent;">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
+            </TextField>
+            <TextField layoutX="11.0" layoutY="162.0" prefHeight="39.0" prefWidth="294.0" promptText="Password" style="-fx-border-color: white  white #388e3c white; -fx-faint-focus-color: transparent; -fx-background-insets: 0 0 0 0; -fx-control-inner: background;">
+               <font>
+                  <Font size="15.0" />
+               </font>
+               <padding>
+                  <Insets left="30.0" />
+               </padding>
+            </TextField>
+            <Label layoutX="197.0" layoutY="225.0" prefHeight="19.0" prefWidth="106.0" text="Forgot password?">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </Label>
+            <CheckBox layoutX="14.0" layoutY="225.0" mnemonicParsing="false" text="Remember me">
+               <font>
+                  <Font size="13.0" />
+               </font>
+            </CheckBox>
+            <ImageView fitHeight="25.0" fitWidth="23.0" layoutX="12.0" layoutY="105.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/phone_icon.png" />
+               </image>
+            </ImageView>
+            <Label layoutX="62.0" layoutY="48.0" prefHeight="17.0" prefWidth="210.0" text="Log in to your own account and enjoy!" />
+            <ImageView fitHeight="25.0" fitWidth="23.0" layoutX="12.0" layoutY="171.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../image/password_icon.png" />
+               </image>
+            </ImageView>
+            <AnchorPane layoutX="6.0" layoutY="92.0" prefHeight="10.0" prefWidth="303.0" style="-fx-background-color: #FFFFFF;" />
+            <AnchorPane layoutX="6.0" layoutY="157.0" prefHeight="10.0" prefWidth="303.0" style="-fx-background-color: #FFFFFF;" />
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
