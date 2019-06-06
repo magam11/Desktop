@@ -8,6 +8,7 @@ import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import sample.Constant;
 
@@ -28,6 +29,8 @@ public class LoginController {
     public ImageView passwordImageView;
     @FXML
     public Button login_button;
+    @FXML
+    public AnchorPane loginForm;
 
     public void initialize(){
         javafx.scene.image.Image phoneNumberIco = new Image(this.getClass().getResourceAsStream("/image/phone_icon.png"));
@@ -35,8 +38,9 @@ public class LoginController {
         javafx.scene.image.Image passwordImage = new Image(this.getClass().getResourceAsStream("/image/password_icon.png"));
         phoneNumberImageView.setImage(phoneNumberIco);
         loginImageImageView.setImage(loginImage);
-//        login_button.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.8)));
-        login_button.setEffect(new DropShadow(BlurType.ONE_PASS_BOX, Color.rgb(0, 0, 0, 0.2),1,3,10,2));
+        loginForm.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.3)));
+//        loginForm.setStyle("-fx-border-radius: 2");
+//        login_button.setEffect(new DropShadow(BlurType.ONE_PASS_BOX, Color.rgb(0, 0, 0, 0.2),1,3,10,2));
         passwordImageView.setImage(passwordImage);
     }
 
