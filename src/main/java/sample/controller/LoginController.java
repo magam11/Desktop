@@ -3,6 +3,7 @@ package sample.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
+import javafx.scene.effect.BlurType;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -34,7 +35,9 @@ public class LoginController {
         javafx.scene.image.Image passwordImage = new Image(this.getClass().getResourceAsStream("/image/password_icon.png"));
         phoneNumberImageView.setImage(phoneNumberIco);
         loginImageImageView.setImage(loginImage);
+//        -fx-effect: dropshadow(three-pass-box, #993300, 3, 10, 2, 3);
 //        login_button.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.8)));
+        login_button.setEffect(new DropShadow(BlurType.ONE_PASS_BOX, Color.rgb(0, 0, 0, 0.2),1,3,10,2));
         passwordImageView.setImage(passwordImage);
     }
 
