@@ -49,13 +49,12 @@ public class MainStageController {
     @FXML
     public ImageView shareImageView;
     @FXML
-    public VBox vboxContainer;
-    @FXML
-    public HBox hbox_row;
+    public CellController cellController;
     public  Stage mainStage;
 
 
     public void initialize() {
+        cellController.scrolPane.setLayoutX(15);
 
 //        vboxContainer.setPrefHeight(500);
         memoryProgressBar.setProgress(125.0 / 400.0);
@@ -81,6 +80,14 @@ public class MainStageController {
         share.setLayoutX(stageWith - 299);
         delete.setLayoutX(stageWith - 202);
         download.setLayoutX(stageWith - 105);
+        cellController.scrolPane.setPrefWidth(stageWith);
+        ObservableList<Node> children = cellController.gridPane.getChildren();
+        for (Node child : children) {
+            AnchorPane itemAnchorPane = (AnchorPane)child;
+            itemAnchorPane.setPrefWidth(300);
+        }
+
+        cellController.scrolPaneCell.setPrefWidth(stageWith);
     }
 
 

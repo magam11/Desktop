@@ -98,7 +98,7 @@
             </VBox>
          </top>
          <center>
-            <fx:include source="part/cell.fxml"/>
+            <fx:include fx:id="cell"  source="part/cell.fxml"/>
          </center>
       </BorderPane>
    </children>
