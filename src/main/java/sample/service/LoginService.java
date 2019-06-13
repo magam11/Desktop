@@ -33,17 +33,15 @@ public class LoginService {
         try {
             fxmlLoader = new  FXMLLoader(getClass().getResource("/view/main.fxml"));
             root = fxmlLoader.load();
-
-
         } catch (IOException e) {
             e.printStackTrace();
         }
         mainStage.setTitle("Cloud Camera");
         mainStage.getIcons().add(new Image(this.getClass().getResourceAsStream("/image/logo.png")));
-        Scene scene = new Scene(root);
+        Scene scene = new Scene(root,906,427);
         mainStage.setScene(scene);
         mainStage.setMinHeight(427.0);
-        mainStage.setMinWidth(753.0);
+        mainStage.setMinWidth(906.0);
         mainStage.show();
         this.mainStage = mainStage;
         fxmlLoader.getController();
@@ -53,7 +51,6 @@ public class LoginService {
         mainStage.widthProperty().addListener((obs, oldVal, newVal) -> {
             ((MainStageController) finalFxmlLoader.getController()).responsivWidth(newVal.doubleValue());
         });
-
         return mainStage;
 
 

@@ -1,6 +1,5 @@
 package sample.storage;
 
-import org.omg.CORBA.PUBLIC_MEMBER;
 
 import java.util.prefs.Preferences;
 
