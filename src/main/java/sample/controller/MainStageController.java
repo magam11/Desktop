@@ -1,26 +1,14 @@
 package sample.controller;
 
-import javafx.beans.property.ReadOnlyDoubleProperty;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.fxml.JavaFXBuilderFactory;
-import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import javafx.stage.Window;
 import sample.Size;
-
-import java.net.URL;
-import java.util.List;
-import java.util.ResourceBundle;
 
 public class MainStageController {
     @FXML
@@ -49,15 +37,16 @@ public class MainStageController {
     @FXML
     public ImageView shareImageView;
     @FXML
-    public VBox vboxContainer;
+    public CellController cellController;
+
     @FXML
-    public HBox hbox_row;
+    public SliderController sliderController;
     public  Stage mainStage;
 
 
     public void initialize() {
-
-//        vboxContainer.setPrefHeight(500);
+        sliderController.sliderContainer.setVisible(false);
+        cellController.scrollPane.setLayoutX(15);
         memoryProgressBar.setProgress(125.0 / 400.0);
         share.setEffect(new DropShadow(19, Color.rgb(0, 0, 0, 0.1)));
         download.setEffect(new DropShadow(19, Color.rgb(0, 0, 0, 0.1)));
@@ -70,7 +59,7 @@ public class MainStageController {
 
 
     public void responsivWidth(double stageWith) {
-
+        cellController.responsiveWidth(stageWith);
         if (stageWith <= 1000.0) {
             memoryProgressBar.setPrefWidth(Size.WIDTH_COEFFICENT_FOR_PROGRESS_BAR_WIDTH * stageWith);
             fraction.setLayoutX(Size.WIDTH_COEFFICENT_FOR_PROGRESS_BAR_WIDTH * stageWith + memoryProgressBar.getLayoutX() + 7);
@@ -81,7 +70,17 @@ public class MainStageController {
         share.setLayoutX(stageWith - 299);
         delete.setLayoutX(stageWith - 202);
         download.setLayoutX(stageWith - 105);
+        cellController.scrollPane.setPrefWidth(stageWith);
+//        for (Node child : children) {
+//            AnchorPane itemAnchorPane = (AnchorPane)child;
+//            itemAnchorPane.setPrefWidth(300);
+//        }
+
+//        cellController.scrolPaneCell.setPrefWidth(stageWith);
     }
 
 
+    public void responsivHeight(double stageHeight) {
+//        cellController.responsiveHeight(stageHeight);
+    }
 }

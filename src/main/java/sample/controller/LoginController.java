@@ -53,8 +53,6 @@ public class LoginController {
         phoneNumberImageView.setImage(phoneNumberIco);
         loginImageImageView.setImage(loginImage);
         loginForm.setEffect(new DropShadow(19, Color.rgb(0, 0, 0, 0.1)));
-//        loginForm.setStyle("-fx-background-radius: 25");
-//        login_button.setEffect(new DropShadow(BlurType.ONE_PASS_BOX, Color.rgb(0, 0, 0, 0.2),1,3,10,2));
         passwordImageView.setImage(passwordImage);
     }
 
