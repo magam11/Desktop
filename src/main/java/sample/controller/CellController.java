@@ -6,6 +6,7 @@ import javafx.geometry.HPos;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 
 public class CellController {
@@ -14,6 +15,12 @@ public class CellController {
     public ScrollPane scrollPane;
     @FXML
     public FlowPane floxPane;
+    private MainStageController mainStageController;
+
+    public void initializeMainStageController(MainStageController mainStageController){
+        this.mainStageController = mainStageController;
+    }
+
 
 
     public void initialize(){
@@ -24,6 +31,13 @@ public class CellController {
 
     public void responsiveWidth(double stageWith) {
         floxPane.setPrefWidth(stageWith);
+
+    }
+
+    @FXML
+    public void openSlider(MouseEvent mouseEvent) {
+        mainStageController.sliderController.sliderContainer.setVisible(true);
+
 
     }
 

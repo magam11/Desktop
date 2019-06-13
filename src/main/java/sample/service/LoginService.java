@@ -51,6 +51,9 @@ public class LoginService {
         mainStage.widthProperty().addListener((obs, oldVal, newVal) -> {
             ((MainStageController) finalFxmlLoader.getController()).responsivWidth(newVal.doubleValue());
         });
+        mainStage.heightProperty().addListener((obs, oldVal, newVal) -> {
+            ((MainStageController) finalFxmlLoader.getController()).responsivHeight(newVal.doubleValue());
+        });
         return mainStage;
 
 

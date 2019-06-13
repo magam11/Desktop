@@ -13,9 +13,10 @@
       <Insets left="10.0" right="10.0" />
    </padding>
    <content>
+<!--      <FlowPane fx:id="floxPane" prefHeight="796.0" prefWidth="780.0" style="-" >-->
       <FlowPane fx:id="floxPane" prefHeight="796.0" prefWidth="780.0" style="-fx-alignment: center;">
          <children>
-            <AnchorPane prefHeight="200.0" prefWidth="177.0" style="-fx-background-color: #1235;">
+            <AnchorPane onMouseClicked="#openSlider" prefHeight="200.0" prefWidth="177.0" style="-fx-background-color: #1235;">
                <FlowPane.margin>
                   <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </FlowPane.margin>

@@ -45,6 +45,7 @@ public class MainStageController {
 
 
     public void initialize() {
+        cellController.initializeMainStageController(this);
         sliderController.sliderContainer.setVisible(false);
         cellController.scrollPane.setLayoutX(15);
         memoryProgressBar.setProgress(125.0 / 400.0);
@@ -60,6 +61,7 @@ public class MainStageController {
 
     public void responsivWidth(double stageWith) {
         cellController.responsiveWidth(stageWith);
+        sliderController.responsiveWidth(stageWith);
         if (stageWith <= 1000.0) {
             memoryProgressBar.setPrefWidth(Size.WIDTH_COEFFICENT_FOR_PROGRESS_BAR_WIDTH * stageWith);
             fraction.setLayoutX(Size.WIDTH_COEFFICENT_FOR_PROGRESS_BAR_WIDTH * stageWith + memoryProgressBar.getLayoutX() + 7);
@@ -81,6 +83,6 @@ public class MainStageController {
 
 
     public void responsivHeight(double stageHeight) {
-//        cellController.responsiveHeight(stageHeight);
+        sliderController.responsiveHeight(stageHeight);
     }
 }

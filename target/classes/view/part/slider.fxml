@@ -11,16 +11,21 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="sliderContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="427.0" prefWidth="906.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane fx:id="sliderContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="427.0" prefWidth="906.0"
+            style="-fx-background-color: rgba(0,0,0,0.31) #000000;"
+            xmlns="http://javafx.com/javafx/8.0.172-ea"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="sample.controller.SliderController">
    <bottom>
       <AnchorPane prefHeight="56.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <ProgressBar layoutX="292.0" layoutY="19.0" prefHeight="18.0" prefWidth="322.0" progress="0.0" />
+            <ProgressBar fx:id="progressBar" layoutX="292.0" layoutY="19.0" prefHeight="18.0" prefWidth="322.0" progress="0.0" />
          </children>
       </AnchorPane>
    </bottom>
    <left>
-      <Label prefHeight="240.0" prefWidth="74.0" text="&lt;" BorderPane.alignment="CENTER">
+      <Label fx:id="previousLabel" prefHeight="78.0" prefWidth="53.0" style="-fx-cursor: hand" text="&lt;" textFill="WHITE" BorderPane.alignment="CENTER">
          <font>
             <Font name="System Bold" size="45.0" />
          </font>
@@ -35,7 +40,7 @@
    <top>
       <AnchorPane prefHeight="48.0" prefWidth="600.0" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="728.0" layoutY="9.0" prefHeight="17.0" prefWidth="18.0"  text="X">
+            <Label fx:id="closeSliderLabel" layoutX="868.0" layoutY="8.0" onMouseClicked="#closeSlider" prefHeight="17.0" prefWidth="18.0" style="-fx-cursor: hand" text="X">
                <font>
                   <Font name="System Bold" size="22.0" />
                </font>
@@ -46,7 +51,7 @@
    <right>
       <AnchorPane prefHeight="567.0" prefWidth="112.0" BorderPane.alignment="CENTER">
          <children>
-            <Label layoutX="34.0" layoutY="165.0" prefHeight="240.0" prefWidth="74.0" text="&gt;">
+            <Label fx:id="nextLabel" layoutX="31.0" layoutY="131.0" prefHeight="78.0" prefWidth="53.0" style="-fx-cursor: hand" text="&gt;" textFill="WHITE">
                <padding>
                   <Insets left="35.0" />
                </padding>
@@ -115,7 +120,7 @@
    <center>
       <StackPane prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: transparent;" BorderPane.alignment="CENTER">
          <children>
-            <ImageView fitHeight="565.0" fitWidth="563.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fx:id="shownImage" fitHeight="565.0" fitWidth="563.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../../image/tiger.jpg" />
                </image>
