@@ -1,7 +1,12 @@
-sample\service\LoginService.class
+sample\controller\CellController.class
 sample\storage\Storage.class
+sample\example\example.class
 sample\Constant.class
 sample\controller\MainStageController.class
-sample\controller\LoginController.class
+sample\service\SliderService.class
 sample\Main.class
 sample\Size.class
+sample\service\LoginService.class
+sample\controller\LoginController.class
+sample\controller\SliderController.class
+sample\example\ClippedShadow.class

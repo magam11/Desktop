@@ -8,4 +8,6 @@
     -fx-text-box-border: #388e3c;
     /*-fx-control-inner-background: #ebfbe1;*/
 }
-
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
+}

@@ -60,6 +60,7 @@ public class MainStageController {
 
 
     public void responsivWidth(double stageWith) {
+        sliderController.initializeMainStageController(this);
         cellController.responsiveWidth(stageWith);
         sliderController.responsiveWidth(stageWith);
         if (stageWith <= 1000.0) {
