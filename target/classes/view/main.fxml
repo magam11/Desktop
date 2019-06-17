@@ -101,6 +101,7 @@
             <fx:include fx:id="cell" source="part/cell.fxml" />
          </center>
       </BorderPane>
-      <fx:include fx:id="slider" source="part/slider.fxml"/>
+      <fx:include fx:id="phone" source="part/phone.fxml"/>
+<!--      <fx:include fx:id="slider" source="part/slider.fxml"/>-->
    </children>
 </StackPane>

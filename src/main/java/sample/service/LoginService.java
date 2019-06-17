@@ -12,6 +12,7 @@ import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import sample.controller.MainStageController;
 
+import java.awt.*;
 import java.io.IOException;
 
 public class LoginService {
@@ -37,11 +38,17 @@ public class LoginService {
             e.printStackTrace();
         }
         mainStage.setTitle("Cloud Camera");
+        Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+
         mainStage.getIcons().add(new Image(this.getClass().getResourceAsStream("/image/logo.png")));
+//        System.out.println("screenSize.getWidth() "+screenSize.getWidth());
+//        Scene scene = new Scene(root,screenSize.getWidth(),screenSize.getHeight());
         Scene scene = new Scene(root,906,427);
         mainStage.setScene(scene);
+//        mainStage.setMinHeight(screenSize.getHeight());
         mainStage.setMinHeight(427.0);
         mainStage.setMinWidth(906.0);
+//        mainStage.setMinWidth(screenSize.getWidth());
         mainStage.show();
         this.mainStage = mainStage;
         fxmlLoader.getController();

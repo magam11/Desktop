@@ -11,12 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<ScrollPane fx:id="sliderContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-            minWidth="-Infinity" prefHeight="427.0" prefWidth="906.0"
-            style="-fx-background-color: rgba(0,0,0,0.54) #000000;"
-            xmlns="http://javafx.com/javafx/8.0.171"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="sample.controller.SliderController">
+<ScrollPane fx:id="sliderContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="427.0" prefWidth="906.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.SliderController">
     <content>
         <BorderPane fx:id="content" prefHeight="427.0" prefWidth="906.0" style="-fx-background-color: rgba(0,0,0,0.54) #000000;">
             <top>
@@ -30,8 +25,6 @@
                                 <Insets left="5.0" />
                             </padding>
                         </Label>
-                        <Label layoutX="59.0" layoutY="39.0" prefHeight="17.0" prefWidth="109.0" text="15.05.2019 13:05" textFill="WHITE" />
-                        <Label fx:id="fraction" layoutX="516.0" layoutY="36.0" prefHeight="17.0" prefWidth="36.0" text="1/127" textFill="WHITE" />
                     </children>
                 </AnchorPane>
             </top>
@@ -45,10 +38,25 @@
                     </BorderPane.margin>
                 </Label>
             </left>
-         <right>
-            <AnchorPane prefHeight="363.0" prefWidth="127.0" BorderPane.alignment="CENTER">
-               <children>
-                        <VBox fx:id="menuBar" layoutX="-5.0" layoutY="3.0" prefHeight="140.0" prefWidth="112.0">
+            <right>
+                <Label fx:id="nextLabel" prefHeight="175.0" prefWidth="45.0" text="&gt;" textFill="WHITE" BorderPane.alignment="CENTER">
+                    <font>
+                        <Font name="System Bold" size="50.0" />
+                    </font>
+                    <BorderPane.margin>
+                        <Insets right="10.0" />
+                    </BorderPane.margin>
+                </Label>
+            </right>
+            <center>
+                <AnchorPane fx:id="center_content" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                    <children>
+                        <ImageView fx:id="shownImage" fitHeight="279.0" fitWidth="676.0" layoutX="14.0" layoutY="23.0" pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../../image/tiger.jpg" />
+                            </image>
+                        </ImageView>
+                        <VBox fx:id="menuBar" layoutX="599.0" layoutY="23.0" prefHeight="140.0" prefWidth="112.0">
                             <children>
                                 <AnchorPane prefHeight="40.0" prefWidth="100.0" style="-fx-background-color: #D5D5D5; -fx-background-radius: 25; -fx-cursor: hand;">
                                     <VBox.margin>
@@ -67,28 +75,13 @@
                                 </AnchorPane>
                             </children>
                         </VBox>
-                      <Label fx:id="nextLabel" layoutX="64.0" layoutY="145.0" prefHeight="69.0" prefWidth="45.0" text="&gt;" textFill="WHITE">
-                          <font>
-                              <Font name="System Bold" size="50.0" />
-                          </font>
-                      </Label>
-               </children>
-            </AnchorPane>
-         </right>
-         <center>
-            <ImageView fx:id="shownImage" fitHeight="296.0" fitWidth="579.0" pickOnBounds="true" preserveRatio="true" BorderPane.alignment="CENTER">
-               <image>
-                  <Image url="@../../image/tiger.jpg" />
-               </image>
-            </ImageView>
-         </center>
-         <bottom>
-            <AnchorPane prefHeight="64.0" prefWidth="906.0" BorderPane.alignment="CENTER">
-               <children>
-                  <ProgressBar fx:id="progressBar" layoutX="326.0" layoutY="14.0" prefWidth="200.0" progress="0.0" />
-               </children>
-            </AnchorPane>
-         </bottom>
+                        <ProgressBar fx:id="progressBar" layoutX="266.0" layoutY="322.0" prefHeight="18.0" prefWidth="278.0" progress="0.0" />
+                        <Label layoutX="391.0" layoutY="303.0" prefHeight="17.0" prefWidth="32.0" text="87 %" textFill="WHITE" />
+                        <Label layoutX="14.0" layoutY="4.0" prefHeight="17.0" prefWidth="109.0" text="15.05.2019 13:05" textFill="WHITE" />
+                        <Label fx:id="fraction" layoutX="479.0" layoutY="6.0" prefHeight="17.0" prefWidth="36.0" text="1/127" textFill="WHITE" />
+                    </children>
+                </AnchorPane>
+            </center>
         </BorderPane>
     </content>
 </ScrollPane>

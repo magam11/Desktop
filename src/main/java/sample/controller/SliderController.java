@@ -51,7 +51,9 @@ public class SliderController {
 
 
     void responsiveWidth(double stageWith) {
+        sliderContainer.setLayoutY(mainStageController.headerRow1.getLayoutY());
         sliderContainer.setPrefWidth(stageWith);
+//        sliderContainer.setPrefHeight(stageWith);
         sliderContainer.setPrefHeight((427.0/906.0)*stageWith);
         content.setPrefWidth(stageWith);
         content.setPrefHeight((427.0/906.0)*stageWith);
@@ -59,6 +61,7 @@ public class SliderController {
 //        center_content.setPrefWidth(stageWith-90);
 //        center_content.setPrefHeight((center_content.getScene().getWindow()).getHeight());
         shownImage.setFitWidth(stageWith-200);
+        shownImage.setFitHeight(sliderContainer.getPrefWidth());
 //        shownImage.setFitHeight((center_content.getScene().getWindow()).getHeight());
 
 

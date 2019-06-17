@@ -36,7 +36,8 @@ public class CellController {
 
     @FXML
     public void openSlider(MouseEvent mouseEvent) {
-        mainStageController.sliderController.sliderContainer.setVisible(true);
+        mainStageController.phoneController.sclollpane.setVisible(true);
+//        mainStageController.sliderController.sliderContainer.setVisible(true);
 
 
     }

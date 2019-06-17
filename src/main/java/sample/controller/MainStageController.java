@@ -39,14 +39,18 @@ public class MainStageController {
     @FXML
     public CellController cellController;
 
+//    @FXML
+//    public SliderController sliderController;
     @FXML
-    public SliderController sliderController;
+    public PhoneController phoneController;
     public  Stage mainStage;
 
 
     public void initialize() {
         cellController.initializeMainStageController(this);
-        sliderController.sliderContainer.setVisible(false);
+        phoneController.sclollpane.setVisible(false);
+//        sliderController.sliderContainer.setVisible(false);
+//        sliderController.sliderContainer.setVisible(false);
         cellController.scrollPane.setLayoutX(15);
         memoryProgressBar.setProgress(125.0 / 400.0);
         share.setEffect(new DropShadow(19, Color.rgb(0, 0, 0, 0.1)));
@@ -60,9 +64,10 @@ public class MainStageController {
 
 
     public void responsivWidth(double stageWith) {
-        sliderController.initializeMainStageController(this);
+//        sliderController.initializeMainStageController(this);
         cellController.responsiveWidth(stageWith);
-        sliderController.responsiveWidth(stageWith);
+        phoneController.responsiveWidth(stageWith);
+//        sliderController.responsiveWidth(stageWith);
         if (stageWith <= 1000.0) {
             memoryProgressBar.setPrefWidth(Size.WIDTH_COEFFICENT_FOR_PROGRESS_BAR_WIDTH * stageWith);
             fraction.setLayoutX(Size.WIDTH_COEFFICENT_FOR_PROGRESS_BAR_WIDTH * stageWith + memoryProgressBar.getLayoutX() + 7);
@@ -84,6 +89,7 @@ public class MainStageController {
 
 
     public void responsivHeight(double stageHeight) {
-        sliderController.responsiveHeight(stageHeight);
+//        sliderController.responsiveHeight(stageHeight);
+        phoneController.responsiveHeight(stageHeight);
     }
 }

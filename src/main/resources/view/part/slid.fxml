@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="427.0" prefWidth="906.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane layoutX="62.0" layoutY="44.0" prefHeight="340.0" prefWidth="782.0" style="-fx-background-color: #1234;">
+         <children>
+            <ScrollPane layoutX="2.0" layoutY="-1.0" onDragDetected="#scrollPane" prefHeight="340.0" prefWidth="673.0">
+               <content>
+                  <StackPane fx:id="shownImage_container" prefHeight="335.0" prefWidth="669.0">
+                     <children>
+                        <ImageView fitHeight="439.0" fitWidth="596.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../image/tiger.jpg" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </StackPane>
+               </content>
+            </ScrollPane>
+            <VBox fx:id="menuBar" layoutX="680.0" layoutY="-1.0" prefHeight="109.0" prefWidth="101.0" style="-fx-background-color: #1234;" />
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="427.0" prefWidth="62.0" style="-fx-background-color: #2547;">
+         <children>
+            <Label layoutX="7.0" layoutY="153.0" prefHeight="122.0" prefWidth="38.0" text="&lt;">
+               <font>
+                  <Font name="System Bold" size="50.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane layoutX="844.0" layoutY="1.0" prefHeight="427.0" prefWidth="62.0" style="-fx-background-color: #2547;">
+         <children>
+            <Label layoutX="12.0" layoutY="153.0" prefHeight="122.0" prefWidth="38.0" text="&gt;">
+               <font>
+                  <Font name="System Bold" size="50.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="header" layoutX="62.0" prefHeight="44.0" prefWidth="782.0" style="-fx-background-color: #6145;" />
+      <AnchorPane fx:id="fluter" layoutX="62.0" layoutY="384.0" prefHeight="44.0" prefWidth="782.0" style="-fx-background-color: #2746;" />
+   </children>
+</AnchorPane>
