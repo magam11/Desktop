@@ -5,7 +5,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
+import sample.Constant;
+import sample.connection.ApiConnection;
 import sample.controller.MainStageController;
+import sample.dataTransferObject.request.AuthenticationRequest;
 import sample.service.LoginService;
 
 import java.io.IOException;
@@ -23,6 +26,10 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public void login(String phoneNumber, String password){
+        ApiConnection.getInstance().loginConnection(Constant.LOGIN_URI, AuthenticationRequest.builder()
+                .phoneNumber(phoneNumber)
+                .password(password)
+                .build());
         Stage mainStage = new Stage();
         FXMLLoader fxmlLoader = null;
         Parent root = null;

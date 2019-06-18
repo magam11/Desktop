@@ -79,7 +79,9 @@ public class LoginController {
         loginStage.close();
         String phoneNumber = phoneNumberTextField.getText();
         String password = passwordTextField.getText();
-        loginService.login(phoneNumber, password);
+        if(phoneNumber!=null && password!=null){
+            loginService.login(phoneNumber, password);
+        }
 
     }
 
