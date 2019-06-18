@@ -43,7 +43,6 @@ public class MainStageController {
 
     public  Stage mainStage;
 
-
     public void initialize() {
         cellController.initializeMainStageController(this);
         slideController.sliderContent.setVisible(false);
@@ -56,11 +55,9 @@ public class MainStageController {
         headerRow2.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.2)));
     }
 
-
     public void responsivWidth(double stageWith) {
         cellController.responsiveWidth(stageWith);
         slideController.responsiveWidth(stageWith);
-
         if (stageWith <= 1000.0) {
             memoryProgressBar.setPrefWidth(Size.WIDTH_COEFFICENT_FOR_PROGRESS_BAR_WIDTH * stageWith);
             fraction.setLayoutX(Size.WIDTH_COEFFICENT_FOR_PROGRESS_BAR_WIDTH * stageWith + memoryProgressBar.getLayoutX() + 7);
@@ -73,7 +70,6 @@ public class MainStageController {
         download.setLayoutX(stageWith - 105);
         cellController.scrollPane.setPrefWidth(stageWith);
     }
-
 
     public void responsivHeight(double stageHeight) {
         slideController.responsiveHeght(stageHeight);
