@@ -38,19 +38,15 @@ public class MainStageController {
     public ImageView shareImageView;
     @FXML
     public CellController cellController;
-
-//    @FXML
-//    public SliderController sliderController;
     @FXML
-    public PhoneController phoneController;
+    public SlideController slideController;
+
     public  Stage mainStage;
 
 
     public void initialize() {
         cellController.initializeMainStageController(this);
-        phoneController.sclollpane.setVisible(false);
-//        sliderController.sliderContainer.setVisible(false);
-//        sliderController.sliderContainer.setVisible(false);
+        slideController.sliderContent.setVisible(false);
         cellController.scrollPane.setLayoutX(15);
         memoryProgressBar.setProgress(125.0 / 400.0);
         share.setEffect(new DropShadow(19, Color.rgb(0, 0, 0, 0.1)));
@@ -58,16 +54,13 @@ public class MainStageController {
         delete.setEffect(new DropShadow(19, Color.rgb(0, 0, 0, 0.1)));
         headerRow1.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.2)));
         headerRow2.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.2)));
-//        headerRow2.setEffect(new DropShadow(19, Color.rgb(0, 0, 0, 0.9)));
-
     }
 
 
     public void responsivWidth(double stageWith) {
-//        sliderController.initializeMainStageController(this);
         cellController.responsiveWidth(stageWith);
-        phoneController.responsiveWidth(stageWith);
-//        sliderController.responsiveWidth(stageWith);
+        slideController.responsiveWidth(stageWith);
+
         if (stageWith <= 1000.0) {
             memoryProgressBar.setPrefWidth(Size.WIDTH_COEFFICENT_FOR_PROGRESS_BAR_WIDTH * stageWith);
             fraction.setLayoutX(Size.WIDTH_COEFFICENT_FOR_PROGRESS_BAR_WIDTH * stageWith + memoryProgressBar.getLayoutX() + 7);
@@ -79,17 +72,10 @@ public class MainStageController {
         delete.setLayoutX(stageWith - 202);
         download.setLayoutX(stageWith - 105);
         cellController.scrollPane.setPrefWidth(stageWith);
-//        for (Node child : children) {
-//            AnchorPane itemAnchorPane = (AnchorPane)child;
-//            itemAnchorPane.setPrefWidth(300);
-//        }
-
-//        cellController.scrolPaneCell.setPrefWidth(stageWith);
     }
 
 
     public void responsivHeight(double stageHeight) {
-//        sliderController.responsiveHeight(stageHeight);
-        phoneController.responsiveHeight(stageHeight);
+        slideController.responsiveHeght(stageHeight);
     }
 }
