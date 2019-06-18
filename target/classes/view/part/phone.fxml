@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<ScrollPane fx:id="sclollpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="427.0" prefWidth="906.0" style="-fx-background-color: rgba(0,0,0,0.54) #000000;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.PhoneController">
+   <content>
+      <BorderPane fx:id="content" prefHeight="422.0" prefWidth="903.0" style="-fx-background-color: rgba(87,255,80,0.54) #bcffa1;">
+         <left>
+            <Label prefWidth="50.0" text="&lt;" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="49.0" />
+               </font></Label>
+         </left>
+         <right>
+            <Label prefWidth="50.0" text="&gt;" BorderPane.alignment="CENTER">
+               <font>
+                  <Font name="System Bold" size="50.0" />
+               </font>
+               <BorderPane.margin>
+                  <Insets />
+               </BorderPane.margin>
+               <padding>
+                  <Insets left="20.0" />
+               </padding></Label>
+         </right>
+         <center>
+            <AnchorPane fx:id="image_content" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #1234;" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox fx:id="benuBar" layoutX="683.0" layoutY="14.0" prefHeight="200.0" prefWidth="100.0" style="-fx-background-color: #8746;" />
+                  <StackPane fx:id="shownImage_container" layoutX="14.0" layoutY="14.0" prefHeight="305.0" prefWidth="661.0" style="-fx-background-color: #9864;">
+                     <children>
+                        <ImageView fx:id="shownImage" fitHeight="307.0" fitWidth="532.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../image/tiger.jpg" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </StackPane>
+               </children></AnchorPane>
+         </center>
+         <top>
+            <AnchorPane prefHeight="65.0" prefWidth="903.0" style="-fx-background-color: #2954;" BorderPane.alignment="CENTER" />
+         </top></BorderPane>
+   </content>
+</ScrollPane>

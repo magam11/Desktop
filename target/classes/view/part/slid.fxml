@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="sliderContent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="427.0" prefWidth="906.0" style="-fx-background-color: rgba(0,0,0,0.54) #000000;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.SlideController">
+   <children>
+      <AnchorPane layoutX="62.0" layoutY="44.0" prefHeight="340.0" prefWidth="782.0">
+         <children>
+            <ScrollPane fx:id="scrollPane" layoutX="2.0" layoutY="-1.0" prefHeight="340.0" prefWidth="673.0" style="-fx-background-color: rgba(0,0,0,0) rgba(0,0,0,0.18);">
+               <content>
+                  <StackPane fx:id="shownImage_container" prefHeight="335.0" prefWidth="669.0">
+                     <children>
+                        <ImageView fx:id="shownImage" fitHeight="439.0" fitWidth="596.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../image/tiger.jpg" />
+                           </image>
+                        </ImageView>
+                     </children>
+                  </StackPane>
+               </content>
+            </ScrollPane>
+            <VBox fx:id="menuBar" layoutX="680.0" layoutY="-1.0" prefHeight="151.0" prefWidth="103.0">
+               <children>
+                  <AnchorPane prefHeight="44.0" prefWidth="100.0" style="-fx-background-color: #D7D7D7; -fx-cursor: hand; -fx-background-radius: 25;">
+                     <VBox.margin>
+                        <Insets bottom="5.0" top="5.0" />
+                     </VBox.margin>
+                     <children>
+                        <ImageView fitHeight="22.0" fitWidth="26.0" layoutX="14.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../image/download.png" />
+                           </image>
+                        </ImageView>
+                        <Label layoutX="36.0" layoutY="14.0" prefHeight="17.0" prefWidth="60.0" text="Download">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="44.0" prefWidth="100.0" style="-fx-background-color: #D7D7D7; -fx-cursor: hand; -fx-background-radius: 25;">
+                     <VBox.margin>
+                        <Insets bottom="5.0" />
+                     </VBox.margin>
+                     <children>
+                        <ImageView fitHeight="22.0" fitWidth="26.0" layoutX="14.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../image/delete.png" />
+                           </image>
+                        </ImageView>
+                        <Label layoutX="37.0" layoutY="14.0" prefHeight="17.0" prefWidth="60.0" text="Delete">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+                  <AnchorPane prefHeight="44.0" prefWidth="100.0" style="-fx-background-color: #D7D7D7; -fx-cursor: hand; -fx-background-radius: 25;">
+                     <children>
+                        <ImageView fitHeight="22.0" fitWidth="26.0" layoutX="9.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../image/share.png" />
+                           </image>
+                        </ImageView>
+                        <Label layoutX="37.0" layoutY="12.0" prefHeight="17.0" prefWidth="60.0" text="Share">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                     </children>
+                  </AnchorPane>
+               </children>
+               <padding>
+                  <Insets left="6.0" />
+               </padding></VBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="leftContent" prefHeight="427.0" prefWidth="60.0">
+         <children>
+            <Label fx:id="previousLabel" layoutX="7.0" layoutY="153.0" prefHeight="122.0" prefWidth="38.0" style="-fx-cursor: hand;" text="&lt;" textFill="#ededed">
+               <font>
+                  <Font name="System Bold" size="50.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="rightContent" layoutX="846.0" layoutY="1.0" prefHeight="427.0" prefWidth="60.0">
+         <children>
+            <Label fx:id="nextLabel" layoutX="12.0" layoutY="153.0" prefHeight="122.0" prefWidth="38.0" style="-fx-cursor: hand;" text="&gt;" textFill="#ededed">
+               <font>
+                  <Font name="System Bold" size="50.0" />
+               </font>
+            </Label>
+            <Label fx:id="closeLabel" onMouseClicked="#closeSlide" layoutX="16.0" layoutY="9.0" prefHeight="34.0" prefWidth="26.0" style="-fx-cursor: hand;" text="X" textFill="#ededed">
+               <font>
+                  <Font name="System Bold" size="23.0" />
+               </font>
+               <padding>
+                  <Insets left="5.0" top="10.0" />
+               </padding>
+            </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="header" layoutX="62.0" prefHeight="45.0" prefWidth="782.0">
+         <children>
+            <Label fx:id="fraction" layoutX="635.0" layoutY="13.0" prefHeight="19.0" prefWidth="38.0" text="1/127" textFill="#d7d7d7">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+               <padding>
+                  <Insets top="15.0" />
+               </padding>
+            </Label>
+            <Label fx:id="dateInfo" layoutX="4.0" layoutY="13.0" prefHeight="19.0" prefWidth="112.0" text="30.01.2017 13:00" textFill="#d7d7d7">
+               <font>
+                  <Font name="System Bold" size="13.0" />
+               </font>
+               <padding>
+                  <Insets top="15.0" />
+               </padding>
+            </Label>
+         </children></AnchorPane>
+      <AnchorPane fx:id="flutter" layoutX="60.0" layoutY="382.0" prefHeight="45.0" prefWidth="789.0">
+         <children>
+            <ProgressBar fx:id="sliderProgressBar" layoutX="231.0" layoutY="19.0" prefHeight="18.0" prefWidth="328.0" progress="0.0" />
+            <Label fx:id="sliderPercent" layoutX="381.0" layoutY="3.0" prefHeight="17.0" prefWidth="26.0" text="87%" textFill="#d7d7d7">
+               <font>
+                  <Font name="System Bold" size="12.0" />
+               </font>
+            </Label>
+         </children></AnchorPane>
+   </children>
+</AnchorPane>
