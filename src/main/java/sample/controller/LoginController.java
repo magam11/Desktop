@@ -3,6 +3,7 @@ package sample.controller;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -38,17 +39,26 @@ public class LoginController {
     public TextField passwordTF;
     @FXML
     public ImageView showPassword;
+    @FXML
+    public Label failureMessage;
 
     private LoginService loginService =  LoginServiceImpl.getInstance();
 
     public void initialize() {
+
+        failureMessage.setVisible(false);
+
         javafx.scene.image.Image phoneNumberIco = new Image(this.getClass().getResourceAsStream("/image/phone_icon.png"));
         javafx.scene.image.Image loginImage = new Image(this.getClass().getResourceAsStream("/image/loginImage.png"));
         javafx.scene.image.Image passwordImage = new Image(this.getClass().getResourceAsStream("/image/password_icon.png"));
+
         phoneNumberImageView.setImage(phoneNumberIco);
         loginImageImageView.setImage(loginImage);
         loginForm.setEffect(new DropShadow(19, Color.rgb(0, 0, 0, 0.1)));
         passwordImageView.setImage(passwordImage);
+        loginService.initializeLoginController(this);
+        passwordTextField.setText("123456");
+        phoneNumberTextField.setText("+37491103354");
     }
 
     @FXML
@@ -75,8 +85,6 @@ public class LoginController {
     }
 
     public void login(MouseEvent mouseEvent) {
-        Stage loginStage = (Stage) ((Node) mouseEvent.getSource()).getScene().getWindow();
-        loginStage.close();
         String phoneNumber = phoneNumberTextField.getText();
         String password = passwordTextField.getText();
         if(phoneNumber!=null && password!=null){

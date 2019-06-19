@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="sliderContent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="427.0" prefWidth="906.0" style="-fx-background-color: rgba(0,0,0,0.54) #000000;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.SlideController">
+<AnchorPane fx:id="sliderContent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0" prefWidth="906.0" style="-fx-background-color: rgba(0,0,0,0.54) #000000;" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.SlideController">
    <children>
       <AnchorPane layoutX="62.0" layoutY="44.0" prefHeight="340.0" prefWidth="782.0">
          <children>
@@ -100,7 +100,7 @@
                   <Font name="System Bold" size="50.0" />
                </font>
             </Label>
-            <Label fx:id="closeLabel" onMouseClicked="#closeSlide" layoutX="16.0" layoutY="9.0" prefHeight="34.0" prefWidth="26.0" style="-fx-cursor: hand;" text="X" textFill="#ededed">
+            <Label fx:id="closeLabel" layoutX="16.0" layoutY="9.0" onMouseClicked="#closeSlide" prefHeight="34.0" prefWidth="26.0" style="-fx-cursor: hand;" text="X" textFill="#ededed">
                <font>
                   <Font name="System Bold" size="23.0" />
                </font>
@@ -129,7 +129,7 @@
                </padding>
             </Label>
          </children></AnchorPane>
-      <AnchorPane fx:id="flutter" layoutX="60.0" layoutY="382.0" prefHeight="45.0" prefWidth="789.0">
+      <AnchorPane fx:id="flutter" layoutX="59.0" layoutY="781.0" prefHeight="45.0" prefWidth="789.0">
          <children>
             <ProgressBar fx:id="sliderProgressBar" layoutX="231.0" layoutY="19.0" prefHeight="18.0" prefWidth="328.0" progress="0.0" />
             <Label fx:id="sliderPercent" layoutX="381.0" layoutY="3.0" prefHeight="17.0" prefWidth="26.0" text="87%" textFill="#d7d7d7">

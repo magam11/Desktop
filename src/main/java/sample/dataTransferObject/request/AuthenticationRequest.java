@@ -1,7 +1,6 @@
 package sample.dataTransferObject.request;
 
 
-import com.sun.istack.internal.NotNull;
 import lombok.*;
 
 @AllArgsConstructor
@@ -10,9 +9,7 @@ import lombok.*;
 @Builder
 
 public class AuthenticationRequest {
-    @NotNull
     private String phoneNumber;
-    @NotNull
     private String password;
 
 

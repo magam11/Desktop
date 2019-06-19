@@ -1,6 +1,21 @@
 package sample.service;
 
+import okhttp3.Response;
+import sample.controller.LoginController;
+import sample.dataTransferObject.response.AuthenticationResponse;
+import sample.dataTransferObject.response.BaseUserData;
+
 public interface LoginService {
 
      void login(String phoneNumber, String password);
+
+     void authenticationFailure(String message);
+
+     void initializeLoginController(LoginController loginController);
+
+     void authenticationSuccessful(AuthenticationResponse build);
+
+     void onRespoinseOfDataApiAnalysis(Response response);
+
+     void openMainStage(BaseUserData baseUserData);
 }
