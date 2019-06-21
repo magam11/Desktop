@@ -3,6 +3,7 @@ package sample.controller;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.effect.DropShadow;
@@ -41,6 +42,8 @@ public class LoginController {
     public ImageView showPassword;
     @FXML
     public Label failureMessage;
+    @FXML
+    public CheckBox rememberMe;
 
     private LoginService loginService =  LoginServiceImpl.getInstance();
 
@@ -88,10 +91,8 @@ public class LoginController {
         String phoneNumber = phoneNumberTextField.getText();
         String password = passwordTextField.getText();
         if(phoneNumber!=null && password!=null){
-            loginService.login(phoneNumber, password);
+            loginService.login(phoneNumber, password,rememberMe.isSelected());
         }
-
     }
-
 
 }

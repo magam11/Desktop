@@ -15,4 +15,5 @@ public class BaseUserData {
     private List<ImageData> picturesData;
     private int totoalPageCount;
     private String fruction;
+    private String phoneNumber;
 }

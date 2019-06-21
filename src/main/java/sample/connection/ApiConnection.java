@@ -11,6 +11,7 @@ import sample.dataTransferObject.response.BaseUserData;
 import sample.dataTransferObject.response.ImageData;
 import sample.service.LoginService;
 import sample.service.serviceImpl.LoginServiceImpl;
+import sample.storage.Storage;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,7 +39,7 @@ public class ApiConnection {
 
 
     @Connection(uri = "user/login")
-    public void loginConnection(String uri, AuthenticationRequest authenticationRequest) {
+    public void loginConnection(String uri, AuthenticationRequest authenticationRequest,boolean remember) {
         MediaType JSON_MEDIA_TYPE = MediaType.parse("application/json; charset=utf-8");
         RequestBody body = RequestBody.create(JSON_MEDIA_TYPE, authenticationRequest.toString());
         Request request = new Request.Builder()
@@ -58,8 +59,14 @@ public class ApiConnection {
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
                     JSONObject responseJson = new JSONObject(new String(response.body().bytes()));
-                    if (responseJson.getBoolean("success")) {                                //login is seccessful
+                    if (responseJson.getBoolean("success")) {//login is seccessful
                         JSONObject userInfo = responseJson.getJSONObject("userInfo");
+                        if(remember){
+                            Storage.getInstance().setToken(userInfo.getString("token"));
+                            Storage.getInstance().setCurrentToken(userInfo.getString("token"));
+                        }else {
+                            Storage.getInstance().setCurrentToken(userInfo.getString("token"));
+                        }
                         loginService.authenticationSuccessful(AuthenticationResponse.builder()
                                 .name(userInfo.getString("name"))
                                 .token(userInfo.getString("token"))
@@ -99,6 +106,12 @@ public class ApiConnection {
                 loginService.onRespoinseOfDataApiAnalysis(response);
             }
         });
+    }
+
+
+    @Connection(uri = "/image/imageName/{imageName}",method = "PUT",pathVariable = "imageName")
+    public void updateImageStatus(String uri,String imageName, boolean imageStatus){
+
 
     }
 }

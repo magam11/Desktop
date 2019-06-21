@@ -42,6 +42,8 @@ public class MainStageController {
     public CellController cellController;
     @FXML
     public SlideController slideController;
+    @FXML
+    public Label imageCountInto;
 
     public  Stage mainStage;
 

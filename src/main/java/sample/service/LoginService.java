@@ -2,12 +2,13 @@ package sample.service;
 
 import okhttp3.Response;
 import sample.controller.LoginController;
+import sample.controller.MainStageController;
 import sample.dataTransferObject.response.AuthenticationResponse;
 import sample.dataTransferObject.response.BaseUserData;
 
 public interface LoginService {
 
-     void login(String phoneNumber, String password);
+     void login(String phoneNumber, String password, boolean remember);
 
      void authenticationFailure(String message);
 
@@ -18,4 +19,6 @@ public interface LoginService {
      void onRespoinseOfDataApiAnalysis(Response response);
 
      void openMainStage(BaseUserData baseUserData);
+
+
 }

@@ -5,6 +5,8 @@ import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.FlowPane;
+import sample.service.CellService;
+import sample.service.serviceImpl.CellServiceImpl;
 
 public class CellController {
 
@@ -18,9 +20,12 @@ public class CellController {
         this.mainStageController = mainStageController;
     }
 
+    //services
+    CellService cellService = CellServiceImpl.getInstance();
 
 
     public void initialize(){
+        cellService.initilizeCellController(this);
         floxPane.setPadding(new Insets(50,0,0,0));
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);

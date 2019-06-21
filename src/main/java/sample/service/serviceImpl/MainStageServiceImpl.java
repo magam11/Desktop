@@ -2,7 +2,9 @@ package sample.service.serviceImpl;
 
 import sample.Size;
 import sample.controller.MainStageController;
+import sample.dataTransferObject.response.BaseUserData;
 import sample.service.MainStageService;
+import sample.storage.Storage;
 
 public class MainStageServiceImpl implements MainStageService {
     private static MainStageService mainStageService = new MainStageServiceImpl();
@@ -39,4 +41,21 @@ public class MainStageServiceImpl implements MainStageService {
     public void initializeMainStageController(MainStageController mainStageController) {
         this.mainStageController = mainStageController;
     }
+
+
+    @Override
+    public void loadMainStageData(BaseUserData baseUserData) {
+        mainStageController.fraction.setText(baseUserData.getFruction());
+        int imagesConunt = baseUserData.getPicturesData() == null ? 0 : baseUserData.getPicturesData().size();
+        mainStageController.imageCountInto.setText("Storage (" + imagesConunt + ")");
+        mainStageController.phoneNumber.setText(baseUserData.getPhoneNumber());
+        mainStageController.memoryProgressBar.setProgress(Double.valueOf(imagesConunt) / 400.0);
+        if (imagesConunt != 0) {
+            CellServiceImpl.getInstance().drawImagesInMainStage(baseUserData.getPicturesData(), Storage.getInstance().getCurrentToken());
+        } else {
+            // TODO something when user does not have pictures ...
+        }
+    }
+
+
 }

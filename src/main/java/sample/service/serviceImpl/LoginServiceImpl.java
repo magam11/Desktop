@@ -19,6 +19,8 @@ import sample.dataTransferObject.response.AuthenticationResponse;
 import sample.dataTransferObject.response.BaseUserData;
 import sample.dataTransferObject.response.ImageData;
 import sample.service.LoginService;
+import sample.service.MainStageService;
+import sample.storage.Storage;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -52,11 +54,12 @@ public class LoginServiceImpl implements LoginService {
 
 
     @Override
-    public void login(String phoneNumber, String password) {
+    public void login(String phoneNumber, String password, boolean remember) {
         ApiConnection.getInstance().loginConnection(Constant.LOGIN_URI, AuthenticationRequest.builder()
                 .phoneNumber(phoneNumber)
                 .password(password)
-                .build());
+                .build(),remember);
+
     }
 
     @Override
@@ -85,6 +88,7 @@ public class LoginServiceImpl implements LoginService {
                     .fruction(responseJson.getString("fruction"))
                     .totoalPageCount(responseJson.getInt("totoalPageCount"))
                     .picturesData(imageData)
+                    .phoneNumber(responseJson.getString("phoneNumber"))
                     .build());
         } else if (response.code() == 401) {
             authenticationFailure(MessageNotifications.status401_text);
@@ -99,20 +103,22 @@ public class LoginServiceImpl implements LoginService {
 
     @Override
     public void openMainStage(BaseUserData baseUserData) {
-        Platform.runLater(()->{
-            ((Stage)loginController.passwordTextField.getScene().getWindow()).close();
+        Platform.runLater(() -> {
+
+            ((Stage) loginController.passwordTextField.getScene().getWindow()).close();
+
             Stage mainStage = new Stage();
             FXMLLoader fxmlLoader = null;
             Parent root = null;
             try {
-                fxmlLoader = new  FXMLLoader(getClass().getResource("/view/main.fxml"));
+                fxmlLoader = new FXMLLoader(getClass().getResource("/view/main.fxml"));
                 root = fxmlLoader.load();
             } catch (IOException e) {
                 e.printStackTrace();
             }
             mainStage.setTitle("Cloud Camera");
             mainStage.getIcons().add(new Image(this.getClass().getResourceAsStream("/image/logo.png")));
-            Scene scene = new Scene(root,906,840);
+            Scene scene = new Scene(root, 906, 840);
             mainStage.setScene(scene);
             mainStage.setMinHeight(427.0);
             mainStage.setMinWidth(906.0);
@@ -120,21 +126,23 @@ public class LoginServiceImpl implements LoginService {
             fxmlLoader.getController();
             FXMLLoader finalFxmlLoader = fxmlLoader;
             MainStageController controller = (MainStageController) finalFxmlLoader.getController();
+            MainStageServiceImpl.getInstance().loadMainStageData(baseUserData);
             controller.mainStage = mainStage;
             mainStage.widthProperty().addListener((obs, oldVal, newVal) -> {
                 ((MainStageController) finalFxmlLoader.getController()).responsivWidth(newVal.doubleValue());
             });
             mainStage.heightProperty().addListener((obs, oldVal, newVal) -> {
                 ((MainStageController) finalFxmlLoader.getController()).responsivHeight(newVal.doubleValue());
-                System.out.println("height "+newVal.doubleValue());
             });
-            mainStage.setOnCloseRequest(we->{
+            mainStage.setOnCloseRequest(we -> {
                 System.exit(0);
             });
+
         });
 
 
     }
+
 
     @Override
     public void authenticationFailure(String message) {

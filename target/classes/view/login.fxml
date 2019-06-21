@@ -54,7 +54,7 @@
                   <Font size="13.0" />
                </font>
             </Label>
-            <CheckBox layoutX="25.0" layoutY="238.0" mnemonicParsing="false" text="Remember me">
+            <CheckBox fx:id="rememberMe" layoutX="25.0" layoutY="238.0" mnemonicParsing="false" text="Remember me">
                <font>
                   <Font size="13.0" />
                </font>
