@@ -15,4 +15,5 @@ public interface CellService {
 
     void downloadImage(String picName, ProgressBar progressBar);
 
+    void removeImageFromCellByIndex(int indexOfImageFromCell);
 }

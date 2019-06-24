@@ -1,6 +1,7 @@
 package sample.service.serviceImpl;
 
 import javafx.animation.PauseTransition;
+import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -85,9 +86,6 @@ public class CellServiceImpl implements CellService {
             delete.setVisible(false);
             delete.setLayoutX(cellContent.getLayoutX() + cellContent.getPrefWidth() - 30);
             delete.setLayoutY(cellContent.getLayoutY() + cellContent.getPrefHeight() - 31);
-            delete.setOnMouseClicked(mouseEvent->{
-                DeleteDialogServiceImpl.getInstance().openConfirpationDialog(pictureData.getPicName(),"cell");
-            });
 
             Image shateWհiteIco = new Image(this.getClass().getResourceAsStream("/image/shareWhite.png"));
             ImageView shareIco = new ImageView(shateWհiteIco);
@@ -145,10 +143,14 @@ public class CellServiceImpl implements CellService {
 
 
             cellContent.getChildren().addAll(imageView, imageDate, delete, share, progressBar, percent, download);
+            cellController.floxPane.getChildren().add(cellContent);
+            delete.setOnMouseClicked(mouseEvent->{
+                DeleteDialogServiceImpl.getInstance().openConfirpationDialog(pictureData.getPicName(),"cell",cellController.floxPane.getChildren().indexOf(cellContent));
+            });
             download.setOnMouseClicked(mouseEvent -> {
                 downloadImage(pictureData.getPicName(),progressBar);
             });
-            cellController.floxPane.getChildren().add(cellContent);
+
         }
     }
 
@@ -188,8 +190,17 @@ public class CellServiceImpl implements CellService {
             }
             outputStream.flush();
             outputStream.close();
-            progressBar.setProgress(0);
-            progressBar.setVisible(false);
+            PauseTransition pauseTransition = new PauseTransition(Duration.seconds(3));
+            pauseTransition.play();
+            pauseTransition.setOnFinished(event -> {
+                Platform.runLater(()->{
+                    progressBar.setProgress(0);
+                    progressBar.setVisible(false);
+
+
+                });
+            });
+
 
 
         } catch (Exception e) {
@@ -197,5 +208,10 @@ public class CellServiceImpl implements CellService {
         }
 
 
+    }
+
+    @Override
+    public void removeImageFromCellByIndex(int indexOfImageFromCell) {
+        cellController.floxPane.getChildren().remove(indexOfImageFromCell);
     }
 }

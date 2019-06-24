@@ -1,21 +1,20 @@
 package sample.connection;
 
 
+import javafx.application.Platform;
 import okhttp3.*;
-import org.json.JSONArray;
 import org.json.JSONObject;
 import sample.Constant;
 import sample.dataTransferObject.request.AuthenticationRequest;
+import sample.dataTransferObject.request.ImageManagerRequest;
 import sample.dataTransferObject.response.AuthenticationResponse;
-import sample.dataTransferObject.response.BaseUserData;
-import sample.dataTransferObject.response.ImageData;
 import sample.service.LoginService;
+import sample.service.serviceImpl.CellServiceImpl;
+import sample.service.serviceImpl.DeleteDialogServiceImpl;
 import sample.service.serviceImpl.LoginServiceImpl;
 import sample.storage.Storage;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ApiConnection {
 
@@ -36,9 +35,10 @@ public class ApiConnection {
 
     //local variabeles
     private OkHttpClient client = new OkHttpClient();
+    private Storage storage = Storage.getInstance();
 
 
-    @Connection(uri = "user/login")
+    @Connection(uri = "user/login",method = "POST")
     public void loginConnection(String uri, AuthenticationRequest authenticationRequest,boolean remember) {
         MediaType JSON_MEDIA_TYPE = MediaType.parse("application/json; charset=utf-8");
         RequestBody body = RequestBody.create(JSON_MEDIA_TYPE, authenticationRequest.toString());
@@ -109,9 +109,33 @@ public class ApiConnection {
     }
 
 
-    @Connection(uri = "/image/imageName/{imageName}",method = "PUT",pathVariable = "imageName")
-    public void updateImageStatus(String uri,String imageName, boolean imageStatus){
+    @Connection(uri = "/image/",method = "PUT",requestBody = ImageManagerRequest.class)
+    public void updateImageStatus(String uri,ImageManagerRequest jsonBody){
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        RequestBody body = RequestBody.create(JSON, jsonBody.toString());
+        Request request = new Request.Builder()
+                .url(Constant.SERVER_ADDRESS+uri)
+                .put(body) //PUT
+                .addHeader(Constant.AUTHORIZATION, storage.getCurrentToken())
+                .build();
 
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                /**
+                 * TODO  something
+                 * */
+                System.out.println("/image/ ---- failure");
+            }
 
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Platform.runLater(()->{
+                    DeleteDialogServiceImpl.getInstance().closeDeleteDialog();
+                    CellServiceImpl.getInstance().removeImageFromCellByIndex(DeleteDialogServiceImpl.getInstance().indexOfImageFromCell.get());
+                });
+
+            }
+        });
     }
 }

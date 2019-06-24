@@ -1,20 +1,25 @@
 package sample.service.serviceImpl;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import sample.controller.MainStageController;
+import sample.Constant;
+import sample.connection.ApiConnection;
 import sample.controller.dialogController.DeleteDialogController;
+import sample.dataTransferObject.request.ImageManagerRequest;
 import sample.service.DeleteDialogService;
 
 import java.io.IOException;
 
-public class DeleteDialogServiceImpl  implements DeleteDialogService {
+public class DeleteDialogServiceImpl implements DeleteDialogService {
     private static DeleteDialogServiceImpl ourInstance = new DeleteDialogServiceImpl();
+    private DeleteDialogController deleteDialogController;
+    public IntegerProperty indexOfImageFromCell;
 
     public static DeleteDialogServiceImpl getInstance() {
         return ourInstance;
@@ -22,8 +27,9 @@ public class DeleteDialogServiceImpl  implements DeleteDialogService {
 
     private DeleteDialogServiceImpl() {
     }
-
-    public void openConfirpationDialog(String picName, String stageName) {
+    @Override
+    public void openConfirpationDialog(String picName, String stageName, int indexOfImage) {
+        indexOfImageFromCell = new SimpleIntegerProperty(indexOfImage);
         Stage mainStage = new Stage();
         FXMLLoader fxmlLoader = null;
         Parent root = null;
@@ -36,21 +42,37 @@ public class DeleteDialogServiceImpl  implements DeleteDialogService {
         mainStage.setTitle("Confirmation dialog");
         mainStage.initModality(Modality.APPLICATION_MODAL);
         mainStage.initStyle(StageStyle.UNDECORATED);
-//        mainStage.getIcons().add(new Image(this.getClass().getResourceAsStream("/image/logo.png")));
-        Scene scene = new Scene(root,479.0,148.0);
+        Scene scene = new Scene(root, 479.0, 148.0);
         mainStage.setScene(scene);
         mainStage.setMinHeight(427.0);
         mainStage.setMinWidth(906.0);
         mainStage.show();
         DeleteDialogController deleteDialogController = (DeleteDialogController) fxmlLoader.getController();
+        this.deleteDialogController = deleteDialogController;
         deleteDialogController.stageName.setText(stageName);
         deleteDialogController.deletedImageName.setText(picName);
     }
 
     @Override
-    public void updateImageStatus(String imageName,String stageName, boolean imageStatus) {
+    public void updateImageStatus(String imageName, String stageName, boolean imageStatus) {
+        if (!imageStatus) {// when image deleted
+            ApiConnection.getInstance().updateImageStatus(Constant.IMAGE_URI, ImageManagerRequest.builder()
+                    .actionType("delete")
+                    .picName(imageName)
+                    .build());
 
-
-
+//            if (stageName.equals("cell")) {//also must be deleted the picture from cell
+//                CellServiceImpl.getInstance().removeImageFromCellByIndex(indexOfImageFromCell.get());
+//                     //  todo something
+//            }
+        }
     }
+
+    @Override
+    public void closeDeleteDialog(){
+        ((Stage)deleteDialogController.deletedImageName.getScene().getWindow()).close();
+    }
+
+
+
 }

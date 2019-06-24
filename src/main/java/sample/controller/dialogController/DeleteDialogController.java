@@ -1,6 +1,7 @@
 package sample.controller.dialogController;
 
 import javafx.fxml.FXML;
+import javafx.scene.Parent;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
@@ -38,6 +39,6 @@ public class DeleteDialogController {
     }
     @FXML
     public void updateImageStatus(MouseEvent mouseEvent) {
-        deleteDialogService.updateImageStatus(deletedImageName.getText(),stageName.getText(),true);
+        deleteDialogService.updateImageStatus(deletedImageName.getText(),stageName.getText(),false);
     }
 }
