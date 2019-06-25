@@ -29,9 +29,6 @@
             <version>3.9.0</version>
         </dependency>
 
-
-
-
         <!-- https://mvnrepository.com/artifact/com.dukescript.amaronui.layouts/jfxflexbox -->
         <dependency>
             <groupId>com.dukescript.amaronui.layouts</groupId>
