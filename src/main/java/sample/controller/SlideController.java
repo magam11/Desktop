@@ -13,6 +13,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import sample.service.SliderService;
+import sample.service.serviceImpl.DeleteDialogServiceImpl;
 import sample.service.serviceImpl.SliderServiceImpl;
 
 
@@ -50,6 +51,10 @@ public class SlideController {
     public ProgressBar sliderProgressBar;
     @FXML
     public Label sliderPercent;
+    @FXML
+    public Label shownImageName;
+    @FXML
+    public AnchorPane delete_btn;
 
     //services
     SliderService sliderService = SliderServiceImpl.getInstance();
@@ -61,41 +66,42 @@ public class SlideController {
     private DoubleProperty sliderPercentWidth;
 
 
-    public void initialize(){
-        halfHeghtOfNextLabel =new SimpleDoubleProperty(nextLabel.getPrefHeight()/2);
-        halfHeghtOfPreviousLabel = new SimpleDoubleProperty(previousLabel.getPrefHeight()/2);
+    public void initialize() {
+        halfHeghtOfNextLabel = new SimpleDoubleProperty(nextLabel.getPrefHeight() / 2);
+        halfHeghtOfPreviousLabel = new SimpleDoubleProperty(previousLabel.getPrefHeight() / 2);
         Text fractionText = new Text("1/127");
         Text sliderPercentText = new Text("1/127");
         sliderPercentWidth = new SimpleDoubleProperty(sliderPercentText.getLayoutBounds().getWidth());
         fractionWidth = new SimpleDoubleProperty(fractionText.getLayoutBounds().getWidth());
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
+        sliderService.initializeSliderController(this);
     }
 
 
-    public void responsiveWidth(double stageWidth){
-        shownImage.setFitWidth(stageWidth-230);
-        shownImage.setFitHeight(shownImage.getFitWidth()*(439.0/596.0));
-        shownImage_container.setPrefWidth(stageWidth-230);
+    public void responsiveWidth(double stageWidth) {
+        shownImage.setFitWidth(stageWidth - 230);
+        shownImage.setFitHeight(shownImage.getFitWidth() * (439.0 / 596.0));
+        shownImage_container.setPrefWidth(stageWidth - 230);
         shownImage_container.setPrefHeight(shownImage.getFitHeight());
-        header.setPrefWidth(stageWidth-120);
-        scrollPane.setPrefWidth(stageWidth-225);
+        header.setPrefWidth(stageWidth - 120);
+        scrollPane.setPrefWidth(stageWidth - 225);
         sliderContent.setPrefWidth(stageWidth);
-        rightContent.setLayoutX(stageWidth-60);
-        menuBar.setLayoutX(shownImage_container.getLayoutX()+shownImage_container.getPrefWidth()+5);
-        flutter.setPrefWidth(stageWidth-120);
-        fraction.setLayoutX(scrollPane.getPrefWidth()+scrollPane.getLayoutX()-fractionWidth.getValue());
-        sliderProgressBar.setLayoutX((stageWidth-sliderProgressBar.getPrefWidth())/2);
-        sliderPercent.setLayoutX((stageWidth-sliderPercentWidth.getValue())/2);
+        rightContent.setLayoutX(stageWidth - 60);
+        menuBar.setLayoutX(shownImage_container.getLayoutX() + shownImage_container.getPrefWidth() + 5);
+        flutter.setPrefWidth(stageWidth - 120);
+        fraction.setLayoutX(scrollPane.getPrefWidth() + scrollPane.getLayoutX() - fractionWidth.getValue());
+        sliderProgressBar.setLayoutX((stageWidth - sliderProgressBar.getPrefWidth()) / 2);
+        sliderPercent.setLayoutX((stageWidth - sliderPercentWidth.getValue()) / 2);
 
     }
 
-    public void responsiveHeght(double stageHeight){
-        scrollPane.setPrefHeight(stageHeight-100);
+    public void responsiveHeght(double stageHeight) {
+        scrollPane.setPrefHeight(stageHeight - 100);
         rightContent.setLayoutY(0);
-        flutter.setLayoutY(stageHeight-60);
-        nextLabel.setLayoutY(stageHeight/2-halfHeghtOfNextLabel.getValue());
-        previousLabel.setLayoutY(stageHeight/2-halfHeghtOfPreviousLabel.getValue());
+        flutter.setLayoutY(stageHeight - 60);
+        nextLabel.setLayoutY(stageHeight / 2 - halfHeghtOfNextLabel.getValue());
+        previousLabel.setLayoutY(stageHeight / 2 - halfHeghtOfPreviousLabel.getValue());
         sliderContent.setPrefHeight(stageHeight);
         rightContent.setPrefHeight(stageHeight);
         leftContent.setPrefHeight(stageHeight);
@@ -106,5 +112,25 @@ public class SlideController {
     public void closeSlide(MouseEvent mouseEvent) {
         sliderContent.setVisible(false);
 
+    }
+
+    @FXML
+    public void openNextImage(MouseEvent mouseEvent) {
+        sliderService.openNextImage();
+
+    }
+
+    @FXML
+    public void openPreviousImage(MouseEvent mouseEvent) {
+        sliderService.openPreviousImage();
+    }
+
+    @FXML
+    public void deleteImageFromSlidePage(MouseEvent mouseEvent) {
+
+        /*TODO nerqevum poxancvac verjin paramety karoxa ev sxala, karoxa hanvi page-i hamary */
+        DeleteDialogServiceImpl
+                .getInstance()
+                .openConfirpationDialog(shownImageName.getText(), "slide", Integer.parseInt(fraction.getText().split("/")[0]) - 1);
     }
 }

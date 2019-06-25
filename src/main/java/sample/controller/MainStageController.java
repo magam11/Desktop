@@ -9,6 +9,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import sample.Size;
+import sample.service.MainStageService;
+import sample.service.serviceImpl.MainStageServiceImpl;
 
 public class MainStageController {
     @FXML
@@ -40,10 +42,16 @@ public class MainStageController {
     public CellController cellController;
     @FXML
     public SlideController slideController;
+    @FXML
+    public Label imageCountInto;
 
     public  Stage mainStage;
 
+    //services
+    private MainStageService mainStageService = MainStageServiceImpl.getInstance();
+
     public void initialize() {
+        mainStageService.initializeMainStageController(this);
         cellController.initializeMainStageController(this);
         slideController.sliderContent.setVisible(false);
         cellController.scrollPane.setLayoutX(15);
@@ -56,19 +64,7 @@ public class MainStageController {
     }
 
     public void responsivWidth(double stageWith) {
-        cellController.responsiveWidth(stageWith);
-        slideController.responsiveWidth(stageWith);
-        if (stageWith <= 1000.0) {
-            memoryProgressBar.setPrefWidth(Size.WIDTH_COEFFICENT_FOR_PROGRESS_BAR_WIDTH * stageWith);
-            fraction.setLayoutX(Size.WIDTH_COEFFICENT_FOR_PROGRESS_BAR_WIDTH * stageWith + memoryProgressBar.getLayoutX() + 7);
-        }
-        logoCamerImageVeiw.setLayoutX(Size.WIDTH_COEFFICENT_FOR_CAMERA_LOGO_CAMERA * stageWith);
-        phoneNumber.setLayoutX(stageWith - 210);
-        logOutLabel.setLayoutX(stageWith - 73);
-        share.setLayoutX(stageWith - 299);
-        delete.setLayoutX(stageWith - 202);
-        download.setLayoutX(stageWith - 105);
-        cellController.scrollPane.setPrefWidth(stageWith);
+        mainStageService.responsivWidth(stageWith);
     }
 
     public void responsivHeight(double stageHeight) {

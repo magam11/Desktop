@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="sliderContent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="427.0" prefWidth="906.0" style="-fx-background-color: rgba(0,0,0,0.54) #000000;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.SlideController">
+<AnchorPane fx:id="sliderContent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0" prefWidth="906.0" style="-fx-background-color: rgba(0,0,0,0.54) #000000;" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.SlideController">
    <children>
       <AnchorPane layoutX="62.0" layoutY="44.0" prefHeight="340.0" prefWidth="782.0">
          <children>
@@ -47,7 +47,7 @@
                         </Label>
                      </children>
                   </AnchorPane>
-                  <AnchorPane prefHeight="44.0" prefWidth="100.0" style="-fx-background-color: #D7D7D7; -fx-cursor: hand; -fx-background-radius: 25;">
+                  <AnchorPane fx:id="delete_btn" prefHeight="44.0" onMouseClicked="#deleteImageFromSlidePage" prefWidth="100.0" style="-fx-background-color: #D7D7D7; -fx-cursor: hand; -fx-background-radius: 25;">
                      <VBox.margin>
                         <Insets bottom="5.0" />
                      </VBox.margin>
@@ -86,7 +86,7 @@
       </AnchorPane>
       <AnchorPane fx:id="leftContent" prefHeight="427.0" prefWidth="60.0">
          <children>
-            <Label fx:id="previousLabel" layoutX="7.0" layoutY="153.0" prefHeight="122.0" prefWidth="38.0" style="-fx-cursor: hand;" text="&lt;" textFill="#ededed">
+            <Label fx:id="previousLabel" layoutX="7.0" layoutY="153.0" onMouseClicked="#openPreviousImage" prefHeight="122.0" prefWidth="38.0" style="-fx-cursor: hand;" text="&lt;" textFill="#ededed">
                <font>
                   <Font name="System Bold" size="50.0" />
                </font>
@@ -95,12 +95,12 @@
       </AnchorPane>
       <AnchorPane fx:id="rightContent" layoutX="846.0" layoutY="1.0" prefHeight="427.0" prefWidth="60.0">
          <children>
-            <Label fx:id="nextLabel" layoutX="12.0" layoutY="153.0" prefHeight="122.0" prefWidth="38.0" style="-fx-cursor: hand;" text="&gt;" textFill="#ededed">
+            <Label fx:id="nextLabel" layoutX="12.0" layoutY="153.0" onMouseClicked="#openNextImage" prefHeight="122.0" prefWidth="38.0" style="-fx-cursor: hand;" text="&gt;" textFill="#ededed">
                <font>
                   <Font name="System Bold" size="50.0" />
                </font>
             </Label>
-            <Label fx:id="closeLabel" onMouseClicked="#closeSlide" layoutX="16.0" layoutY="9.0" prefHeight="34.0" prefWidth="26.0" style="-fx-cursor: hand;" text="X" textFill="#ededed">
+            <Label fx:id="closeLabel" layoutX="16.0" layoutY="9.0" onMouseClicked="#closeSlide" prefHeight="34.0" prefWidth="26.0" style="-fx-cursor: hand;" text="X" textFill="#ededed">
                <font>
                   <Font name="System Bold" size="23.0" />
                </font>
@@ -129,7 +129,7 @@
                </padding>
             </Label>
          </children></AnchorPane>
-      <AnchorPane fx:id="flutter" layoutX="60.0" layoutY="382.0" prefHeight="45.0" prefWidth="789.0">
+      <AnchorPane fx:id="flutter" layoutX="59.0" layoutY="781.0" prefHeight="45.0" prefWidth="789.0">
          <children>
             <ProgressBar fx:id="sliderProgressBar" layoutX="231.0" layoutY="19.0" prefHeight="18.0" prefWidth="328.0" progress="0.0" />
             <Label fx:id="sliderPercent" layoutX="381.0" layoutY="3.0" prefHeight="17.0" prefWidth="26.0" text="87%" textFill="#d7d7d7">
@@ -137,6 +137,7 @@
                   <Font name="System Bold" size="12.0" />
                </font>
             </Label>
+            <Label fx:id="shownImageName" layoutX="12.0" layoutY="21.0" text="Label" visible="false" />
          </children></AnchorPane>
    </children>
 </AnchorPane>
