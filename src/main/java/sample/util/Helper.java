@@ -1,5 +1,8 @@
 package sample.util;
 
+import okhttp3.HttpUrl;
+import sample.Constant;
+
 import java.io.File;
 
 public class Helper {
@@ -47,4 +50,6 @@ public class Helper {
         }
         return dirPath;
     }
+
+
 }

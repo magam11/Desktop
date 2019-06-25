@@ -1,5 +1,7 @@
 package sample.service.serviceImpl;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import sample.Size;
 import sample.controller.MainStageController;
 import sample.dataTransferObject.response.BaseUserData;
@@ -8,6 +10,7 @@ import sample.storage.Storage;
 
 public class MainStageServiceImpl implements MainStageService {
     private static MainStageService mainStageService = new MainStageServiceImpl();
+    public static IntegerProperty myImageCount;
 
     private MainStageServiceImpl() {
     }
@@ -46,6 +49,7 @@ public class MainStageServiceImpl implements MainStageService {
     @Override
     public void loadMainStageData(BaseUserData baseUserData) {
         mainStageController.fraction.setText(baseUserData.getFruction());
+        myImageCount = new SimpleIntegerProperty(Integer.parseInt(baseUserData.getFruction().split("/")[0]));
         int imagesConunt = baseUserData.getPicturesData() == null ? 0 : baseUserData.getPicturesData().size();
         mainStageController.imageCountInto.setText("Storage (" + imagesConunt + ")");
         mainStageController.phoneNumber.setText(baseUserData.getPhoneNumber());

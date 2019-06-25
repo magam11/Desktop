@@ -27,6 +27,7 @@ public class DeleteDialogServiceImpl implements DeleteDialogService {
 
     private DeleteDialogServiceImpl() {
     }
+
     @Override
     public void openConfirpationDialog(String picName, String stageName, int indexOfImage) {
         indexOfImageFromCell = new SimpleIntegerProperty(indexOfImage);
@@ -60,19 +61,20 @@ public class DeleteDialogServiceImpl implements DeleteDialogService {
                     .actionType("delete")
                     .picName(imageName)
                     .build());
-
-//            if (stageName.equals("cell")) {//also must be deleted the picture from cell
-//                CellServiceImpl.getInstance().removeImageFromCellByIndex(indexOfImageFromCell.get());
-//                     //  todo something
-//            }
+            if (stageName.equals("cell")) {
+                CellServiceImpl.getInstance().removeImageFromCellByIndex(DeleteDialogServiceImpl.getInstance().indexOfImageFromCell.get());
+            }
+            else { //stugel nkari hamary, ete verjinn e apa slidery pakel ete voch apa cuyc tal hajord nkary, jnjel nkari hamarov voroshvac contenty cellPag-um
+                CellServiceImpl.getInstance().removeImageFromCellByIndex(DeleteDialogServiceImpl.getInstance().indexOfImageFromCell.get());
+                SliderServiceImpl.getInstance().openNextImage();
+            }
         }
     }
 
     @Override
-    public void closeDeleteDialog(){
-        ((Stage)deleteDialogController.deletedImageName.getScene().getWindow()).close();
+    public void closeDeleteDialog() {
+        ((Stage) deleteDialogController.deletedImageName.getScene().getWindow()).close();
     }
-
 
 
 }

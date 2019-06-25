@@ -3,9 +3,6 @@ package sample.service.serviceImpl;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
@@ -14,7 +11,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.util.Duration;
@@ -22,18 +18,14 @@ import sample.Constant;
 import sample.controller.CellController;
 import sample.dataTransferObject.response.ImageData;
 import sample.service.CellService;
-import sample.service.DeleteDialogService;
 import sample.util.Helper;
-
 
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.InputStream;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
 import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 public class CellServiceImpl implements CellService {
@@ -149,6 +141,9 @@ public class CellServiceImpl implements CellService {
             });
             download.setOnMouseClicked(mouseEvent -> {
                 downloadImage(pictureData.getPicName(),progressBar);
+            });
+            imageView.setOnMouseClicked(mouseEvent->{
+                SliderServiceImpl.getInstance().openSlider(pictureData.getPicName(),cellController.floxPane.getChildren().indexOf(cellContent));
             });
 
         }
