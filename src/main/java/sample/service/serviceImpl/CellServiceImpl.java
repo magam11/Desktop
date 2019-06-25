@@ -136,14 +136,14 @@ public class CellServiceImpl implements CellService {
 
             cellContent.getChildren().addAll(imageView, imageDate, delete, share, progressBar, percent, download);
             cellController.floxPane.getChildren().add(cellContent);
-            delete.setOnMouseClicked(mouseEvent->{
-                DeleteDialogServiceImpl.getInstance().openConfirpationDialog(pictureData.getPicName(),"cell",cellController.floxPane.getChildren().indexOf(cellContent));
+            delete.setOnMouseClicked(mouseEvent -> {
+                DeleteDialogServiceImpl.getInstance().openConfirpationDialog(pictureData.getPicName(), "cell", cellController.floxPane.getChildren().indexOf(cellContent));
             });
             download.setOnMouseClicked(mouseEvent -> {
-                downloadImage(pictureData.getPicName(),progressBar);
+                downloadImage(pictureData.getPicName(), progressBar);
             });
-            imageView.setOnMouseClicked(mouseEvent->{
-                SliderServiceImpl.getInstance().openSlider(pictureData.getPicName(),cellController.floxPane.getChildren().indexOf(cellContent));
+            imageView.setOnMouseClicked(mouseEvent -> {
+                SliderServiceImpl.getInstance().openSlider(pictureData.getPicName(), cellController.floxPane.getChildren().indexOf(cellContent));
             });
 
         }
@@ -154,15 +154,13 @@ public class CellServiceImpl implements CellService {
      * Download image from server
      *
      * @param picName
-     *
      */
     @Override
     public void downloadImage(String picName, ProgressBar progressBar) {
         progressBar.setProgress(0);
         progressBar.setVisible(true);
-
         try {
-            URL url = new URL(Constant.SERVER_ADDRESS+Constant.IMAGE_URI+picName);
+            URL url = new URL(Constant.SERVER_ADDRESS + Constant.IMAGE_URI + picName);
             URLConnection urlConnection = url.openConnection();
             double pictureSize = new Double(urlConnection.getHeaderField("pictureSize") + "D");
             urlConnection.connect();
@@ -188,21 +186,14 @@ public class CellServiceImpl implements CellService {
             PauseTransition pauseTransition = new PauseTransition(Duration.seconds(3));
             pauseTransition.play();
             pauseTransition.setOnFinished(event -> {
-                Platform.runLater(()->{
+                Platform.runLater(() -> {
                     progressBar.setProgress(0);
                     progressBar.setVisible(false);
-
-
                 });
             });
-
-
-
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
     }
 
     @Override
