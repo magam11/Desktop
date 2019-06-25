@@ -14,4 +14,7 @@ public interface SliderService {
 
     void openPreviousImage();
 
+    boolean isShowedLastImage();
+
+    void closeSlidePage();
 }

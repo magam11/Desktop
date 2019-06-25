@@ -65,8 +65,14 @@ public class DeleteDialogServiceImpl implements DeleteDialogService {
                 CellServiceImpl.getInstance().removeImageFromCellByIndex(DeleteDialogServiceImpl.getInstance().indexOfImageFromCell.get());
             }
             else { //stugel nkari hamary, ete verjinn e apa slidery pakel ete voch apa cuyc tal hajord nkary, jnjel nkari hamarov voroshvac contenty cellPag-um
-                CellServiceImpl.getInstance().removeImageFromCellByIndex(DeleteDialogServiceImpl.getInstance().indexOfImageFromCell.get());
-                SliderServiceImpl.getInstance().openNextImage();
+//                CellServiceImpl.getInstance().removeImageFromCellByIndex(DeleteDialogServiceImpl.getInstance().indexOfImageFromCell.get());
+                if(!SliderServiceImpl.getInstance().isShowedLastImage()){ //when there is another picture to be shown
+                    SliderServiceImpl.getInstance().openNextImage();
+                }else { // when there is not a picture to show, close slider
+                    SliderServiceImpl.getInstance().closeSlidePage();
+
+                }
+
             }
         }
     }

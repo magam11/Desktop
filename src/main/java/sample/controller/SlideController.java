@@ -129,8 +129,8 @@ public class SlideController {
     public void deleteImageFromSlidePage(MouseEvent mouseEvent) {
 
         /*TODO nerqevum poxancvac verjin paramety karoxa ev sxala, karoxa hanvi page-i hamary */
-//        DeleteDialogServiceImpl
-//                .getInstance()
-//                .openConfirpationDialog(shownImageName.getText(), "slide", Integer.parseInt(fraction.getText().split("/")[0]) - 1);
+        DeleteDialogServiceImpl
+                .getInstance()
+                .openConfirpationDialog(shownImageName.getText(), "slide", Integer.parseInt(fraction.getText().split("/")[0]) - 1);
     }
 }

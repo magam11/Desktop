@@ -83,7 +83,6 @@ public class SliderServiceImpl implements SliderService {
                 }else {
                     slideController.fraction.setText(Integer.parseInt(fractionData[0])-1+"/"+fractionData[1]);
                 }
-
             } else {
                 if(previous_next.equals("next")) {
                     slideController.nextLabel.setVisible(false);
@@ -98,7 +97,16 @@ public class SliderServiceImpl implements SliderService {
         }
     }
 
+    @Override
+    public boolean isShowedLastImage(){
+        String[] fructionData = slideController.fraction.getText().split("/");
+        return fructionData[0].equals(fructionData[1]);
+    }
 
+    @Override
+    public void closeSlidePage() {
+        slideController.sliderContent.setVisible(false);
+    }
 
 
 }
