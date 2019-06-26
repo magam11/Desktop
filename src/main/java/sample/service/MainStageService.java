@@ -1,5 +1,6 @@
 package sample.service;
 
+import javafx.scene.control.ProgressBar;
 import sample.controller.MainStageController;
 import sample.dataTransferObject.response.BaseUserData;
 import sample.dataTransferObject.response.ImageData;
@@ -17,4 +18,12 @@ public interface MainStageService {
 
 
     void logOut() throws IOException;
+
+    void drawImagesInMainStage(List<ImageData> picturesData, String currentToken);
+
+    void downloadImage(String picName, ProgressBar progressBar);
+
+    void removeImageFromCellByIndex(int indexOfImageFromCell);
+
+
 }
