@@ -4,16 +4,22 @@ import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import sample.service.CellService;
 import sample.service.serviceImpl.CellServiceImpl;
 
 public class CellController {
-
+    @FXML
+    public AnchorPane cellContent;
     @FXML
     public ScrollPane scrollPane;
     @FXML
     public FlowPane floxPane;
+    @FXML
+    public AnchorPane filterPane;
+    @FXML
+    public AnchorPane pageNumbersPane;
     private MainStageController mainStageController;
 
     public void initializeMainStageController(MainStageController mainStageController){
@@ -32,7 +38,7 @@ public class CellController {
     }
 
     public void responsiveWidth(double stageWith) {
-        floxPane.setPrefWidth(stageWith);
+        floxPane.setPrefWidth(stageWith-10);
 
     }
 

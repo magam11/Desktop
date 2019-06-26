@@ -4,12 +4,18 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.stage.Stage;
 import sample.Size;
 import sample.controller.MainStageController;
 import sample.dataTransferObject.response.BaseUserData;
 import sample.service.MainStageService;
 import sample.storage.Storage;
+
+import java.io.IOException;
 
 public class MainStageServiceImpl implements MainStageService {
     private static MainStageService mainStageService = new MainStageServiceImpl();
@@ -42,7 +48,11 @@ public class MainStageServiceImpl implements MainStageService {
         mainStageController.download.setLayoutX(stageWith - 105);
         mainStageController.logOut_btn.setLayoutX(stageWith-130);
         mainStageController.recycle_btn.setLayoutX(stageWith-227);
-        mainStageController.cellController.scrollPane.setPrefWidth(stageWith);
+        mainStageController.cellController.scrollPane.setPrefWidth(stageWith-40);
+        mainStageController.cellController.cellContent.setPrefWidth(stageWith);
+        mainStageController.cellController.cellContent.setLayoutX(20);
+        mainStageController.cellController.filterPane.setPrefWidth(stageWith);
+        mainStageController.cellController.pageNumbersPane.setPrefWidth(stageWith);
         mainStageController.headerRow1.setPrefWidth(stageWith);
         mainStageController.phoneNumber.setLayoutX(mainStageController.recycle_btn.getLayoutX()-phoneNumberLenth.getValue()-8);
     }
@@ -71,12 +81,26 @@ public class MainStageServiceImpl implements MainStageService {
     }
 
     @Override
-    public void logOut() {
+    public void logOut() throws IOException {
         Storage storage = Storage.getInstance();
         storage.setCurrentToken("");
         storage.setToken("");
         ((Stage)mainStageController.headerRow1.getScene().getWindow()).close();
+        Parent root = FXMLLoader.load(getClass().getResource("/view/login.fxml"));
+        Stage primaryStage = new Stage();
+        primaryStage.setTitle("Log in");
+        javafx.scene.image.Image logo = new Image(this.getClass().getResourceAsStream("/image/logo.png"));
+        primaryStage.setResizable(false);
+        primaryStage.getIcons().add(logo);
 
+
+        Scene scene = new Scene(root);
+        primaryStage.setScene(scene);
+
+        primaryStage.setOnCloseRequest(we->{
+            System.exit(0);
+        });
+        primaryStage.show();
     }
 
 

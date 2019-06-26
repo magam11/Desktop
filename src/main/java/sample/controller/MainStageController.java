@@ -14,6 +14,8 @@ import sample.Size;
 import sample.service.MainStageService;
 import sample.service.serviceImpl.MainStageServiceImpl;
 
+import java.io.IOException;
+
 public class MainStageController {
     @FXML
     public ImageView logoCamerImageVeiw;
@@ -80,9 +82,13 @@ public class MainStageController {
 
     public void responsivHeight(double stageHeight) {
         slideController.responsiveHeght(stageHeight);
+        cellController.filterPane.setLayoutY(0);
+        cellController.cellContent.setLayoutY(60);
+//        cellController.pageNumbersPane.setLayoutY(cellController.scrollPane.getPrefHeight()+cellController.scrollPane.getLayoutY()+5);
     }
 
-    public void logOut(MouseEvent mouseEvent) {
+    @FXML
+    public void logOut(MouseEvent mouseEvent) throws IOException {
         mainStageService.logOut();
     }
 }

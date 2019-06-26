@@ -11,3 +11,6 @@
 .scroll-pane > .viewport {
     -fx-background-color: transparent;
 }
+#mainPane{
+    -fx-alignment: center;
+}
