@@ -84,7 +84,6 @@ public class SliderServiceImpl implements SliderService {
             slideController.nextLabel.setVisible(true);
             if (picturesData != null && picturesData.length() > 0) {
                 JSONObject imageDataJson = picturesData.getJSONObject(0);
-                System.out.println("dateeee "+imageDataJson.getString("createdAt"));
                 String picName = imageDataJson.getString("picName");
                 Image image = new Image(Constant.SERVER_ADDRESS + Constant.IMAGE_URI + picName);
                 slideController.shownImage.setImage(image);

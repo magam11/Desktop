@@ -15,6 +15,5 @@ public interface MainStageService {
     void loadMainStageData(BaseUserData baseUserData);
 
 
-
-
+    void logOut();
 }

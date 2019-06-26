@@ -4,7 +4,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
@@ -18,7 +20,6 @@ public class MainStageController {
     @FXML
     public Label phoneNumber;
     @FXML
-    public Label logOutLabel;
     public ProgressBar memoryProgressBar;
     @FXML
     public AnchorPane headerRow1;
@@ -46,11 +47,21 @@ public class MainStageController {
     public Label imageCountInto;
 
     public  Stage mainStage;
+    @FXML
+    public ImageView recycleImageView;
+    @FXML
+    public ImageView logoutImageView;
+    @FXML
+    public AnchorPane logOut_btn;
+    @FXML
+    public AnchorPane recycle_btn;
 
     //services
     private MainStageService mainStageService = MainStageServiceImpl.getInstance();
 
     public void initialize() {
+        recycleImageView.setImage(new Image(this.getClass().getResourceAsStream("/image/recicleBin.png")));
+        logoutImageView.setImage(new Image(this.getClass().getResourceAsStream("/image/logout.png")));
         mainStageService.initializeMainStageController(this);
         cellController.initializeMainStageController(this);
         slideController.sliderContent.setVisible(false);
@@ -69,5 +80,9 @@ public class MainStageController {
 
     public void responsivHeight(double stageHeight) {
         slideController.responsiveHeght(stageHeight);
+    }
+
+    public void logOut(MouseEvent mouseEvent) {
+        mainStageService.logOut();
     }
 }
