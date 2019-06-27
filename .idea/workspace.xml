@@ -3,37 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="logini ejn e havaqvum&#10;mejy ka shadowi orinak&#10;verjacel e logini eji viewi havaqumy&#10;havaqvel e main eji headery">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sample/connection/ApiConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/connection/ApiConnection.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sample/controller/MainStageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/controller/MainStageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sample/controller/SlideController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/controller/SlideController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sample/service/DeleteDialogService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/service/DeleteDialogService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sample/service/LoginService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/service/LoginService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sample/service/MainStageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/service/MainStageService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sample/service/SliderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/service/SliderService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/DeleteDialogServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/DeleteDialogServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/LoginServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/LoginServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/MainStageServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/MainStageServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/SliderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/SliderServiceImpl.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/view/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/main.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/view/main_original.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/main_original.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/view/part/slid.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/part/slid.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/sample/connection/ApiConnection$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/sample/connection/ApiConnection$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/sample/connection/ApiConnection$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/sample/connection/ApiConnection$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/sample/connection/ApiConnection$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/sample/connection/ApiConnection$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/sample/connection/ApiConnection$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/sample/connection/ApiConnection$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/sample/connection/ApiConnection.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/sample/connection/ApiConnection.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/sample/controller/MainStageController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/sample/controller/MainStageController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/sample/controller/SlideController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/sample/controller/SlideController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/sample/service/DeleteDialogService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/sample/service/DeleteDialogService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/sample/service/LoginService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/sample/service/LoginService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/sample/service/MainStageService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/sample/service/MainStageService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/sample/service/SliderService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/sample/service/SliderService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/sample/service/serviceImpl/DeleteDialogServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/sample/service/serviceImpl/DeleteDialogServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/sample/service/serviceImpl/LoginServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/sample/service/serviceImpl/LoginServiceImpl.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/sample/service/serviceImpl/MainStageServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/sample/service/serviceImpl/MainStageServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/sample/service/serviceImpl/SliderServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/sample/service/serviceImpl/SliderServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/view/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/main.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/view/part/slid.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/part/slid.fxml" afterDir="false" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -94,19 +65,13 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/SliderServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="163" column="51" lean-forward="true" selection-start-line="163" selection-start-column="51" selection-end-line="163" selection-end-column="51" />
+            <state relative-caret-position="160">
+              <caret line="163" column="51" selection-start-line="163" selection-start-column="51" selection-end-line="163" selection-end-column="51" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1038#1039#0" expanded="true" />
-                <element signature="e#1074#1075#0" expanded="true" />
-                <element signature="e#1167#1168#0" expanded="true" />
-                <element signature="e#1221#1222#0" expanded="true" />
-                <element signature="e#4985#4986#0" expanded="true" />
-                <element signature="e#5048#5049#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -125,8 +90,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/sample/controller/SlideController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="142" column="29" selection-start-line="142" selection-start-column="29" selection-end-line="142" selection-end-column="29" />
+            <state relative-caret-position="272">
+              <caret line="130" column="65" selection-start-line="130" selection-start-column="65" selection-end-line="130" selection-end-column="65" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#5165#5166#0" expanded="true" />
@@ -151,11 +116,17 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/MainStageServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="504">
-              <caret line="339" column="28" selection-start-line="339" selection-start-column="28" selection-end-line="339" selection-end-column="28" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state>
+              <caret line="385" column="5" selection-start-line="385" selection-start-column="5" selection-end-line="385" selection-end-column="5" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/.gitignore">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="255">
+              <caret line="15" column="5" lean-forward="true" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
             </state>
           </provider>
         </entry>
@@ -188,7 +159,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>recycle_btn</find>
       <find>logoU</find>
       <find>row</find>
       <find>responsivWidth</find>
@@ -214,10 +184,11 @@
       <find>----</find>
       <find>openSlider</find>
       <find>openConfirmationDialog</find>
-      <find>--*-*-*-*-</find>
       <find>petq e liner</find>
       <find>downloadImage</find>
+      <find>--*-*-*-*-</find>
       <find>sliderPercent</find>
+      <find>loaded page numner</find>
     </findStrings>
   </component>
   <component name="FindManager">
@@ -231,7 +202,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/java/sample/controller/ScrollController.java" />
         <option value="$PROJECT_DIR$/src/main/resources/view/part/scoll.fxml" />
         <option value="$PROJECT_DIR$/src/main/java/sample/controller/SliderControllerOriginal.java" />
         <option value="$PROJECT_DIR$/src/main/resources/view/part/slider.fxml" />
@@ -275,13 +245,14 @@
         <option value="$PROJECT_DIR$/src/main/java/sample/service/LoginService.java" />
         <option value="$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/LoginServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/sample/service/MainStageService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/MainStageServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/sample/connection/ApiConnection.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sample/controller/SlideController.java" />
         <option value="$PROJECT_DIR$/src/main/java/sample/service/SliderService.java" />
         <option value="$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/DeleteDialogServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/resources/view/part/slid.fxml" />
         <option value="$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/SliderServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sample/controller/SlideController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/MainStageServiceImpl.java" />
+        <option value="$PROJECT_DIR$/.gitignore" />
       </list>
     </option>
   </component>
@@ -718,7 +689,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="275744000" />
+    <option name="totallyTimeSpent" value="276757000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
@@ -784,16 +755,6 @@
     </SUITE>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/target/classes/sample/connection/ApiConnection.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="19" column="64" lean-forward="true" selection-start-line="19" selection-start-column="64" selection-end-line="19" selection-end-column="64" />
-          <folding>
-            <element signature="e#0#1772#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://$MAVEN_REPOSITORY$/com/squareup/okhttp3/okhttp/3.9.0/okhttp-3.9.0.jar!/okhttp3/Headers.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="221">
@@ -1131,32 +1092,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sample/controller/SlideController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="142" column="29" selection-start-line="142" selection-start-column="29" selection-end-line="142" selection-end-column="29" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#5165#5166#0" expanded="true" />
-            <element signature="e#5210#5211#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/sample/service/SliderService.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="136">
           <caret line="8" column="22" selection-start-line="8" selection-start-column="9" selection-end-line="8" selection-end-column="22" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/MainStageServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="504">
-          <caret line="339" column="28" selection-start-line="339" selection-start-column="28" selection-end-line="339" selection-end-column="28" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1173,17 +1112,37 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/SliderServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="163" column="51" lean-forward="true" selection-start-line="163" selection-start-column="51" selection-end-line="163" selection-end-column="51" />
+        <state relative-caret-position="160">
+          <caret line="163" column="51" selection-start-line="163" selection-start-column="51" selection-end-line="163" selection-end-column="51" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1038#1039#0" expanded="true" />
-            <element signature="e#1074#1075#0" expanded="true" />
-            <element signature="e#1167#1168#0" expanded="true" />
-            <element signature="e#1221#1222#0" expanded="true" />
-            <element signature="e#4985#4986#0" expanded="true" />
-            <element signature="e#5048#5049#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sample/controller/SlideController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="130" column="65" selection-start-line="130" selection-start-column="65" selection-end-line="130" selection-end-column="65" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#5165#5166#0" expanded="true" />
+            <element signature="e#5210#5211#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/MainStageServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret line="385" column="5" selection-start-line="385" selection-start-column="5" selection-end-line="385" selection-end-column="5" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="15" column="5" lean-forward="true" selection-start-line="15" selection-start-column="5" selection-end-line="15" selection-end-column="5" />
         </state>
       </provider>
     </entry>
