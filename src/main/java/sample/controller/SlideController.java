@@ -129,10 +129,6 @@ public class SlideController {
 
     @FXML
     public void deleteImageFromSlidePage(MouseEvent mouseEvent) {
-        /*TODO nerqevum poxancvac verjin paramety karoxa ev sxala, karoxa hanvi page-i hamary */
-        System.out.println("--*-*-*-*-");
-        System.out.println(MainStageServiceImpl.getInstance().currentPageIndex.get());
-        System.out.println(Integer.parseInt(fraction.getText().split("/")[0]) - (MainStageServiceImpl.getInstance().currentPageIndex.get()-1)*50);
         DeleteDialogServiceImpl
                 .getInstance()
                 .openConfirmationDialog(shownImageName.getText(), "slide",

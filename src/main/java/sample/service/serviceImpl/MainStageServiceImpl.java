@@ -344,9 +344,6 @@ public class MainStageServiceImpl implements MainStageService {
 
     @Override
     public void loadPage(Response response, int loadedPageNumber) {
-        System.out.println("loaded page numner " + loadedPageNumber);
-        System.out.println("-----------------------------------------------------------");
-        System.out.println();
         Platform.runLater(() -> {
             if (response.isSuccessful()) { //HttpStatusCode = 200
                 JSONObject responseJson = null;
