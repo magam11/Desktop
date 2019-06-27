@@ -89,7 +89,7 @@ public class LoginServiceImpl implements LoginService {
                     .totoalPageCount(responseJson.getInt("totoalPageCount"))
                     .picturesData(imageData)
                     .phoneNumber(responseJson.getString("phoneNumber"))
-                    .build());
+                    .build(),1);
         } else if (response.code() == 401) {
             authenticationFailure(MessageNotifications.status401_text);
         } else if (response.code() == 403) {
@@ -102,7 +102,7 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public void openMainStage(BaseUserData baseUserData) {
+    public void openMainStage(BaseUserData baseUserData,int loadedPageNumber) {
         Platform.runLater(() -> {
 
             ((Stage) loginController.passwordTextField.getScene().getWindow()).close();
@@ -126,7 +126,7 @@ public class LoginServiceImpl implements LoginService {
             fxmlLoader.getController();
             FXMLLoader finalFxmlLoader = fxmlLoader;
             MainStageController controller = (MainStageController) finalFxmlLoader.getController();
-            MainStageServiceImpl.getInstance().loadMainStageData(baseUserData);
+            MainStageServiceImpl.getInstance().loadMainStageData(baseUserData,loadedPageNumber);
             controller.mainStage = mainStage;
             mainStage.widthProperty().addListener((obs, oldVal, newVal) -> {
                 ((MainStageController) finalFxmlLoader.getController()).responsivWidth(newVal.doubleValue());

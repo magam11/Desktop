@@ -2,10 +2,7 @@ package sample.service.serviceImpl;
 
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.SimpleDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.*;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
@@ -22,8 +19,12 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Duration;
+import okhttp3.Response;
+import org.json.JSONArray;
+import org.json.JSONObject;
 import sample.Constant;
 import sample.Size;
+import sample.connection.ApiConnection;
 import sample.controller.MainStageController;
 import sample.dataTransferObject.response.BaseUserData;
 import sample.dataTransferObject.response.ImageData;
@@ -37,10 +38,10 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.List;
+import java.util.*;
 
 public class MainStageServiceImpl implements MainStageService {
-    private static MainStageService mainStageService = new MainStageServiceImpl();
+    private static MainStageServiceImpl mainStageService = new MainStageServiceImpl();
     public static IntegerProperty myImageCount;
 
     private DoubleProperty phoneNumberLenth;
@@ -48,12 +49,17 @@ public class MainStageServiceImpl implements MainStageService {
     private MainStageServiceImpl() {
     }
 
-    public static MainStageService getInstance() {
+    public static MainStageServiceImpl getInstance() {
         return mainStageService;
     }
 
     //local variables
     private MainStageController mainStageController;
+    Map<Label, Integer> pages = new HashMap<>();
+    public volatile IntegerProperty currentPageIndex = new SimpleIntegerProperty(1);
+
+    AnchorPane pageNumbersContainer = new AnchorPane();
+    private boolean isLodedPageNumbersContainer = false;
 
 
     @Override
@@ -62,7 +68,7 @@ public class MainStageServiceImpl implements MainStageService {
         mainStageController.memoryProgressBar.setLayoutX(81);
         mainStageController.memoryHint.setLayoutX(28.0);
 //        +++layoutX="14.0"
-        mainStageController.floxPane.setPrefWidth(stageWith-10);
+        mainStageController.floxPane.setPrefWidth(stageWith - 10);
         mainStageController.slideController.responsiveWidth(stageWith);
         if (stageWith <= 1000.0) {
             mainStageController.memoryProgressBar.setPrefWidth(Size.WIDTH_COEFFICENT_FOR_PROGRESS_BAR_WIDTH * stageWith);
@@ -72,15 +78,15 @@ public class MainStageServiceImpl implements MainStageService {
         mainStageController.share.setLayoutX(stageWith - 299);
         mainStageController.delete.setLayoutX(stageWith - 202);
         mainStageController.download.setLayoutX(stageWith - 105);
-        mainStageController.logOut_btn.setLayoutX(stageWith-130);
-        mainStageController.recycle_btn.setLayoutX(stageWith-227);
-        mainStageController.scrollPane.setPrefWidth(stageWith-40);
+        mainStageController.logOut_btn.setLayoutX(stageWith - 130);
+        mainStageController.recycle_btn.setLayoutX(stageWith - 227);
+        mainStageController.scrollPane.setPrefWidth(stageWith - 40);
         mainStageController.cell_containerAnchorPane.setPrefWidth(stageWith);
         mainStageController.cell_containerAnchorPane.setLayoutX(20);
         mainStageController.filterPane.setPrefWidth(stageWith);
         mainStageController.pageNumbersPane.setPrefWidth(stageWith);
         mainStageController.headerRow1.setPrefWidth(stageWith);
-        mainStageController.phoneNumber.setLayoutX(mainStageController.recycle_btn.getLayoutX()-phoneNumberLenth.getValue()-8);
+        mainStageController.phoneNumber.setLayoutX(mainStageController.recycle_btn.getLayoutX() - phoneNumberLenth.getValue() - 8);
     }
 
     @Override
@@ -90,31 +96,58 @@ public class MainStageServiceImpl implements MainStageService {
 
 
     @Override
-    public void loadMainStageData(BaseUserData baseUserData) {
+    public void loadMainStageData(BaseUserData baseUserData, int loadedPageNumber) {
         int totoalPageCount = baseUserData.getTotoalPageCount();
-        double celnterX = mainStageController.pageNumbersPane.getWidth()/2;
-//        double layaoutXOfFirstNumber = mainStageController.pageNumbersPane.getWidth()/2;
-        double flayaoutXOfFirstNumber = celnterX -(totoalPageCount-1)*10;
-        System.out.println("--------- pagecount "+totoalPageCount);
-        for (int i = 0; i < totoalPageCount; i++) {
-            Label label = new Label(String.valueOf(i+1));
-            label.setLayoutX(flayaoutXOfFirstNumber +i*10);
-            label.setLayoutY(mainStageController.pageNumbersPane.getLayoutY()+mainStageController.pageNumbersPane.getHeight()/2);
-//            label.setFont(Font.font());
-            mainStageController.pageNumbersPane.getChildren().add(label);
-
-
+        ReadOnlyDoubleProperty widthPrp = mainStageController.pageNumbersPane.widthProperty();
+        pageNumbersContainer.setStyle("-fx-alignment: center");
+        Label label;
+        if (pageNumbersContainer.getChildren() != null && pageNumbersContainer.getChildren().size() > 0) {
+            pageNumbersContainer.getChildren().removeAll(pageNumbersContainer.getChildren());
+            pageNumbersContainer = new AnchorPane();
+            pages.clear();
         }
+        for (int i = 0; i < totoalPageCount; i++) {
+            label = new Label(String.valueOf(i + 1));
+            label.setLayoutX(widthPrp.getValue() / 2 - (totoalPageCount - 1) * 20 + i * 20);
+            label.setFont(Font.font(null, FontWeight.BOLD, 14));
+            label.setId(String.valueOf(i + 1));
+            if ((i + 1) == loadedPageNumber) {
+                label.setTextFill(Paint.valueOf("#388e3c"));
+                label.setUnderline(true);
+                pages.put(label, i + 1);
+            }
+            if ((i + 1) != loadedPageNumber) {
+                label.setStyle("-fx-cursor: hand");
+            }
+            int finalI = i;
+            label.setOnMouseClicked(mouseEvent -> {
+                if (currentPageIndex.get() != (finalI + 1)) {
+                    ApiConnection.getInstance().getPage(Constant.BASE_DATA_URI, finalI + 1, Storage.getInstance().getCurrentToken());
+                    currentPageIndex.set(finalI + 1);
+                }
+            });
+            pages.put(label, i + 1);
+            pageNumbersContainer.getChildren().add(label);
+        }
+        widthPrp.addListener((observable, oldValue, newValue) -> {
+            int numbverIndex;
+            for (Label label1 : pages.keySet()) {
+                numbverIndex = pages.get(label1);
+                label1.setLayoutX(newValue.doubleValue() / 2 - (pages.size() - 1) * 20 + numbverIndex * 20);
+            }
+        });
+        mainStageController.pageNumbersPane.setStyle("-fx-alignment: center");
+        mainStageController.pageNumbersPane.getChildren().add(pageNumbersContainer);
         mainStageController.fraction.setText(baseUserData.getFruction());
         myImageCount = new SimpleIntegerProperty(Integer.parseInt(baseUserData.getFruction().split("/")[0]));
         int imagesConunt = baseUserData.getPicturesData() == null ? 0 : baseUserData.getPicturesData().size();
         mainStageController.imageCountInto.setText("Storage (" + imagesConunt + ")");
         mainStageController.phoneNumber.setText(baseUserData.getPhoneNumber());
         phoneNumberLenth = new SimpleDoubleProperty(mainStageController.phoneNumber.getLayoutBounds().getWidth());
-        mainStageController.phoneNumber.setLayoutX(mainStageController.recycle_btn.getLayoutX()-phoneNumberLenth.getValue()-8);
-        mainStageController.memoryProgressBar.setProgress(Double.valueOf(imagesConunt) / 500.0);
+        mainStageController.phoneNumber.setLayoutX(mainStageController.recycle_btn.getLayoutX() - phoneNumberLenth.getValue() - 8);
+        mainStageController.memoryProgressBar.setProgress((double) imagesConunt / 500.0);
         if (imagesConunt != 0) {
-           drawImagesInMainStage(baseUserData.getPicturesData(), Storage.getInstance().getCurrentToken());
+            drawImagesInMainStage(baseUserData.getPicturesData(), Storage.getInstance().getCurrentToken());
         } else {
             // TODO something when user does not have pictures ...
         }
@@ -125,7 +158,7 @@ public class MainStageServiceImpl implements MainStageService {
         Storage storage = Storage.getInstance();
         storage.setCurrentToken("");
         storage.setToken("");
-        ((Stage)mainStageController.headerRow1.getScene().getWindow()).close();
+        ((Stage) mainStageController.headerRow1.getScene().getWindow()).close();
         Parent root = FXMLLoader.load(getClass().getResource("/view/login.fxml"));
         Stage primaryStage = new Stage();
         primaryStage.setTitle("Log in");
@@ -137,7 +170,7 @@ public class MainStageServiceImpl implements MainStageService {
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);
 
-        primaryStage.setOnCloseRequest(we->{
+        primaryStage.setOnCloseRequest(we -> {
             System.exit(0);
         });
         primaryStage.show();
@@ -146,7 +179,7 @@ public class MainStageServiceImpl implements MainStageService {
 
     @Override
     public void drawImagesInMainStage(List<ImageData> picturesData, String currentToken) {
-        System.out.println("length "+picturesData.size());
+        boolean firstTime = true;
         for (ImageData pictureData : picturesData) {
 
             AnchorPane cellContent = new AnchorPane();
@@ -234,15 +267,23 @@ public class MainStageServiceImpl implements MainStageService {
 
 
             cellContent.getChildren().addAll(imageView, imageDate, delete, share, progressBar, percent, download);
+
+            if (firstTime && mainStageController.floxPane.getChildren() != null && mainStageController.floxPane.getChildren().size() > 0) {
+
+                mainStageController.floxPane.getChildren().remove(0, mainStageController.floxPane.getChildren().size());
+            }
             mainStageController.floxPane.getChildren().add(cellContent);
+            firstTime = false;
+
             delete.setOnMouseClicked(mouseEvent -> {
-                DeleteDialogServiceImpl.getInstance().openConfirpationDialog(pictureData.getPicName(), "cell", mainStageController.floxPane.getChildren().indexOf(cellContent));
+                DeleteDialogServiceImpl.getInstance().openConfirmationDialog(pictureData.getPicName(), "cell", mainStageController.floxPane.getChildren().indexOf(cellContent));
             });
             download.setOnMouseClicked(mouseEvent -> {
                 downloadImage(pictureData.getPicName(), progressBar);
             });
             imageView.setOnMouseClicked(mouseEvent -> {
-                SliderServiceImpl.getInstance().openSlider(pictureData.getPicName(), mainStageController.floxPane.getChildren().indexOf(cellContent));
+
+                SliderServiceImpl.getInstance().openSlider(pictureData.getPicName(), (currentPageIndex.getValue() - 1) * 50 + mainStageController.floxPane.getChildren().indexOf(cellContent));
             });
 
         }
@@ -297,6 +338,53 @@ public class MainStageServiceImpl implements MainStageService {
 
     @Override
     public void removeImageFromCellByIndex(int indexOfImageFromCell) {
+        System.out.println("---- indexNumber "+indexOfImageFromCell);
         mainStageController.floxPane.getChildren().remove(indexOfImageFromCell);
+    }
+
+    @Override
+    public void loadPage(Response response, int loadedPageNumber) {
+        System.out.println("loaded page numner " + loadedPageNumber);
+        System.out.println("-----------------------------------------------------------");
+        System.out.println();
+        Platform.runLater(() -> {
+            if (response.isSuccessful()) { //HttpStatusCode = 200
+                JSONObject responseJson = null;
+                try {
+                    responseJson = new JSONObject(new String(response.body().bytes()));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                List<ImageData> imageData = new ArrayList<>();
+                JSONArray picturesData = responseJson.getJSONArray("picturesData");
+                JSONObject imageDataJson = null;
+                if (picturesData != null) {
+                    for (int i = 0; i < picturesData.length(); i++) {
+                        System.out.println();
+                        imageDataJson = picturesData.getJSONObject(i);
+                        imageData.add(ImageData.builder()
+                                .createdAt(imageDataJson.getString("createdAt"))
+                                .picName(imageDataJson.getString("picName"))
+                                .picSize(imageDataJson.getDouble("picSize"))
+                                .build());
+                    }
+                }
+                loadMainStageData(BaseUserData.builder()
+                        .fruction(responseJson.getString("fruction"))
+                        .totoalPageCount(responseJson.getInt("totoalPageCount"))
+                        .picturesData(imageData)
+                        .phoneNumber(responseJson.getString("phoneNumber"))
+                        .build(), loadedPageNumber);
+            } else if (response.code() == 401) {
+//          TODO something
+//          TODO something
+            } else if (response.code() == 403) {
+//          TODO something
+            } else if (response.code() == 410) {
+//          TODO something
+            } else {
+//          TODO something
+            }
+        });
     }
 }

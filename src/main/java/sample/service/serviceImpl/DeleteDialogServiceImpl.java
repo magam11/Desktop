@@ -29,7 +29,7 @@ public class DeleteDialogServiceImpl implements DeleteDialogService {
     }
 
     @Override
-    public void openConfirpationDialog(String picName, String stageName, int indexOfImage) {
+    public void openConfirmationDialog(String picName, String stageName, int indexOfImage) {
         indexOfImageFromCell = new SimpleIntegerProperty(indexOfImage);
         Stage mainStage = new Stage();
         FXMLLoader fxmlLoader = null;
@@ -62,13 +62,21 @@ public class DeleteDialogServiceImpl implements DeleteDialogService {
                     .picName(imageName)
                     .build());
             if (stageName.equals("cell")) {
-                MainStageServiceImpl.getInstance().removeImageFromCellByIndex(DeleteDialogServiceImpl.getInstance().indexOfImageFromCell.get());
-            }
-            else { //stugel nkari hamary, ete verjinn e apa slidery pakel ete voch apa cuyc tal hajord nkary, jnjel nkari hamarov voroshvac contenty cellPag-um
+                MainStageServiceImpl.getInstance().removeImageFromCellByIndex(indexOfImageFromCell.get());
+            } else { //stugel nkari hamary, ete verjinn e apa slidery pakel ete voch apa cuyc tal hajord nkary, jnjel nkari hamarov voroshvac contenty cellPag-um
 //                CellServiceImpl.getInstance().removeImageFromCellByIndex(DeleteDialogServiceImpl.getInstance().indexOfImageFromCell.get());
-                if(!SliderServiceImpl.getInstance().isShowedLastImage()){ //when there is another picture to be shown
+                try {
+                    MainStageServiceImpl.getInstance().removeImageFromCellByIndex(indexOfImageFromCell.get()-1);
+
+                    System.out.println("petq e liner "+(indexOfImageFromCell.get()+(MainStageServiceImpl.getInstance().currentPageIndex.get()-1)*50));
+                    // որ ցուցադրվող հաջորդ նկարի ժամանակ համարի մեկով պակաս ցույց տա,
+                    SliderServiceImpl.getInstance().isIncrementFructionNumbering.set(true);
+                }catch (Exception e){
+                    e.printStackTrace();
+                }
+                if (!SliderServiceImpl.getInstance().isShowedLastImage()) { //when there is another picture to be shown
                     SliderServiceImpl.getInstance().openNextImage();
-                }else { // when there is not a picture to show, close slider
+                } else { // when there is not a picture to show, close slider
                     SliderServiceImpl.getInstance().closeSlidePage();
 
                 }

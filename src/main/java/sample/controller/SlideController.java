@@ -14,6 +14,7 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import sample.service.SliderService;
 import sample.service.serviceImpl.DeleteDialogServiceImpl;
+import sample.service.serviceImpl.MainStageServiceImpl;
 import sample.service.serviceImpl.SliderServiceImpl;
 
 
@@ -128,11 +129,14 @@ public class SlideController {
 
     @FXML
     public void deleteImageFromSlidePage(MouseEvent mouseEvent) {
-
         /*TODO nerqevum poxancvac verjin paramety karoxa ev sxala, karoxa hanvi page-i hamary */
+        System.out.println("--*-*-*-*-");
+        System.out.println(MainStageServiceImpl.getInstance().currentPageIndex.get());
+        System.out.println(Integer.parseInt(fraction.getText().split("/")[0]) - (MainStageServiceImpl.getInstance().currentPageIndex.get()-1)*50);
         DeleteDialogServiceImpl
                 .getInstance()
-                .openConfirpationDialog(shownImageName.getText(), "slide", Integer.parseInt(fraction.getText().split("/")[0]) - 1);
+                .openConfirmationDialog(shownImageName.getText(), "slide",
+                        Integer.parseInt(fraction.getText().split("/")[0]) - (MainStageServiceImpl.getInstance().currentPageIndex.get()-1)*50);
     }
     @FXML
     public void downloadImageFromSlidePage(MouseEvent mouseEvent) {

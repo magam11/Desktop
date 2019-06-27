@@ -2,6 +2,9 @@ package sample.service.serviceImpl;
 
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.util.Duration;
@@ -37,6 +40,8 @@ public class SliderServiceImpl implements SliderService {
     public void initializeSliderController(SlideController slideController) {
         this.slideController = slideController;
     }
+
+    public BooleanProperty isIncrementFructionNumbering = new SimpleBooleanProperty(false);
 
 
     @Override
@@ -91,6 +96,10 @@ public class SliderServiceImpl implements SliderService {
                 String[] fractionData = slideController.fraction.getText().split("/");
                 if(previous_next.equals("next")){
                     slideController.fraction.setText(Integer.parseInt(fractionData[0])+1+"/"+fractionData[1]);
+                    //երբ նկար է ջնջվել է պետք է համարը չփոխվի
+                    if(isIncrementFructionNumbering.get()){
+                        slideController.fraction.setText(Integer.parseInt(fractionData[0])+"/"+fractionData[1]);
+                    }
                 }else {
                     slideController.fraction.setText(Integer.parseInt(fractionData[0])-1+"/"+fractionData[1]);
                 }
@@ -118,14 +127,16 @@ public class SliderServiceImpl implements SliderService {
     public void closeSlidePage() {
         slideController.sliderContent.setVisible(false);
     }
+
+
     @Override
     public void downloadImage() {
+        System.out.println("download");
         slideController.sliderPercent.setText("0 %");
+        slideController.sliderPercent.setVisible(true);
         slideController.sliderProgressBar.setProgress(0);
         slideController.sliderProgressBar.setVisible(true);
         try {
-            String ss = slideController.shownImageName.getText();
-            System.out.println("ssssssssssss "+ss);
             URL url = new URL(Constant.SERVER_ADDRESS + Constant.IMAGE_URI + slideController.shownImageName.getText());
             URLConnection urlConnection = url.openConnection();
             double pictureSize = new Double(urlConnection.getHeaderField("pictureSize") + "D");
@@ -136,7 +147,7 @@ public class SliderServiceImpl implements SliderService {
             byte[] buffer = new byte[bufferSize];
 
             BufferedOutputStream outputStream = new BufferedOutputStream(
-                    new FileOutputStream(dirPath + slideController.shownImageName));
+                    new FileOutputStream(dirPath + slideController.shownImageName.getText()));
             int len = 0;
             double downloadedSize = 0;
             while ((len = inputStream.read(buffer, 0, bufferSize)) > -1) {
@@ -144,7 +155,7 @@ public class SliderServiceImpl implements SliderService {
                 downloadedSize += slideController.sliderProgressBar.getProgress() + len;
                 double v = (downloadedSize) / pictureSize;
                 slideController.sliderProgressBar.setProgress(v);
-                slideController.sliderPercent.setText(v*100+"%");
+                slideController.sliderPercent.setText((int) v*100+"%");
             }
             outputStream.flush();
             outputStream.close();
@@ -161,4 +172,8 @@ public class SliderServiceImpl implements SliderService {
         }
     }
 
+    @Override
+    public void updateFruction(int numerator) {
+        slideController.fraction.setText(numerator+"/"+slideController.fraction.getText().split("/")[1]);
+    }
 }
