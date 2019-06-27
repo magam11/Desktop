@@ -6,6 +6,8 @@ import sample.controller.SlideController;
 public interface SliderService {
     void initializeSliderController(SlideController slideController);
 
+    void downloadImage();
+
     void openSlider(String picName, int indexOf);
 
     void openNextImage();

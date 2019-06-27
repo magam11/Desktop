@@ -55,6 +55,8 @@ public class SlideController {
     public Label shownImageName;
     @FXML
     public AnchorPane delete_btn;
+    @FXML
+    public AnchorPane download_btn;
 
     //services
     SliderService sliderService = SliderServiceImpl.getInstance();
@@ -117,7 +119,6 @@ public class SlideController {
     @FXML
     public void openNextImage(MouseEvent mouseEvent) {
         sliderService.openNextImage();
-
     }
 
     @FXML
@@ -132,5 +133,9 @@ public class SlideController {
         DeleteDialogServiceImpl
                 .getInstance()
                 .openConfirpationDialog(shownImageName.getText(), "slide", Integer.parseInt(fraction.getText().split("/")[0]) - 1);
+    }
+    @FXML
+    public void downloadImageFromSlidePage(MouseEvent mouseEvent) {
+        sliderService.downloadImage();
     }
 }
