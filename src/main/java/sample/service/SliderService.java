@@ -19,4 +19,6 @@ public interface SliderService {
     boolean isShowedLastImage();
 
     void closeSlidePage();
+
+    void updateFruction(int numerator);
 }

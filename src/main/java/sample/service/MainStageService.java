@@ -1,6 +1,7 @@
 package sample.service;
 
 import javafx.scene.control.ProgressBar;
+import okhttp3.Response;
 import sample.controller.MainStageController;
 import sample.dataTransferObject.response.BaseUserData;
 import sample.dataTransferObject.response.ImageData;
@@ -14,7 +15,7 @@ public interface MainStageService {
 
     void initializeMainStageController(MainStageController mainStageController);
 
-    void loadMainStageData(BaseUserData baseUserData);
+    void loadMainStageData(BaseUserData baseUserData,int loadedPageNumber);
 
 
     void logOut() throws IOException;
@@ -26,4 +27,5 @@ public interface MainStageService {
     void removeImageFromCellByIndex(int indexOfImageFromCell);
 
 
+    void loadPage(Response response, int pageNumber);
 }

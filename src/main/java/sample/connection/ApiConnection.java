@@ -11,6 +11,7 @@ import sample.dataTransferObject.response.AuthenticationResponse;
 import sample.service.LoginService;
 import sample.service.serviceImpl.DeleteDialogServiceImpl;
 import sample.service.serviceImpl.LoginServiceImpl;
+import sample.service.serviceImpl.MainStageServiceImpl;
 import sample.service.serviceImpl.SliderServiceImpl;
 import sample.storage.Storage;
 
@@ -108,6 +109,29 @@ public class ApiConnection {
         });
     }
 
+    @Connection(uri = "user/data/{pageNumber}", method = "GET", pathVariable = "pageNumber")
+    public void getPage(String uri, int pageNumber, String token) {
+        Request request = new Request.Builder()
+                .url(Constant.SERVER_ADDRESS + uri + pageNumber)
+                .addHeader(Constant.AUTHORIZATION, token)
+                .build();
+        OkHttpClient client1 = new OkHttpClient();
+        client1.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                /**
+                 * TODO  something
+                 * */
+                System.out.println("user/data/{pageNumber} ---- failure");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                MainStageServiceImpl.getInstance().loadPage(response,pageNumber);
+            }
+        });
+    }
+
 
     @Connection(uri = "/image/", method = "PUT", requestBody = ImageManagerRequest.class)
     public void updateImageStatus(String uri, ImageManagerRequest jsonBody) {
@@ -130,6 +154,8 @@ public class ApiConnection {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+//                MainStageServiceImpl.getInstance().removeImageFromCellByIndex(Integer.parseInt(fraction.getText().split("/")[0]) - 1- MainStageServiceImpl.getInstance().currentPageIndex.get()*50);
+
                 Platform.runLater(() -> {
                     DeleteDialogServiceImpl.getInstance().closeDeleteDialog();
 

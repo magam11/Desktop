@@ -18,7 +18,7 @@ public interface LoginService {
 
      void onRespoinseOfDataApiAnalysis(Response response);
 
-     void openMainStage(BaseUserData baseUserData);
+     void openMainStage(BaseUserData baseUserData,int loadedPageNumber);
 
 
 }

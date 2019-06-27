@@ -30,7 +30,7 @@
             </ScrollPane>
             <VBox fx:id="menuBar" layoutX="680.0" layoutY="-1.0" prefHeight="151.0" prefWidth="103.0">
                <children>
-                  <AnchorPane fx:id="download_btn" prefHeight="44.0" onMouseClicked="#downloadImageFromSlidePage" prefWidth="100.0" style="-fx-background-color: #D7D7D7; -fx-cursor: hand; -fx-background-radius: 25;">
+                  <AnchorPane fx:id="download_btn" onMouseClicked="#downloadImageFromSlidePage" prefHeight="44.0" prefWidth="100.0" style="-fx-background-color: #D7D7D7; -fx-cursor: hand; -fx-background-radius: 25;">
                      <VBox.margin>
                         <Insets bottom="5.0" top="5.0" />
                      </VBox.margin>
@@ -112,7 +112,7 @@
       </AnchorPane>
       <AnchorPane fx:id="header" layoutX="62.0" prefHeight="45.0" prefWidth="782.0">
          <children>
-            <Label fx:id="fraction" layoutX="635.0" layoutY="13.0" prefHeight="19.0" prefWidth="38.0" text="1/127" textFill="#d7d7d7">
+            <Label fx:id="fraction" layoutX="635.0" layoutY="13.0" prefHeight="34.0" prefWidth="60.0" text="1/127" textFill="#d7d7d7">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
@@ -132,7 +132,7 @@
       <AnchorPane fx:id="flutter" layoutX="59.0" layoutY="781.0" prefHeight="45.0" prefWidth="789.0">
          <children>
             <ProgressBar fx:id="sliderProgressBar" layoutX="231.0" layoutY="19.0" prefHeight="18.0" prefWidth="328.0" progress="0.0" />
-            <Label fx:id="sliderPercent" layoutX="381.0" layoutY="3.0" prefHeight="17.0" prefWidth="26.0" text="87%" textFill="#d7d7d7">
+            <Label fx:id="sliderPercent" layoutX="381.0" layoutY="3.0" prefHeight="17.0" prefWidth="60.0" text="87%" textFill="#d7d7d7">
                <font>
                   <Font name="System Bold" size="12.0" />
                </font>
