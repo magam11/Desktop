@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.ScrollPane?>
@@ -12,7 +13,6 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.layout.GridPane?>
 <StackPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0" prefWidth="906.0" style="-fx-background-color: #FAFAFA" stylesheets="/css/main.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.MainStageController">
     <children>
         <AnchorPane fx:id="mainContent" prefHeight="840.0" prefWidth="906.0">
@@ -107,7 +107,7 @@
                                     </ImageView>
                                 </children>
                             </AnchorPane>
-                            <AnchorPane fx:id="delete" layoutX="680.0" layoutY="32.0" prefHeight="27.0" prefWidth="91.0" style="-fx-background-radius: 15; -fx-background-color: #FFFFFF; -fx-cursor: hand;">
+                            <AnchorPane fx:id="delete" layoutX="680.0" layoutY="32.0" onMouseClicked="#showCheckBoxs" prefHeight="27.0" prefWidth="91.0" style="-fx-background-radius: 15; -fx-background-color: #FFFFFF; -fx-cursor: hand;">
                                 <children>
                                     <Label layoutX="46.0" layoutY="5.0" prefHeight="17.0" prefWidth="39.0" text="Delete">
                                         <font>
@@ -127,7 +127,15 @@
             </VBox>
             <AnchorPane fx:id="cell_containerAnchorPane" layoutX="-2.0" layoutY="133.0" prefHeight="660.0" prefWidth="906.0" style="-fx-background-color: #FAFAFA;">
                 <children>
-                    <AnchorPane fx:id="filterPane" layoutY="-1.0" prefHeight="63.0" prefWidth="906.0" style="-fx-background-color: #FAFAFA;" />
+                    <AnchorPane fx:id="filterPane" layoutY="-1.0" prefHeight="63.0" prefWidth="906.0" style="-fx-background-color: #FAFAFA;">
+                  <children>
+                     <Label fx:id="selectAllHint" layoutX="14.0" layoutY="23.0" prefHeight="17.0" prefWidth="59.0" text=" Select All">
+                        <font>
+                           <Font name="System Bold" size="12.0" />
+                        </font>
+                     </Label>
+                     <CheckBox fx:id="selectALL_checkBox" layoutX="80.0" onMouseClicked="#selectOrCancelItems" layoutY="23.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="17.0" text="CheckBox" />
+                  </children></AnchorPane>
                     <ScrollPane fx:id="scrollPane" layoutY="62.0" prefHeight="599.0" prefWidth="906.0">
                         <content>
                             <FlowPane fx:id="floxPane" prefHeight="597.0" prefWidth="897.0" style="-fx-alignment: center;" />
@@ -137,58 +145,7 @@
                 </children>
             </AnchorPane>
             <AnchorPane fx:id="pageNumbersPane" layoutY="795.0" prefHeight="46.0" prefWidth="906.0" style="-fx-background-color: #FAFAFA;">
-            <children>
-<!--               <Label layoutX="203.0" layoutY="10.0" prefHeight="17.0" prefWidth="21.0" text="1">-->
-<!--                  <font>-->
-<!--                     <Font name="System Bold" size="19.0" />-->
-<!--                  </font>-->
-<!--               </Label>-->
-<!--               <Label layoutX="256.0" layoutY="10.0" prefHeight="28.0" prefWidth="17.0" text="2">-->
-<!--                  <font>-->
-<!--                     <Font name="System Bold" size="19.0" />-->
-<!--                  </font>-->
-<!--               </Label>-->
-<!--               <Label layoutX="298.0" layoutY="10.0" prefHeight="17.0" prefWidth="21.0" text="3">-->
-<!--                  <font>-->
-<!--                     <Font name="System Bold" size="19.0" />-->
-<!--                  </font>-->
-<!--               </Label>-->
-<!--               <Label layoutX="350.0" layoutY="10.0" prefHeight="17.0" prefWidth="21.0" text="4">-->
-<!--                  <font>-->
-<!--                     <Font name="System Bold" size="19.0" />-->
-<!--                  </font>-->
-<!--               </Label>-->
-<!--               <Label layoutX="404.0" layoutY="10.0" prefHeight="17.0" prefWidth="21.0" text="5">-->
-<!--                  <font>-->
-<!--                     <Font name="System Bold" size="19.0" />-->
-<!--                  </font>-->
-<!--               </Label>-->
-<!--               <Label layoutX="453.0" layoutY="9.0" prefHeight="17.0" prefWidth="21.0" text="6">-->
-<!--                  <font>-->
-<!--                     <Font name="System Bold" size="19.0" />-->
-<!--                  </font>-->
-<!--               </Label>-->
-<!--               <Label layoutX="498.0" layoutY="9.0" prefHeight="17.0" prefWidth="21.0" text="7">-->
-<!--                  <font>-->
-<!--                     <Font name="System Bold" size="19.0" />-->
-<!--                  </font>-->
-<!--               </Label>-->
-<!--               <Label layoutX="537.0" layoutY="10.0" prefHeight="17.0" prefWidth="21.0" text="8">-->
-<!--                  <font>-->
-<!--                     <Font name="System Bold" size="19.0" />-->
-<!--                  </font>-->
-<!--               </Label>-->
-<!--               <Label layoutX="574.0" layoutY="9.0" prefHeight="17.0" prefWidth="21.0" text="9">-->
-<!--                  <font>-->
-<!--                     <Font name="System Bold" size="19.0" />-->
-<!--                  </font>-->
-<!--               </Label>-->
-<!--               <Label layoutX="612.0" layoutY="9.0" prefHeight="28.0" prefWidth="26.0" text="10">-->
-<!--                  <font>-->
-<!--                     <Font name="System Bold" size="19.0" />-->
-<!--                  </font>-->
-<!--               </Label>-->
-            </children></AnchorPane>
+            </AnchorPane>
         </AnchorPane>
         <fx:include fx:id="slide" source="part/slid.fxml"/>
         <Label fx:id="currentPageNumber" text="1" visible="false" />

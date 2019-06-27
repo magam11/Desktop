@@ -1,6 +1,7 @@
 package sample.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
@@ -10,11 +11,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
-import sample.Size;
 import sample.service.MainStageService;
 import sample.service.serviceImpl.MainStageServiceImpl;
 
@@ -72,16 +70,21 @@ public class MainStageController {
     @FXML
     public Label memoryHint;
     @FXML
-    public AnchorPane CONTENET;
-    @FXML
     public AnchorPane mainContent;
     @FXML
     public Label currentPageNumber;
+    @FXML
+    public Label selectAllHint;
+    @FXML
+    public CheckBox selectALL_checkBox;
 
     //services
     private MainStageService mainStageService = MainStageServiceImpl.getInstance();
 
     public void initialize() {
+        selectALL_checkBox.setText("");
+        selectAllHint.setVisible(false);
+        selectALL_checkBox.setVisible(false);
         floxPane.setPrefHeight(581);
         floxPane.setPrefWidth(897);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -117,5 +120,14 @@ public class MainStageController {
     @FXML
     public void logOut(MouseEvent mouseEvent) throws IOException {
         mainStageService.logOut();
+    }
+
+    @FXML
+    public void showCheckBoxs(MouseEvent mouseEvent) {
+        mainStageService.showCheckBoxes();
+    }
+    @FXML
+    public void selectOrCancelItems(MouseEvent mouseEvent) {
+        mainStageService.selectOrCancelItems();
     }
 }

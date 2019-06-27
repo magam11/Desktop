@@ -1,5 +1,6 @@
 package sample.service;
 
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.ProgressBar;
 import okhttp3.Response;
 import sample.controller.MainStageController;
@@ -28,4 +29,10 @@ public interface MainStageService {
 
 
     void loadPage(Response response, int pageNumber);
+
+    void showCheckBoxes();
+
+    void selectOrCancelItems();
+
+    void singleSelectOrCancelItem(CheckBox checkBox,int index,String imageName);
 }

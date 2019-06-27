@@ -67,8 +67,6 @@ public class DeleteDialogServiceImpl implements DeleteDialogService {
 //                CellServiceImpl.getInstance().removeImageFromCellByIndex(DeleteDialogServiceImpl.getInstance().indexOfImageFromCell.get());
                 try {
                     MainStageServiceImpl.getInstance().removeImageFromCellByIndex(indexOfImageFromCell.get()-1);
-
-                    System.out.println("petq e liner "+(indexOfImageFromCell.get()+(MainStageServiceImpl.getInstance().currentPageIndex.get()-1)*50));
                     // որ ցուցադրվող հաջորդ նկարի ժամանակ համարի մեկով պակաս ցույց տա,
                     SliderServiceImpl.getInstance().isIncrementFructionNumbering.set(true);
                 }catch (Exception e){

@@ -11,4 +11,6 @@ public class Constant {
     public static final String IMAGE_URI = "image/";
     public static final String NEXT_IMAGE = "image/next";
     public static final String PREVIOUS_IMAGE = "image/previous";
+
+    public static final String SPLITER = "/image/";
 }

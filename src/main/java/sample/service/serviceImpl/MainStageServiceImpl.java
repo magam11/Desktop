@@ -3,10 +3,13 @@ package sample.service.serviceImpl;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.beans.property.*;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
@@ -57,9 +60,10 @@ public class MainStageServiceImpl implements MainStageService {
     private MainStageController mainStageController;
     Map<Label, Integer> pages = new HashMap<>();
     public volatile IntegerProperty currentPageIndex = new SimpleIntegerProperty(1);
+    public volatile Map<CheckBox, Integer> checkboxes = new HashMap<>();
+    public volatile Map<Integer, String> selectedImage = new HashMap<>();
 
     AnchorPane pageNumbersContainer = new AnchorPane();
-    private boolean isLodedPageNumbersContainer = false;
 
 
     @Override
@@ -180,6 +184,8 @@ public class MainStageServiceImpl implements MainStageService {
     @Override
     public void drawImagesInMainStage(List<ImageData> picturesData, String currentToken) {
         boolean firstTime = true;
+        checkboxes.clear();
+        int index = 0;
         for (ImageData pictureData : picturesData) {
 
             AnchorPane cellContent = new AnchorPane();
@@ -191,6 +197,7 @@ public class MainStageServiceImpl implements MainStageService {
 
             Image image = new Image(Constant.SERVER_ADDRESS + Constant.IMAGE_URI + pictureData.getPicName());
             ImageView imageView = new ImageView(image);
+            imageView.setId("" + index);                               //ամեն նկարի որպես id տրվում է իր ինդեքսի համարը
             imageView.setFitWidth(cellContent.getPrefWidth());
             imageView.setFitHeight(cellContent.getPrefHeight());
 
@@ -248,7 +255,16 @@ public class MainStageServiceImpl implements MainStageService {
             percent.setTextFill(Paint.valueOf("#d7d7d7"));
             percent.setVisible(false);
 
+            CheckBox checkBox = new CheckBox();
+            checkBox.setLayoutX(cellContent.getLayoutX() + cellContent.getPrefWidth() - 25);
+            checkBox.setLayoutY(cellContent.getLayoutY() + 5);
+            checkBox.setVisible(false);
+            checkboxes.put(checkBox, index);
 
+            int finalIndex = index;
+            checkBox.setOnMouseClicked(mouseEvent->{
+                singleSelectOrCancelItem(checkBox,finalIndex,pictureData.getPicName());
+            });
             cellContent.setOnMouseEntered(mouseEvent -> {
                 imageDate.setVisible(true);
                 delete.setVisible(true);
@@ -266,7 +282,7 @@ public class MainStageServiceImpl implements MainStageService {
             });
 
 
-            cellContent.getChildren().addAll(imageView, imageDate, delete, share, progressBar, percent, download);
+            cellContent.getChildren().addAll(imageView, imageDate, delete, share, progressBar, percent, download, checkBox);
 
             if (firstTime && mainStageController.floxPane.getChildren() != null && mainStageController.floxPane.getChildren().size() > 0) {
 
@@ -285,7 +301,7 @@ public class MainStageServiceImpl implements MainStageService {
 
                 SliderServiceImpl.getInstance().openSlider(pictureData.getPicName(), (currentPageIndex.getValue() - 1) * 50 + mainStageController.floxPane.getChildren().indexOf(cellContent));
             });
-
+            index++;
         }
     }
 
@@ -338,7 +354,9 @@ public class MainStageServiceImpl implements MainStageService {
 
     @Override
     public void removeImageFromCellByIndex(int indexOfImageFromCell) {
-        System.out.println("---- indexNumber "+indexOfImageFromCell);
+        for (Map.Entry<CheckBox, Integer> checkBoxIntegerEntry : checkboxes.entrySet()) {
+            if (checkBoxIntegerEntry.getValue() == indexOfImageFromCell) checkboxes.remove(checkBoxIntegerEntry);
+        }
         mainStageController.floxPane.getChildren().remove(indexOfImageFromCell);
     }
 
@@ -384,4 +402,46 @@ public class MainStageServiceImpl implements MainStageService {
             }
         });
     }
+
+    @Override
+    public void showCheckBoxes() {
+        for (CheckBox checkBox : checkboxes.keySet()) {
+            checkBox.setVisible(true);
+        }
+        mainStageController.selectAllHint.setVisible(true);
+        mainStageController.selectALL_checkBox.setVisible(true);
+    }
+
+    @Override
+    public void selectOrCancelItems() {
+        Scene scene = mainStageController.floxPane.getScene();
+        ObservableList<Node> items = mainStageController.floxPane.getChildren();
+        String imageName;
+        if (mainStageController.selectALL_checkBox.isSelected()) {
+            for (Map.Entry<CheckBox, Integer> checkBoxIntegerEntry : checkboxes.entrySet()) {
+                checkBoxIntegerEntry.getKey().setSelected(true);
+                imageName = ((ImageView) scene.lookup("#" + checkBoxIntegerEntry.getValue()))
+                        .getImage().impl_getUrl().split(Constant.SPLITER)[1];
+                selectedImage.put(checkBoxIntegerEntry.getValue(),imageName);
+            }
+        } else {
+            for (Map.Entry<CheckBox, Integer> checkBoxIntegerEntry : checkboxes.entrySet()) {
+                checkBoxIntegerEntry.getKey().setSelected(false);
+                selectedImage.clear();
+            }
+        }
+
+    }
+    @Override
+    public void singleSelectOrCancelItem(CheckBox checkBox,int index,String imageName){
+        if(checkBox.isSelected()){
+            selectedImage.put(index,imageName);
+        }else {
+            for (Map.Entry<Integer, String> entry : selectedImage.entrySet()) {
+                if(entry.getKey().equals(index)){
+                 selectedImage.remove(entry);
+                }
+            }
+        }
+    };
 }
