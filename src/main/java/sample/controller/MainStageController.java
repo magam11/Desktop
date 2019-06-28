@@ -1,6 +1,10 @@
 package sample.controller;
 
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.event.EventType;
 import javafx.fxml.FXML;
+import javafx.scene.Cursor;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -12,6 +16,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import sample.service.MainStageService;
 import sample.service.serviceImpl.MainStageServiceImpl;
@@ -35,20 +40,20 @@ public class MainStageController {
     public AnchorPane download;
     @FXML
     public AnchorPane delete;
-    @FXML
-    public AnchorPane share;
+//    @FXML
+//    public AnchorPane share;
     @FXML
     public ImageView downloadImageView;
     @FXML
     public ImageView deleteImageView;
-    @FXML
-    public ImageView shareImageView;
+//    @FXML
+//    public ImageView shareImageView;
     @FXML
     public SlideController slideController;
     @FXML
     public Label imageCountInto;
 
-    public  Stage mainStage;
+    public Stage mainStage;
     @FXML
     public ImageView recycleImageView;
     @FXML
@@ -77,11 +82,23 @@ public class MainStageController {
     public Label selectAllHint;
     @FXML
     public CheckBox selectALL_checkBox;
+    @FXML
+    public Label deleteTxt;
+    @FXML
+    public Label cancel;
+    public Label shareTxt;
+    public Label downloadTxt;
+    @FXML
+    public BooleanProperty isShowCheckBox = new SimpleBooleanProperty(true); //else go to action
+    @FXML
+   public RecicleBinController recicleBinController;
+
 
     //services
     private MainStageService mainStageService = MainStageServiceImpl.getInstance();
 
     public void initialize() {
+        cancel.setVisible(false);
         selectALL_checkBox.setText("");
         selectAllHint.setVisible(false);
         selectALL_checkBox.setVisible(false);
@@ -94,7 +111,6 @@ public class MainStageController {
         mainStageService.initializeMainStageController(this);
         slideController.sliderContent.setVisible(false);
         memoryProgressBar.setProgress(125.0 / 400.0);
-        share.setEffect(new DropShadow(19, Color.rgb(0, 0, 0, 0.1)));
         download.setEffect(new DropShadow(19, Color.rgb(0, 0, 0, 0.1)));
         delete.setEffect(new DropShadow(19, Color.rgb(0, 0, 0, 0.1)));
         headerRow1.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.2)));
@@ -106,13 +122,13 @@ public class MainStageController {
     }
 
     public void responsivHeight(double stageHeight) {
-
-        cell_containerAnchorPane.setPrefHeight(mainContent.getHeight()-179);
-        scrollPane.setPrefHeight(mainContent.getHeight()-242);
-        floxPane.setPrefHeight(mainContent.getHeight()-242);
+        recicleBinController.responsiveHeight(stageHeight);
+        cell_containerAnchorPane.setPrefHeight(mainContent.getHeight() - 179);
+        scrollPane.setPrefHeight(mainContent.getHeight() - 242);
+        floxPane.setPrefHeight(mainContent.getHeight() - 242);
 
 //        pageNumbersPane.setLayoutY(floxPane.getLayoutY()+floxPane.getPrefHeight());
-        pageNumbersPane.setLayoutY(mainContent.getHeight()-50);
+        pageNumbersPane.setLayoutY(mainContent.getHeight() - 50);
 
         slideController.responsiveHeght(stageHeight);
     }
@@ -123,11 +139,45 @@ public class MainStageController {
     }
 
     @FXML
-    public void showCheckBoxs(MouseEvent mouseEvent) {
-        mainStageService.showCheckBoxes();
+    public void showCheckBoxesՕrDelete(MouseEvent mouseEvent) {
+        if (isShowCheckBox.get()) {
+            download.setDisable(true);
+            download.setStyle("-fx-cursor: default;-fx-background-radius: 15; -fx-background-color: #FFFFFF;");
+            delete.setStyle("-fx-cursor: hand;-fx-background-radius: 15; -fx-background-color: #388e3c;");
+            deleteTxt.setTextFill(Paint.valueOf("#FAFAFA"));
+            cancel.setVisible(true);
+            mainStageService.showCheckBoxes();
+            isShowCheckBox.set(false);
+        }else {
+            mainStageService.deleteSelectedImages();
+//            action
+        }
+
     }
+
     @FXML
     public void selectOrCancelItems(MouseEvent mouseEvent) {
         mainStageService.selectOrCancelItems();
+    }
+
+    @FXML
+    public void cancelSelected(MouseEvent mouseEvent) {
+        mainStageService.cancelSelect();
+    }
+
+    @FXML
+    public void downloadSelectedImage(MouseEvent mouseEvent) {
+        if (isShowCheckBox.get()) {
+            delete.setDisable(true);
+            downloadTxt.setTextFill(Paint.valueOf("#FAFAFA"));
+            delete.setStyle("-fx-cursor: default;-fx-background-radius: 15; -fx-background-color: #FFFFFF;");
+            download.setStyle("-fx-cursor: hand;-fx-background-radius: 15; -fx-background-color: #388e3c;");
+            cancel.setVisible(true);
+            mainStageService.showCheckBoxes();
+            isShowCheckBox.set(false);
+        }else {
+            mainStageService.downloadSelectedImages();
+//            action
+        }
     }
 }

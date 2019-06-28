@@ -79,23 +79,24 @@
                             </Label>
                             <ProgressBar fx:id="memoryProgressBar" layoutX="67.0" layoutY="48.0" prefHeight="0.0" prefWidth="200.0" progress="0.0" />
                             <Label fx:id="fraction" layoutX="274.0" layoutY="45.0" prefHeight="17.0" prefWidth="64.0" text="125/500" />
-                            <AnchorPane fx:id="share" layoutX="578.0" layoutY="32.0" prefHeight="27.0" prefWidth="91.0" style="-fx-background-radius: 15; -fx-background-color: #FFFFFF; -fx-cursor: hand;">
+<!--                            <AnchorPane fx:id="share" layoutX="578.0" onMouseClicked="#shareSelect" layoutY="32.0" prefHeight="27.0" prefWidth="91.0" style="-fx-background-radius: 15; -fx-background-color: #FFFFFF; -fx-cursor: hand;">-->
+<!--                                <children>-->
+<!--                                    <Label layoutX="49.0" fx:id="shareTxt" layoutY="5.0" prefHeight="17.0" prefWidth="39.0" text="Share">-->
+<!--                                        <font>-->
+<!--                                            <Font name="System Bold" size="12.0" />-->
+<!--                                        </font>-->
+<!--                                    </Label>-->
+<!--                                    <ImageView fx:id="shareImageView" fitHeight="19.0" fitWidth="25.0" layoutX="8.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">-->
+<!--                                        <image>-->
+<!--                                            <Image url="@../image/share.png" />-->
+<!--                                        </image>-->
+<!--                                    </ImageView>-->
+<!--                                </children>-->
+<!--                            </AnchorPane>-->
+<!--                            onMouseClicked="#downloadSelectedImage"-->
+                            <AnchorPane fx:id="download" layoutX="785.0"  layoutY="32.0" onMouseClicked="#downloadSelectedImage" prefHeight="27.0" prefWidth="91.0" style="-fx-background-radius: 15; -fx-background-color: #FFFFFF; -fx-cursor: hand;">
                                 <children>
-                                    <Label layoutX="49.0" layoutY="5.0" prefHeight="17.0" prefWidth="39.0" text="Share">
-                                        <font>
-                                            <Font name="System Bold" size="12.0" />
-                                        </font>
-                                    </Label>
-                                    <ImageView fx:id="shareImageView" fitHeight="19.0" fitWidth="25.0" layoutX="8.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
-                                        <image>
-                                            <Image url="@../image/share.png" />
-                                        </image>
-                                    </ImageView>
-                                </children>
-                            </AnchorPane>
-                            <AnchorPane fx:id="download" layoutX="785.0" layoutY="32.0" prefHeight="27.0" prefWidth="91.0" style="-fx-background-radius: 15; -fx-background-color: #FFFFFF; -fx-cursor: hand;">
-                                <children>
-                                    <Label layoutX="26.0" layoutY="5.0" prefHeight="17.0" prefWidth="59.0" text="Download">
+                                    <Label layoutX="26.0" fx:id="downloadTxt" layoutY="5.0" prefHeight="17.0" prefWidth="59.0" text="Download">
                                         <font>
                                             <Font name="System Bold" size="12.0" />
                                         </font>
@@ -107,9 +108,9 @@
                                     </ImageView>
                                 </children>
                             </AnchorPane>
-                            <AnchorPane fx:id="delete" layoutX="680.0" layoutY="32.0" onMouseClicked="#showCheckBoxs" prefHeight="27.0" prefWidth="91.0" style="-fx-background-radius: 15; -fx-background-color: #FFFFFF; -fx-cursor: hand;">
+                            <AnchorPane fx:id="delete" layoutX="680.0" layoutY="32.0" onMouseClicked="#showCheckBoxesՕrDelete" prefHeight="27.0" prefWidth="91.0" style="-fx-background-radius: 15; -fx-background-color: #FFFFFF; -fx-cursor: hand;">
                                 <children>
-                                    <Label layoutX="46.0" layoutY="5.0" prefHeight="17.0" prefWidth="39.0" text="Delete">
+                                    <Label fx:id="deleteTxt" layoutX="46.0" layoutY="5.0" prefHeight="17.0" prefWidth="39.0" text="Delete">
                                         <font>
                                             <Font name="System Bold" size="12.0" />
                                         </font>
@@ -134,7 +135,12 @@
                            <Font name="System Bold" size="12.0" />
                         </font>
                      </Label>
-                     <CheckBox fx:id="selectALL_checkBox" layoutX="80.0" onMouseClicked="#selectOrCancelItems" layoutY="23.0" mnemonicParsing="false" prefHeight="17.0" prefWidth="17.0" text="CheckBox" />
+                     <CheckBox fx:id="selectALL_checkBox" layoutX="80.0" layoutY="23.0" mnemonicParsing="false" onMouseClicked="#selectOrCancelItems" prefHeight="17.0" prefWidth="17.0" style="-fx-cursor: hand" text="CheckBox" />
+                     <Label fx:id="cancel" layoutX="121.0" onMouseClicked="#cancelSelected" style="-fx-cursor: hand" layoutY="23.0" prefHeight="17.0" prefWidth="48.0" text="Cancel">
+                        <font>
+                           <Font name="System Bold" size="12.0" />
+                        </font>
+                     </Label>
                   </children></AnchorPane>
                     <ScrollPane fx:id="scrollPane" layoutY="62.0" prefHeight="599.0" prefWidth="906.0">
                         <content>
@@ -148,6 +154,7 @@
             </AnchorPane>
         </AnchorPane>
         <fx:include fx:id="slide" source="part/slid.fxml"/>
+        <fx:include fx:id="recycleBin" source="part/recycleBin.fxml"/>
         <Label fx:id="currentPageNumber" text="1" visible="false" />
     </children>
 </StackPane>

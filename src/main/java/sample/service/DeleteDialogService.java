@@ -7,4 +7,6 @@ public interface DeleteDialogService {
     void updateImageStatus(String imageName,String stageName,boolean imageStatus);
 
     void closeDeleteDialog();
+
+    void openConfirmationDialogForBatch();
 }

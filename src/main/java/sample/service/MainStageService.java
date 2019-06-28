@@ -35,4 +35,14 @@ public interface MainStageService {
     void selectOrCancelItems();
 
     void singleSelectOrCancelItem(CheckBox checkBox,int index,String imageName);
+
+    void deleteSelectedImages();
+
+    void cancelSelect();
+
+    void removeAllCheckobox();
+
+    void changeUserStatusAndUpdatePage();
+
+    void downloadSelectedImages();
 }

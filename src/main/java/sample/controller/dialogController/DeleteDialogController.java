@@ -10,6 +10,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import sample.service.DeleteDialogService;
 import sample.service.serviceImpl.DeleteDialogServiceImpl;
+import sample.service.serviceImpl.MainStageServiceImpl;
 
 public class DeleteDialogController {
     @FXML
@@ -39,6 +40,13 @@ public class DeleteDialogController {
     }
     @FXML
     public void updateImageStatus(MouseEvent mouseEvent) {
-        deleteDialogService.updateImageStatus(deletedImageName.getText(),stageName.getText(),false);
+        if(stageName.getText().equals("main_Batch")){
+            ((Stage)recicleBin_imageView.getScene().getWindow()).close();
+            MainStageServiceImpl.getInstance().changeUserStatusAndUpdatePage();
+
+
+        }else {
+            deleteDialogService.updateImageStatus(deletedImageName.getText(),stageName.getText(),false);
+        }
     }
 }

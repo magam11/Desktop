@@ -131,7 +131,6 @@ public class SliderServiceImpl implements SliderService {
 
     @Override
     public void downloadImage() {
-        System.out.println("download");
         slideController.sliderPercent.setText("0 %");
         slideController.sliderPercent.setVisible(true);
         slideController.sliderProgressBar.setProgress(0);

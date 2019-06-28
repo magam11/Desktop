@@ -13,4 +13,5 @@ public class Constant {
     public static final String PREVIOUS_IMAGE = "image/previous";
 
     public static final String SPLITER = "/image/";
+    public static final String IPAGE_UPDATE_MANY = "/image/many";
 }
