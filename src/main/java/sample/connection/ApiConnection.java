@@ -1,13 +1,17 @@
 package sample.connection;
 
 
+import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import javafx.application.Platform;
 import okhttp3.*;
+import org.json.JSONArray;
 import org.json.JSONObject;
 import sample.Constant;
 import sample.dataTransferObject.request.AuthenticationRequest;
+import sample.dataTransferObject.request.ImageData;
 import sample.dataTransferObject.request.ImageManagerRequest;
 import sample.dataTransferObject.response.AuthenticationResponse;
+import sample.dataTransferObject.response.BaseUserData;
 import sample.service.LoginService;
 import sample.service.serviceImpl.DeleteDialogServiceImpl;
 import sample.service.serviceImpl.LoginServiceImpl;
@@ -16,6 +20,9 @@ import sample.service.serviceImpl.SliderServiceImpl;
 import sample.storage.Storage;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class ApiConnection {
 
@@ -86,7 +93,7 @@ public class ApiConnection {
         });
     }
 
-    @Connection(uri = "user/data/{pageNumber}", method = "GET", pathVariable = "pageNumber")
+    @Connection(uri = "user/data/page/{pageNumber}", method = "GET", pathVariable = "pageNumber")
     public void baseData(String uri, int pageNumber, String token) {
         Request request = new Request.Builder()
                 .url(Constant.SERVER_ADDRESS + uri + pageNumber)
@@ -127,7 +134,7 @@ public class ApiConnection {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                MainStageServiceImpl.getInstance().loadPage(response,pageNumber);
+                MainStageServiceImpl.getInstance().loadPage(response, pageNumber);
             }
         });
     }
@@ -184,7 +191,62 @@ public class ApiConnection {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 Platform.runLater(() -> {
-                        SliderServiceImpl.getInstance().showpPreviousNextImageData(response,next_previous);
+                    SliderServiceImpl.getInstance().showpPreviousNextImageData(response, next_previous);
+                });
+
+            }
+        });
+    }
+
+    @Connection(uri = "/image/many", method = "PUT", requestBody = ImageData.class)
+    public void updateImagesStatusBatch(ImageData imageData) {
+        System.out.println("imageData " + imageData);
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        RequestBody body = RequestBody.create(JSON, imageData.toString());
+        Request request = new Request.Builder()
+                .url(Constant.SERVER_ADDRESS + Constant.IPAGE_UPDATE_MANY)
+                .put(body)
+                .addHeader(Constant.AUTHORIZATION, storage.getCurrentToken())
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                // TODO something
+                System.out.println("/image/many -failure");
+            }
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                Platform.runLater(() -> {
+                    if (response.code() == 200) {
+                        JSONObject responseJson = null;
+                        try {
+                            responseJson = new JSONObject(new String(response.body().bytes()));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        List<sample.dataTransferObject.response.ImageData> data = new ArrayList<>();
+                        JSONArray picturesData = responseJson.getJSONArray("picturesData");
+                        JSONObject imageDataJson = null;
+                        if (picturesData != null) {
+                            for (int i = 0; i < picturesData.length(); i++) {
+                                imageDataJson = picturesData.getJSONObject(i);
+                                data.add(sample.dataTransferObject.response.ImageData.builder()
+                                        .createdAt(imageDataJson.getString("createdAt"))
+                                        .picName(imageDataJson.getString("picName"))
+                                        .picSize(imageDataJson.getDouble("picSize"))
+                                        .build());
+                            }
+                        }
+                        BaseUserData baseUserData = BaseUserData.builder()
+                                .fruction(responseJson.getString("fruction"))
+                                .totoalPageCount(responseJson.getInt("totoalPageCount"))
+                                .picturesData(data)
+                                .phoneNumber(responseJson.getString("phoneNumber"))
+                                .build();
+                        MainStageServiceImpl.getInstance().loadMainStageData(baseUserData, imageData.getPage());
+                    } else {
+                        //TODO something
+                    }
                 });
 
             }

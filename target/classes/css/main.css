@@ -14,3 +14,16 @@
 #mainPane{
     -fx-alignment: center;
 }
+
+
+.check-box .box {
+    -fx-background-color: white;
+    -fx-border-color: #E9E9E9;
+    -fx-mark-color: #388e3c
+}
+
+
+
+.check-box:selected .box {
+    -fx-border-color: #388e3c;
+}

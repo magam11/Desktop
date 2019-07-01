@@ -45,11 +45,10 @@ public class DeleteDialogServiceImpl implements DeleteDialogService {
         mainStage.initStyle(StageStyle.UNDECORATED);
         Scene scene = new Scene(root, 479.0, 148.0);
         mainStage.setScene(scene);
-        mainStage.setMinHeight(427.0);
-        mainStage.setMinWidth(906.0);
+        mainStage.setMinHeight(148.0);
+        mainStage.setMinWidth(479.0);
         mainStage.show();
-        DeleteDialogController deleteDialogController = (DeleteDialogController) fxmlLoader.getController();
-        this.deleteDialogController = deleteDialogController;
+        this.deleteDialogController = (DeleteDialogController) fxmlLoader.getController();
         deleteDialogController.stageName.setText(stageName);
         deleteDialogController.deletedImageName.setText(picName);
     }
@@ -64,11 +63,10 @@ public class DeleteDialogServiceImpl implements DeleteDialogService {
             if (stageName.equals("cell")) {
                 MainStageServiceImpl.getInstance().removeImageFromCellByIndex(indexOfImageFromCell.get());
             } else { //stugel nkari hamary, ete verjinn e apa slidery pakel ete voch apa cuyc tal hajord nkary, jnjel nkari hamarov voroshvac contenty cellPag-um
+                // ETE ET HAMAROV ARDEN ET NKARY HAVAQVEL E SELECTEDiMAGES LISTUM DRANIC EL JNJEL
 //                CellServiceImpl.getInstance().removeImageFromCellByIndex(DeleteDialogServiceImpl.getInstance().indexOfImageFromCell.get());
                 try {
                     MainStageServiceImpl.getInstance().removeImageFromCellByIndex(indexOfImageFromCell.get()-1);
-
-                    System.out.println("petq e liner "+(indexOfImageFromCell.get()+(MainStageServiceImpl.getInstance().currentPageIndex.get()-1)*50));
                     // որ ցուցադրվող հաջորդ նկարի ժամանակ համարի մեկով պակաս ցույց տա,
                     SliderServiceImpl.getInstance().isIncrementFructionNumbering.set(true);
                 }catch (Exception e){
@@ -88,6 +86,29 @@ public class DeleteDialogServiceImpl implements DeleteDialogService {
     @Override
     public void closeDeleteDialog() {
         ((Stage) deleteDialogController.deletedImageName.getScene().getWindow()).close();
+    }
+
+    @Override
+    public void openConfirmationDialogForBatch() {
+        Stage mainStage = new Stage();
+        FXMLLoader fxmlLoader = null;
+        Parent root = null;
+        try {
+            fxmlLoader = new FXMLLoader(getClass().getResource("/view/dialog/deleteConfirmationDialog.fxml"));
+            root = fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        mainStage.setTitle("Confirmation dialog");
+        mainStage.initModality(Modality.APPLICATION_MODAL);
+        mainStage.initStyle(StageStyle.UNDECORATED);
+        Scene scene = new Scene(root, 479.0, 148.0);
+        mainStage.setScene(scene);
+        mainStage.setMinHeight(148.0);
+        mainStage.setMinWidth(479.0);
+        mainStage.show();
+        this.deleteDialogController = (DeleteDialogController) fxmlLoader.getController();
+        deleteDialogController.stageName.setText("main_Batch");
     }
 
 

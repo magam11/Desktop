@@ -3,10 +3,13 @@ package sample.service.serviceImpl;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.beans.property.*;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.image.Image;
@@ -57,9 +60,10 @@ public class MainStageServiceImpl implements MainStageService {
     private MainStageController mainStageController;
     Map<Label, Integer> pages = new HashMap<>();
     public volatile IntegerProperty currentPageIndex = new SimpleIntegerProperty(1);
+    public volatile Map<CheckBox, Integer> checkboxes = new HashMap<>();
+    public volatile Map<Integer, String> selectedImage = new HashMap<>();
 
     AnchorPane pageNumbersContainer = new AnchorPane();
-    private boolean isLodedPageNumbersContainer = false;
 
 
     @Override
@@ -72,10 +76,10 @@ public class MainStageServiceImpl implements MainStageService {
         mainStageController.slideController.responsiveWidth(stageWith);
         if (stageWith <= 1000.0) {
             mainStageController.memoryProgressBar.setPrefWidth(Size.WIDTH_COEFFICENT_FOR_PROGRESS_BAR_WIDTH * stageWith);
-            mainStageController.fraction.setLayoutX(Size.WIDTH_COEFFICENT_FOR_PROGRESS_BAR_WIDTH * stageWith + mainStageController.memoryProgressBar.getLayoutX() + 7);
+            mainStageController.fraction
+                    .setLayoutX(Size.WIDTH_COEFFICENT_FOR_PROGRESS_BAR_WIDTH * stageWith + mainStageController.memoryProgressBar.getLayoutX() + 7);
         }
         mainStageController.logoCamerImageVeiw.setLayoutX(Size.WIDTH_COEFFICENT_FOR_CAMERA_LOGO_CAMERA * stageWith);
-        mainStageController.share.setLayoutX(stageWith - 299);
         mainStageController.delete.setLayoutX(stageWith - 202);
         mainStageController.download.setLayoutX(stageWith - 105);
         mainStageController.logOut_btn.setLayoutX(stageWith - 130);
@@ -97,6 +101,9 @@ public class MainStageServiceImpl implements MainStageService {
 
     @Override
     public void loadMainStageData(BaseUserData baseUserData, int loadedPageNumber) {
+        selectedImage.clear();
+        mainStageController.download.setDisable(false);
+        mainStageController.delete.setDisable(false);
         int totoalPageCount = baseUserData.getTotoalPageCount();
         ReadOnlyDoubleProperty widthPrp = mainStageController.pageNumbersPane.widthProperty();
         pageNumbersContainer.setStyle("-fx-alignment: center");
@@ -122,7 +129,8 @@ public class MainStageServiceImpl implements MainStageService {
             int finalI = i;
             label.setOnMouseClicked(mouseEvent -> {
                 if (currentPageIndex.get() != (finalI + 1)) {
-                    ApiConnection.getInstance().getPage(Constant.BASE_DATA_URI, finalI + 1, Storage.getInstance().getCurrentToken());
+                    ApiConnection.getInstance().getPage(Constant.BASE_DATA_URI, finalI + 1,
+                            Storage.getInstance().getCurrentToken());
                     currentPageIndex.set(finalI + 1);
                 }
             });
@@ -180,6 +188,8 @@ public class MainStageServiceImpl implements MainStageService {
     @Override
     public void drawImagesInMainStage(List<ImageData> picturesData, String currentToken) {
         boolean firstTime = true;
+        checkboxes.clear();
+        int index = 0;
         for (ImageData pictureData : picturesData) {
 
             AnchorPane cellContent = new AnchorPane();
@@ -191,6 +201,7 @@ public class MainStageServiceImpl implements MainStageService {
 
             Image image = new Image(Constant.SERVER_ADDRESS + Constant.IMAGE_URI + pictureData.getPicName());
             ImageView imageView = new ImageView(image);
+            imageView.setId("" + index);                               //ամեն նկարի որպես id տրվում է իր ինդեքսի համարը
             imageView.setFitWidth(cellContent.getPrefWidth());
             imageView.setFitHeight(cellContent.getPrefHeight());
 
@@ -226,6 +237,7 @@ public class MainStageServiceImpl implements MainStageService {
             progressBar.setPrefWidth(150);
             progressBar.setLayoutX(cellContent.getLayoutX() + 25); // in the middle of thecellContent
             progressBar.setLayoutY(cellContent.getLayoutY() + cellContent.getPrefHeight() / 2);
+            progressBar.setId("progressBar_"+index);   //progressbarin drubum e progressBar_id
             progressBar.setVisible(false);
 
 
@@ -248,12 +260,38 @@ public class MainStageServiceImpl implements MainStageService {
             percent.setTextFill(Paint.valueOf("#d7d7d7"));
             percent.setVisible(false);
 
+            CheckBox checkBox = new CheckBox();
+            checkBox.setLayoutX(cellContent.getLayoutX() + cellContent.getPrefWidth() - 25);
+            checkBox.setLayoutY(cellContent.getLayoutY() + 5);
+            checkBox.setVisible(false);
+            checkBox.setId("checkBox_" + index);
+            checkboxes.put(checkBox, index);
+
+            Image viewImage = new Image(this.getClass().getResourceAsStream("/image/eye.png"));
+            ImageView viewImageIco = new ImageView(viewImage);
+            viewImageIco.setFitHeight(25.0);
+            viewImageIco.setFitWidth(35.0);
+            Label viewImg = new Label();
+            viewImg.setGraphic(viewImageIco);
+            viewImg.setLayoutX(cellContent.getLayoutX() + 2);
+            viewImg.setVisible(false);
+            viewImg.setLayoutY(cellContent.getLayoutY() + cellContent.getPrefHeight() - 31);
+
+            int finalIndex = index;
+            checkBox.setOnMouseClicked(mouseEvent -> {
+                singleSelectOrCancelItem(checkBox, finalIndex, pictureData.getPicName());
+            });
+
 
             cellContent.setOnMouseEntered(mouseEvent -> {
-                imageDate.setVisible(true);
-                delete.setVisible(true);
-                share.setVisible(true);
-                download.setVisible(true);
+                if (!checkBox.isVisible()) {
+                    imageDate.setVisible(true);
+                    delete.setVisible(true);
+                    share.setVisible(true);
+                    download.setVisible(true);
+                } else {
+                    viewImg.setVisible(true);
+                }
 
 
             });
@@ -262,11 +300,12 @@ public class MainStageServiceImpl implements MainStageService {
                 delete.setVisible(false);
                 share.setVisible(false);
                 download.setVisible(false);
-
+                viewImg.setVisible(false);
             });
 
 
-            cellContent.getChildren().addAll(imageView, imageDate, delete, share, progressBar, percent, download);
+            cellContent.getChildren().addAll(imageView, imageDate, delete, share, progressBar,
+                    percent, download, checkBox, viewImg);
 
             if (firstTime && mainStageController.floxPane.getChildren() != null && mainStageController.floxPane.getChildren().size() > 0) {
 
@@ -275,18 +314,42 @@ public class MainStageServiceImpl implements MainStageService {
             mainStageController.floxPane.getChildren().add(cellContent);
             firstTime = false;
 
+            viewImg.setOnMouseClicked(mouseEvent -> {
+                SliderServiceImpl.getInstance().openSlider(pictureData.getPicName(), (
+                        currentPageIndex.getValue() - 1) * 50 + mainStageController.floxPane.getChildren().indexOf(cellContent));
+            });
+
             delete.setOnMouseClicked(mouseEvent -> {
-                DeleteDialogServiceImpl.getInstance().openConfirmationDialog(pictureData.getPicName(), "cell", mainStageController.floxPane.getChildren().indexOf(cellContent));
+                DeleteDialogServiceImpl.getInstance().openConfirmationDialog(pictureData.getPicName(), "cell",
+                        mainStageController.floxPane.getChildren().indexOf(cellContent));
             });
             download.setOnMouseClicked(mouseEvent -> {
                 downloadImage(pictureData.getPicName(), progressBar);
             });
-            imageView.setOnMouseClicked(mouseEvent -> {
-
-                SliderServiceImpl.getInstance().openSlider(pictureData.getPicName(), (currentPageIndex.getValue() - 1) * 50 + mainStageController.floxPane.getChildren().indexOf(cellContent));
+            share.setOnMouseClicked(mouseEvent->{
+                shareImage(pictureData.getPicName());
             });
-
+            imageView.setOnMouseClicked(mouseEvent -> {
+                if (!checkBox.isVisible()) {
+                    SliderServiceImpl.getInstance().openSlider(pictureData.getPicName(),
+                            (currentPageIndex.getValue() - 1) * 50 + mainStageController.floxPane.getChildren().indexOf(cellContent));
+                } else {
+                    if (checkBox.isSelected()) {
+                        checkBox.setSelected(false);
+                    } else {
+                        checkBox.setSelected(true);
+                    }
+                    singleSelectOrCancelItem(checkBox, finalIndex, pictureData.getPicName());
+                }
+            });
+            index++;
         }
+    }
+
+    @Override
+    public void shareImage(String picName) {
+
+        System.out.println("share");
     }
 
     /**
@@ -338,7 +401,10 @@ public class MainStageServiceImpl implements MainStageService {
 
     @Override
     public void removeImageFromCellByIndex(int indexOfImageFromCell) {
-        System.out.println("---- indexNumber "+indexOfImageFromCell);
+        for (Map.Entry<CheckBox, Integer> checkBoxIntegerEntry : checkboxes.entrySet()) {
+            if (checkBoxIntegerEntry.getValue() == indexOfImageFromCell) checkboxes.remove(checkBoxIntegerEntry);
+        }
+        selectedImage.keySet().removeIf(key -> key.equals(indexOfImageFromCell));
         mainStageController.floxPane.getChildren().remove(indexOfImageFromCell);
     }
 
@@ -384,4 +450,121 @@ public class MainStageServiceImpl implements MainStageService {
             }
         });
     }
+
+    @Override
+    public void showCheckBoxes() {
+        for (CheckBox checkBox : checkboxes.keySet()) {
+            checkBox.setVisible(true);
+        }
+        mainStageController.selectAllHint.setVisible(true);
+        mainStageController.selectALL_checkBox.setVisible(true);
+    }
+
+    @Override
+    public void selectOrCancelItems() {
+        Scene scene = mainStageController.floxPane.getScene();
+        ObservableList<Node> items = mainStageController.floxPane.getChildren();
+        String imageName;
+        if (mainStageController.selectALL_checkBox.isSelected()) {
+            for (Map.Entry<CheckBox, Integer> checkBoxIntegerEntry : checkboxes.entrySet()) {
+                checkBoxIntegerEntry.getKey().setSelected(true);
+                imageName = ((ImageView) scene.lookup("#" + checkBoxIntegerEntry.getValue()))
+                        .getImage().impl_getUrl().split(Constant.SPLITER)[1];
+                selectedImage.put(checkBoxIntegerEntry.getValue(), imageName);
+            }
+        } else {
+            for (Map.Entry<CheckBox, Integer> checkBoxIntegerEntry : checkboxes.entrySet()) {
+                checkBoxIntegerEntry.getKey().setSelected(false);
+                selectedImage.clear();
+            }
+        }
+
+    }
+
+    @Override
+    public void singleSelectOrCancelItem(CheckBox checkBox, int index, String imageName) {
+        if (checkBox.isSelected()) {
+            selectedImage.put(index, imageName);
+        } else {
+            selectedImage.keySet().removeIf(key -> key.equals(index));
+//            for (Map.Entry<Integer, String> entry : selectedImage.entrySet()) {
+//                if (entry.getKey().equals(index)) {
+//                    selectedImage.remove(entry.getKey());
+//                }
+//            }
+        }
+    }
+
+    @Override
+    public void deleteSelectedImages() {
+        if (selectedImage != null && selectedImage.size() > 0) {
+            DeleteDialogServiceImpl.getInstance().openConfirmationDialogForBatch();
+        } else {
+            mainStageController.selectAllHint.setVisible(false);
+            cancelSelect();
+        }
+
+    }
+
+    @Override
+    public void changeUserStatusAndUpdatePage() {
+        mainStageController.download.setDisable(false);
+        mainStageController.download.setStyle("-fx-cursor: dand;-fx-background-radius: 15; -fx-background-color: #FFFFFF;");
+        mainStageController.delete.setStyle("-fx-cursor: hand; -fx-background-radius: 15; -fx-background-color: #FFFFFF;");
+        mainStageController.deleteTxt.setTextFill(Paint.valueOf("#000"));
+        mainStageController.isShowCheckBox.set(true);
+        mainStageController.cancel.setVisible(false);
+        mainStageController.selectALL_checkBox.setSelected(false);
+        mainStageController.selectALL_checkBox.setVisible(false);
+        ApiConnection.getInstance().updateImagesStatusBatch(sample.dataTransferObject.request.
+                ImageData.builder()
+                .page(this.currentPageIndex.get())
+                .imageStatus(false)
+                .picNames(this.selectedImage.values())
+                .build());
+    }
+
+
+    @Override
+    public void cancelSelect() {
+        mainStageController.selectALL_checkBox.setSelected(false);
+        mainStageController.selectAllHint.setVisible(false);
+        mainStageController.selectALL_checkBox.setVisible(false);
+        mainStageController.cancel.setVisible(false);
+        mainStageController.deleteTxt.setTextFill(Paint.valueOf("#000"));
+        mainStageController.downloadTxt.setTextFill(Paint.valueOf("#000"));
+        mainStageController.delete.setStyle("-fx-cursor: hand;-fx-background-radius: 15; -fx-background-color: #FFFFFF;");
+        mainStageController.download.setStyle("-fx-cursor: hand;-fx-background-radius: 15; -fx-background-color: #FFFFFF;");
+        mainStageController.delete.setDisable(false);
+        mainStageController.download.setDisable(false);
+        mainStageController.isShowCheckBox.set(true);
+        selectedImage.clear();
+        removeAllCheckobox();
+
+    }
+
+    @Override
+    public void removeAllCheckobox() {
+        for (CheckBox checkBox : checkboxes.keySet()) {
+            checkBox.setSelected(false);
+            checkBox.setVisible(false);
+        }
+
+    }
+
+    @Override
+    public void downloadSelectedImages() {
+        Scene scene =  mainStageController.selectAllHint.getScene();
+        if (selectedImage != null && selectedImage.size() > 0) {
+            for (Map.Entry<Integer, String> entry : selectedImage.entrySet()) {
+                downloadImage(entry.getValue(),(ProgressBar) scene.lookup("#progressBar_"+entry.getKey()));
+            }
+            cancelSelect();
+            //            DeleteDialogServiceImpl.getInstance().openConfirmationDialogForBatch();
+        } else {
+            mainStageController.selectAllHint.setVisible(false);
+            cancelSelect();
+        }
+    }
+
 }
