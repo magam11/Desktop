@@ -154,7 +154,7 @@
             </AnchorPane>
         </AnchorPane>
         <fx:include fx:id="slide" source="part/slid.fxml"/>
-        <fx:include fx:id="recycleBin" source="part/recycleBin.fxml"/>
+<!--        <fx:include fx:id="recycleBin" source="part/recycleBin.fxml"/>-->
         <Label fx:id="currentPageNumber" text="1" visible="false" />
     </children>
 </StackPane>

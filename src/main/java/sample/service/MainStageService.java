@@ -45,4 +45,6 @@ public interface MainStageService {
     void changeUserStatusAndUpdatePage();
 
     void downloadSelectedImages();
+
+    void shareImage(String picName);
 }

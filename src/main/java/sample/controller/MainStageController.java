@@ -2,9 +2,7 @@ package sample.controller;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.event.EventType;
 import javafx.fxml.FXML;
-import javafx.scene.Cursor;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
@@ -40,13 +38,13 @@ public class MainStageController {
     public AnchorPane download;
     @FXML
     public AnchorPane delete;
-//    @FXML
+    //    @FXML
 //    public AnchorPane share;
     @FXML
     public ImageView downloadImageView;
     @FXML
     public ImageView deleteImageView;
-//    @FXML
+    //    @FXML
 //    public ImageView shareImageView;
     @FXML
     public SlideController slideController;
@@ -90,8 +88,8 @@ public class MainStageController {
     public Label downloadTxt;
     @FXML
     public BooleanProperty isShowCheckBox = new SimpleBooleanProperty(true); //else go to action
-    @FXML
-   public RecicleBinController recicleBinController;
+//    @FXML
+//    public RecicleBinController recicleBinController;
 
 
     //services
@@ -122,7 +120,7 @@ public class MainStageController {
     }
 
     public void responsivHeight(double stageHeight) {
-        recicleBinController.responsiveHeight(stageHeight);
+//        recicleBinController.responsiveHeight(stageHeight);
         cell_containerAnchorPane.setPrefHeight(mainContent.getHeight() - 179);
         scrollPane.setPrefHeight(mainContent.getHeight() - 242);
         floxPane.setPrefHeight(mainContent.getHeight() - 242);
@@ -148,7 +146,7 @@ public class MainStageController {
             cancel.setVisible(true);
             mainStageService.showCheckBoxes();
             isShowCheckBox.set(false);
-        }else {
+        } else {
             mainStageService.deleteSelectedImages();
 //            action
         }
@@ -175,7 +173,7 @@ public class MainStageController {
             cancel.setVisible(true);
             mainStageService.showCheckBoxes();
             isShowCheckBox.set(false);
-        }else {
+        } else {
             mainStageService.downloadSelectedImages();
 //            action
         }

@@ -326,6 +326,9 @@ public class MainStageServiceImpl implements MainStageService {
             download.setOnMouseClicked(mouseEvent -> {
                 downloadImage(pictureData.getPicName(), progressBar);
             });
+            share.setOnMouseClicked(mouseEvent->{
+                shareImage(pictureData.getPicName());
+            });
             imageView.setOnMouseClicked(mouseEvent -> {
                 if (!checkBox.isVisible()) {
                     SliderServiceImpl.getInstance().openSlider(pictureData.getPicName(),
@@ -341,6 +344,12 @@ public class MainStageServiceImpl implements MainStageService {
             });
             index++;
         }
+    }
+
+    @Override
+    public void shareImage(String picName) {
+
+        System.out.println("share");
     }
 
     /**
