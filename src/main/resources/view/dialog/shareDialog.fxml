@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="333.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.dialogController.ShareDialogController">
+   <children>
+      <TextField fx:id="sharedImageLink" layoutX="14.0" layoutY="116.0" prefHeight="44.0" prefWidth="423.0" />
+      <Label layoutX="14.0" layoutY="28.0" prefHeight="44.0" prefWidth="222.0" text="Share">
+         <font>
+            <Font name="System Bold" size="41.0" />
+         </font>
+      </Label>
+      <Label layoutX="456.0" layoutY="116.0" onMouseClicked="#copyLink" prefHeight="44.0" prefWidth="131.0" style="-fx-background-color: #3C8B42; -fx-cursor: hand;" text="Copy" textFill="WHITE">
+         <font>
+            <Font name="System Bold" size="28.0" />
+         </font>
+         <padding>
+            <Insets left="30.0" />
+         </padding>
+      </Label>
+      <Label layoutX="557.0" style="-fx-cursor: hand" layoutY="13.0" onMouseClicked="#closeShareDialog" prefHeight="19.0" prefWidth="29.0" text="X">
+         <font>
+            <Font name="System Bold" size="22.0" />
+         </font>
+         <padding>
+            <Insets left="8.0" />
+         </padding>
+      </Label>
+      <ImageView fx:id="faceBookImageView" fitHeight="68.0" fitWidth="74.0" layoutX="26.0" layoutY="191.0" onMouseClicked="#shareOnFaceBook" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+         <image>
+            <Image url="@../../image/facebook.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="linkedinImageView" fitHeight="59.0" fitWidth="68.0" layoutX="118.0" layoutY="196.0" onMouseClicked="#shareOnLinkedin" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+         <image>
+            <Image url="@../../image/linkedin.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="twitterImageView" fitHeight="64.0" fitWidth="64.0" layoutX="205.0" layoutY="194.0" onMouseClicked="#shareOnTwitter" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+         <image>
+            <Image url="@../../image/twitter.png" />
+         </image>
+      </ImageView>
+      <ImageView fx:id="pinterestImageView" fitHeight="59.0" fitWidth="64.0" layoutX="300.0" layoutY="197.0" onMouseClicked="#shareOnPinterest" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+         <image>
+            <Image url="@../../image/pinterest.png" />
+         </image>
+      </ImageView>
+      <Label layoutX="32.0" layoutY="265.0" prefHeight="17.0" prefWidth="53.0" text="FaceBook" />
+      <Label layoutX="217.0" layoutY="265.0" prefHeight="17.0" prefWidth="41.0" text="Twitter" />
+      <Label layoutX="126.0" layoutY="265.0" prefHeight="17.0" prefWidth="53.0" text="Linkedin" />
+      <Label layoutX="304.0" layoutY="265.0" prefHeight="17.0" prefWidth="53.0" text="Pinterest" />
+   </children>
+</AnchorPane>

@@ -1,5 +1,9 @@
 package sample.service.serviceImpl;
 
+import com.restfb.DefaultFacebookClient;
+import com.restfb.FacebookClient;
+import com.restfb.Parameter;
+import com.restfb.types.FacebookType;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.beans.property.*;
@@ -12,6 +16,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -20,7 +25,9 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import okhttp3.Response;
 import org.json.JSONArray;
@@ -35,13 +42,16 @@ import sample.service.MainStageService;
 import sample.storage.Storage;
 import sample.util.Helper;
 
+import java.awt.*;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.*;
+import java.util.List;
 
 public class MainStageServiceImpl implements MainStageService {
     private static MainStageServiceImpl mainStageService = new MainStageServiceImpl();
@@ -237,7 +247,7 @@ public class MainStageServiceImpl implements MainStageService {
             progressBar.setPrefWidth(150);
             progressBar.setLayoutX(cellContent.getLayoutX() + 25); // in the middle of thecellContent
             progressBar.setLayoutY(cellContent.getLayoutY() + cellContent.getPrefHeight() / 2);
-            progressBar.setId("progressBar_"+index);   //progressbarin drubum e progressBar_id
+            progressBar.setId("progressBar_" + index);   //progressbarin drubum e progressBar_id
             progressBar.setVisible(false);
 
 
@@ -326,7 +336,7 @@ public class MainStageServiceImpl implements MainStageService {
             download.setOnMouseClicked(mouseEvent -> {
                 downloadImage(pictureData.getPicName(), progressBar);
             });
-            share.setOnMouseClicked(mouseEvent->{
+            share.setOnMouseClicked(mouseEvent -> {
                 shareImage(pictureData.getPicName());
             });
             imageView.setOnMouseClicked(mouseEvent -> {
@@ -346,11 +356,6 @@ public class MainStageServiceImpl implements MainStageService {
         }
     }
 
-    @Override
-    public void shareImage(String picName) {
-
-        System.out.println("share");
-    }
 
     /**
      * Download image from server
@@ -554,17 +559,38 @@ public class MainStageServiceImpl implements MainStageService {
 
     @Override
     public void downloadSelectedImages() {
-        Scene scene =  mainStageController.selectAllHint.getScene();
+        Scene scene = mainStageController.selectAllHint.getScene();
         if (selectedImage != null && selectedImage.size() > 0) {
             for (Map.Entry<Integer, String> entry : selectedImage.entrySet()) {
-                downloadImage(entry.getValue(),(ProgressBar) scene.lookup("#progressBar_"+entry.getKey()));
+                downloadImage(entry.getValue(), (ProgressBar) scene.lookup("#progressBar_" + entry.getKey()));
             }
             cancelSelect();
-            //            DeleteDialogServiceImpl.getInstance().openConfirmationDialogForBatch();
         } else {
             mainStageController.selectAllHint.setVisible(false);
             cancelSelect();
         }
+    }
+
+    @Override
+    public void shareImage(String picName) {
+        Stage shareDialogStage = new Stage();
+        FXMLLoader fxmlLoader = null;
+        Parent root = null;
+        try {
+            fxmlLoader = new FXMLLoader(getClass().getResource("/view/dialog/shareDialog.fxml"));
+            root = fxmlLoader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        Scene scene = new Scene(root);
+        shareDialogStage.setScene(scene);
+        shareDialogStage.initStyle(StageStyle.UNDECORATED);
+        shareDialogStage.initModality(Modality.APPLICATION_MODAL);
+        shareDialogStage.setResizable(false);
+        TextField sharedImageLink = (TextField) scene.lookup("#sharedImageLink");
+        sharedImageLink.setText(Constant.SERVER_ADDRESS + Constant.IMAGE_URI + picName);
+        shareDialogStage.show();
     }
 
 }
