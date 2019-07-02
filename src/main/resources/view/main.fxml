@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0" prefWidth="906.0" style="-fx-background-color: #FAFAFA" stylesheets="/css/main.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.MainStageController">
+<StackPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0" prefWidth="906.0" style="-fx-background-color: #FAFAFA" stylesheets="/css/main.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.MainStageController">
     <children>
         <AnchorPane fx:id="mainContent" prefHeight="840.0" prefWidth="906.0">
 
@@ -94,9 +94,9 @@
 <!--                                </children>-->
 <!--                            </AnchorPane>-->
 <!--                            onMouseClicked="#downloadSelectedImage"-->
-                            <AnchorPane fx:id="download" layoutX="785.0"  layoutY="32.0" onMouseClicked="#downloadSelectedImage" prefHeight="27.0" prefWidth="91.0" style="-fx-background-radius: 15; -fx-background-color: #FFFFFF; -fx-cursor: hand;">
+                            <AnchorPane fx:id="download" layoutX="785.0" layoutY="32.0" onMouseClicked="#downloadSelectedImage" prefHeight="27.0" prefWidth="91.0" style="-fx-background-radius: 15; -fx-background-color: #FFFFFF; -fx-cursor: hand;">
                                 <children>
-                                    <Label layoutX="26.0" fx:id="downloadTxt" layoutY="5.0" prefHeight="17.0" prefWidth="59.0" text="Download">
+                                    <Label fx:id="downloadTxt" layoutX="26.0" layoutY="5.0" prefHeight="17.0" prefWidth="59.0" text="Download">
                                         <font>
                                             <Font name="System Bold" size="12.0" />
                                         </font>
@@ -128,19 +128,21 @@
             </VBox>
             <AnchorPane fx:id="cell_containerAnchorPane" layoutX="-2.0" layoutY="133.0" prefHeight="660.0" prefWidth="906.0" style="-fx-background-color: #FAFAFA;">
                 <children>
-                    <AnchorPane fx:id="filterPane" layoutY="-1.0" prefHeight="63.0" prefWidth="906.0" style="-fx-background-color: #FAFAFA;">
+                    <AnchorPane fx:id="filterPane" layoutY="-1.0" prefHeight="81.0" prefWidth="908.0" style="-fx-background-color: #FAFAFA;">
                   <children>
-                     <Label fx:id="selectAllHint" layoutX="14.0" layoutY="23.0" prefHeight="17.0" prefWidth="59.0" text=" Select All">
+                     <Label fx:id="selectAllHint" layoutX="14.0" layoutY="8.0" prefHeight="17.0" prefWidth="59.0" text=" Select All">
                         <font>
                            <Font name="System Bold" size="12.0" />
                         </font>
                      </Label>
-                     <CheckBox fx:id="selectALL_checkBox" layoutX="80.0" layoutY="23.0" mnemonicParsing="false" onMouseClicked="#selectOrCancelItems" prefHeight="17.0" prefWidth="17.0" style="-fx-cursor: hand" text="CheckBox" />
-                     <Label fx:id="cancel" layoutX="121.0" onMouseClicked="#cancelSelected" style="-fx-cursor: hand" layoutY="23.0" prefHeight="17.0" prefWidth="48.0" text="Cancel">
+                     <CheckBox fx:id="selectALL_checkBox" layoutX="80.0" layoutY="8.0" mnemonicParsing="false" onMouseClicked="#selectOrCancelItems" prefHeight="17.0" prefWidth="17.0" style="-fx-cursor: hand" text="CheckBox" />
+                     <Label fx:id="cancel" layoutX="121.0" layoutY="9.0" onMouseClicked="#cancelSelected" prefHeight="17.0" prefWidth="48.0" style="-fx-cursor: hand" text="Cancel">
                         <font>
                            <Font name="System Bold" size="12.0" />
                         </font>
                      </Label>
+                        <AnchorPane fx:id="pageNumbersPane" layoutX="2.0" layoutY="25.0" prefHeight="46.0" prefWidth="906.0" style="-fx-background-color: #FAFAFA;">
+            </AnchorPane>
                   </children></AnchorPane>
                     <ScrollPane fx:id="scrollPane" layoutY="62.0" prefHeight="599.0" prefWidth="906.0">
                         <content>
@@ -150,10 +152,8 @@
                     </ScrollPane>
                 </children>
             </AnchorPane>
-            <AnchorPane fx:id="pageNumbersPane" layoutY="795.0" prefHeight="46.0" prefWidth="906.0" style="-fx-background-color: #FAFAFA;">
-            </AnchorPane>
         </AnchorPane>
-<!--        <fx:include fx:id="slide" source="part/slid.fxml"/>-->
+        <fx:include fx:id="slide" source="part/slid.fxml"/>
 <!--        <fx:include fx:id="recycleBin" source="part/recycleBin.fxml"/>-->
         <Label fx:id="currentPageNumber" text="1" visible="false" />
 <!--        <fx:include source="part/loader.fxml" />-->

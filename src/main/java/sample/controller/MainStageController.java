@@ -129,7 +129,7 @@ public class MainStageController {
         floxPane.setPrefHeight(mainContent.getHeight() - 242);
 
 //        pageNumbersPane.setLayoutY(floxPane.getLayoutY()+floxPane.getPrefHeight());
-        pageNumbersPane.setLayoutY(mainContent.getHeight() - 50);
+//        pageNumbersPane.setLayoutY(mainContent.getHeight() - 50);
 
         slideController.responsiveHeght(stageHeight);
     }
