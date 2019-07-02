@@ -19,16 +19,34 @@ public class progressi extends Application {
     static double ii = 0;
 
     // launch the application 
-    public void start(Stage s) throws Exception {
-        s.setTitle("creating progressIndicator");
+    public void start(Stage stage) throws Exception {
+        stage.setTitle("creating progressIndicator");
+
+
+
+
+        BorderPane anchorPane = new BorderPane();
+//        anchorPane.setStyle("-fx-alignment: center");
+
+
+
+        StackPane r = new StackPane();
+
+
+//        r.setStyle("-fx-alignment: center");
+
+
 
         ProgressIndicator pb = new ProgressIndicator();
-        pb.setStyle("-fx-progress-color: red;");
-        StackPane r = new StackPane();
-        r.getChildren().add(pb);
+        pb.setStyle("-fx-progress-color: #388e3c;");
+        pb.setMaxHeight(300);
+        pb.setMaxWidth(300);
+        anchorPane.setCenter(pb);
+        r.getChildren().add(anchorPane);
         Scene sc = new Scene(r, 200, 200);
-        s.setScene(sc);
-        s.show();
+
+        stage.setScene(sc);
+        stage.show();
     }
 
     public static void main(String args[]) {

@@ -153,8 +153,9 @@
             <AnchorPane fx:id="pageNumbersPane" layoutY="795.0" prefHeight="46.0" prefWidth="906.0" style="-fx-background-color: #FAFAFA;">
             </AnchorPane>
         </AnchorPane>
-        <fx:include fx:id="slide" source="part/slid.fxml"/>
+<!--        <fx:include fx:id="slide" source="part/slid.fxml"/>-->
 <!--        <fx:include fx:id="recycleBin" source="part/recycleBin.fxml"/>-->
         <Label fx:id="currentPageNumber" text="1" visible="false" />
+<!--        <fx:include source="part/loader.fxml" />-->
     </children>
 </StackPane>

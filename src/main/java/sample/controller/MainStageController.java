@@ -13,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
@@ -88,6 +89,8 @@ public class MainStageController {
     public Label downloadTxt;
     @FXML
     public BooleanProperty isShowCheckBox = new SimpleBooleanProperty(true); //else go to action
+    @FXML
+    public StackPane mainPane;
 //    @FXML
 //    public RecicleBinController recicleBinController;
 

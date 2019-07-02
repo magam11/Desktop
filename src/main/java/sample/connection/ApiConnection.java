@@ -1,7 +1,6 @@
 package sample.connection;
 
 
-import com.sun.xml.internal.bind.v2.runtime.reflect.opt.Const;
 import javafx.application.Platform;
 import okhttp3.*;
 import org.json.JSONArray;
@@ -21,7 +20,6 @@ import sample.storage.Storage;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class ApiConnection {

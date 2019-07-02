@@ -8,6 +8,14 @@
     -fx-text-box-border: #388e3c;
     /*-fx-control-inner-background: #ebfbe1;*/
 }
+/*
+.progress-indicator:indeterminate > .spinner {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-background-radius: 0;
+}
+*/
+
 .scroll-pane > .viewport {
     -fx-background-color: transparent;
 }

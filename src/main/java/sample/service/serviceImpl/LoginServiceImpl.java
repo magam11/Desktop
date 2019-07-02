@@ -1,10 +1,15 @@
 package sample.service.serviceImpl;
 
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
+import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import okhttp3.Response;
 import org.json.JSONArray;
@@ -19,16 +24,20 @@ import sample.dataTransferObject.response.AuthenticationResponse;
 import sample.dataTransferObject.response.BaseUserData;
 import sample.dataTransferObject.response.ImageData;
 import sample.service.LoginService;
-import sample.service.MainStageService;
-import sample.storage.Storage;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class LoginServiceImpl implements LoginService {
     private static LoginServiceImpl instance = new LoginServiceImpl();
 
+    BooleanProperty showLoader = new SimpleBooleanProperty(true);
+    Timer timer;
+    ProgressIndicator pb = new ProgressIndicator();
+    MainStageController mainStageController;
 
     public static LoginServiceImpl getInstance() {
         return instance;
@@ -58,7 +67,7 @@ public class LoginServiceImpl implements LoginService {
         ApiConnection.getInstance().loginConnection(Constant.LOGIN_URI, AuthenticationRequest.builder()
                 .phoneNumber(phoneNumber)
                 .password(password)
-                .build(),remember);
+                .build(), remember);
 
     }
 
@@ -89,7 +98,7 @@ public class LoginServiceImpl implements LoginService {
                     .totoalPageCount(responseJson.getInt("totoalPageCount"))
                     .picturesData(imageData)
                     .phoneNumber(responseJson.getString("phoneNumber"))
-                    .build(),1);
+                    .build(), 1);
         } else if (response.code() == 401) {
             authenticationFailure(MessageNotifications.status401_text);
         } else if (response.code() == 403) {
@@ -102,7 +111,7 @@ public class LoginServiceImpl implements LoginService {
     }
 
     @Override
-    public void openMainStage(BaseUserData baseUserData,int loadedPageNumber) {
+    public void openMainStage(BaseUserData baseUserData, int loadedPageNumber) {
         Platform.runLater(() -> {
 
             ((Stage) loginController.passwordTextField.getScene().getWindow()).close();
@@ -122,27 +131,56 @@ public class LoginServiceImpl implements LoginService {
             mainStage.setScene(scene);
             mainStage.setMinHeight(427.0);
             mainStage.setMinWidth(906.0);
+            mainStageController = (MainStageController) fxmlLoader.getController();
             mainStage.show();
-            fxmlLoader.getController();
-            FXMLLoader finalFxmlLoader = fxmlLoader;
-            MainStageController controller = (MainStageController) finalFxmlLoader.getController();
-            MainStageServiceImpl.getInstance().loadMainStageData(baseUserData,loadedPageNumber);
-            controller.mainStage = mainStage;
-            mainStage.widthProperty().addListener((obs, oldVal, newVal) -> {
-                ((MainStageController) finalFxmlLoader.getController()).responsivWidth(newVal.doubleValue());
+//                showLoader(mainStageController);
+
+            FXMLLoader finalFxmlLoader1 = fxmlLoader;
+            Platform.runLater(() -> {
+                FXMLLoader finalFxmlLoader = finalFxmlLoader1;
+                MainStageController controller = (MainStageController) finalFxmlLoader.getController();
+                MainStageServiceImpl.getInstance().loadMainStageData(baseUserData, loadedPageNumber);
+//                closeLoader(mainStageController);
+                controller.mainStage = mainStage;
+                mainStage.widthProperty().addListener((obs, oldVal, newVal) -> {
+                    ((MainStageController) finalFxmlLoader.getController()).responsivWidth(newVal.doubleValue());
+                });
+                mainStage.heightProperty().addListener((obs, oldVal, newVal) -> {
+                    ((MainStageController) finalFxmlLoader.getController()).responsivHeight(newVal.doubleValue());
+                });
+                mainStage.setOnCloseRequest(we -> {
+                    System.exit(0);
+                });
             });
-            mainStage.heightProperty().addListener((obs, oldVal, newVal) -> {
-                ((MainStageController) finalFxmlLoader.getController()).responsivHeight(newVal.doubleValue());
-            });
-            mainStage.setOnCloseRequest(we -> {
-                System.exit(0);
-            });
+
 
         });
 
 
     }
 
+
+    @Override
+    public void showLoader(MainStageController mainStageController) {
+
+        LoaderTask loaderTask = new LoaderTask();
+        timer = new Timer("loader");
+        timer.scheduleAtFixedRate(loaderTask, 0, 999999999);
+
+
+    }
+
+    @Override
+    public void closeLoader(MainStageController mainStageController) {
+        StackPane mainPane = mainStageController.mainPane;
+        StackPane loader = (StackPane) mainPane.getScene().lookup("#loader");
+        showLoader.setValue(false);
+        mainPane.getChildren().remove(loader);
+        timer.cancel();
+        System.out.println("loadery jnjvec");
+
+
+    }
 
     @Override
     public void authenticationFailure(String message) {
@@ -158,4 +196,24 @@ public class LoginServiceImpl implements LoginService {
     }
 
 
+    class LoaderTask extends TimerTask {
+        @Override
+        public void run() {
+            final int[] progress = {0};
+            Platform.runLater(() -> {
+                showLoader.setValue(true);
+                StackPane loader = new StackPane();
+                loader.setId("loader");
+                BorderPane anchorPane = new BorderPane();
+                pb.setStyle("-fx-progress-color: #388e3c;");
+                pb.setMaxHeight(300);
+                pb.setMaxWidth(300);
+                anchorPane.setCenter(pb);
+                loader.getChildren().add(anchorPane);
+                mainStageController.mainPane.getChildren().add(3, loader);
+                System.out.println("ashxatec");
+            });
+
+        }
+    }
 }
