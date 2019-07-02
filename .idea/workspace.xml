@@ -2,8 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="logini ejn e havaqvum&#10;mejy ka shadowi orinak&#10;verjacel e logini eji viewi havaqumy&#10;havaqvel e main eji headery">
-      <change beforePath="$PROJECT_DIR$/src/main/java/sample/controller/MainStageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/controller/MainStageController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/view/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/main.fxml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -118,8 +117,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/MainStageServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="174">
-              <caret line="475" column="80" selection-start-line="475" selection-start-column="60" selection-end-line="475" selection-end-column="80" />
+            <state relative-caret-position="344">
+              <caret line="482" column="38" lean-forward="true" selection-start-line="482" selection-start-column="38" selection-end-line="482" selection-end-column="38" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -708,11 +707,10 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="343881000" />
+    <option name="totallyTimeSpent" value="345479000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1918" height="1047" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.26372445" />
       <window_info id="Structure" order="1" weight="0.25" />
@@ -724,7 +722,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32936078" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.32713348" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.37199125" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.37199125" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -737,7 +735,7 @@
       <window_info anchor="bottom" id="Messages" order="13" weight="0.32932165" />
       <window_info anchor="bottom" id="Docker" order="14" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="15" />
-      <window_info anchor="bottom" id="Terminal" order="16" weight="0.032822758" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="16" visible="true" weight="0.4420131" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -1170,8 +1168,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/MainStageServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="174">
-          <caret line="475" column="80" selection-start-line="475" selection-start-column="60" selection-end-line="475" selection-end-column="80" />
+        <state relative-caret-position="344">
+          <caret line="482" column="38" lean-forward="true" selection-start-line="482" selection-start-column="38" selection-end-line="482" selection-end-column="38" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
