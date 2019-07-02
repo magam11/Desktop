@@ -3,10 +3,7 @@ package sample.controller;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.fxml.FXML;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -17,10 +14,13 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 import sample.service.MainStageService;
 import sample.service.serviceImpl.MainStageServiceImpl;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.MonthDay;
 
 public class MainStageController {
     @FXML
@@ -91,6 +91,16 @@ public class MainStageController {
     public BooleanProperty isShowCheckBox = new SimpleBooleanProperty(true); //else go to action
     @FXML
     public StackPane mainPane;
+    @FXML
+    public ImageView search;
+    @FXML
+    public DatePicker toDate;
+    @FXML
+    public Label toHint;
+    @FXML
+    public DatePicker fromDate;
+    @FXML
+    public Label filterHint;
 //    @FXML
 //    public RecicleBinController recicleBinController;
 
@@ -99,6 +109,36 @@ public class MainStageController {
     private MainStageService mainStageService = MainStageServiceImpl.getInstance();
 
     public void initialize() {
+        final Callback<DatePicker, DateCell> dayCellFactory = new Callback<DatePicker, DateCell>() {
+            public DateCell call(final DatePicker datePicker) {
+                return new DateCell() {
+
+                    @Override public void updateItem(LocalDate item, boolean empty) {
+                        super.updateItem(item, empty);
+
+                        if (MonthDay.from(item).equals(MonthDay.of(7, 15)) &&
+                                !(getStyleClass().contains("next-month") || getStyleClass().contains("previous-month"))
+                        ) {
+                            setTooltip(new Tooltip("Beware the Ides of March!"));
+                            setStyle("-fx-background-color: #ff4444;");
+                       }
+//                        if(empty){
+//                            setStyle("-fx-background-color: #ff4444;");
+//                        }
+//                        else {
+//                            setTooltip(null);
+//                            setStyle(null);
+//                        }
+                    }
+                };
+            }
+        };
+
+//        DatePicker picker = new DatePicker();
+        toDate.setDayCellFactory(dayCellFactory);
+
+
+
         cancel.setVisible(false);
         selectALL_checkBox.setText("");
         selectAllHint.setVisible(false);
@@ -119,18 +159,18 @@ public class MainStageController {
     }
 
     public void responsivWidth(double stageWith) {
+        fromDate.setLayoutX(stageWith-298);
+        filterHint.setLayoutX(stageWith-423);
+        toHint.setLayoutX(stageWith-188);
+        search.setLayoutX(stageWith-51);
+        toDate.setLayoutX(stageWith-167);
         mainStageService.responsivWidth(stageWith);
     }
 
     public void responsivHeight(double stageHeight) {
-//        recicleBinController.responsiveHeight(stageHeight);
         cell_containerAnchorPane.setPrefHeight(mainContent.getHeight() - 179);
-        scrollPane.setPrefHeight(mainContent.getHeight() - 242);
-        floxPane.setPrefHeight(mainContent.getHeight() - 242);
-
-//        pageNumbersPane.setLayoutY(floxPane.getLayoutY()+floxPane.getPrefHeight());
-//        pageNumbersPane.setLayoutY(mainContent.getHeight() - 50);
-
+        scrollPane.setPrefHeight(mainContent.getHeight() - 220);
+        floxPane.setPrefHeight(mainContent.getHeight() - 220);
         slideController.responsiveHeght(stageHeight);
     }
 

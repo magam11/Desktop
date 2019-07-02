@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.ScrollPane?>
@@ -13,7 +14,12 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0" prefWidth="906.0" style="-fx-background-color: #FAFAFA" stylesheets="/css/main.css" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.MainStageController">
+<StackPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+           minWidth="-Infinity"
+           prefHeight="840.0" prefWidth="906.0" style="-fx-background-color: #FAFAFA"
+           stylesheets="/css/main.css"
+           xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
+           fx:controller="sample.controller.MainStageController">
     <children>
         <AnchorPane fx:id="mainContent" prefHeight="840.0" prefWidth="906.0">
 
@@ -128,7 +134,7 @@
             </VBox>
             <AnchorPane fx:id="cell_containerAnchorPane" layoutX="-2.0" layoutY="133.0" prefHeight="660.0" prefWidth="906.0" style="-fx-background-color: #FAFAFA;">
                 <children>
-                    <AnchorPane fx:id="filterPane" layoutY="-1.0" prefHeight="81.0" prefWidth="908.0" style="-fx-background-color: #FAFAFA;">
+                    <AnchorPane fx:id="filterPane" layoutY="-1.0" prefHeight="82.0" prefWidth="908.0" style="-fx-background-color: #FAFAFA;">
                   <children>
                      <Label fx:id="selectAllHint" layoutX="14.0" layoutY="8.0" prefHeight="17.0" prefWidth="59.0" text=" Select All">
                         <font>
@@ -141,12 +147,29 @@
                            <Font name="System Bold" size="12.0" />
                         </font>
                      </Label>
-                        <AnchorPane fx:id="pageNumbersPane" layoutX="2.0" layoutY="25.0" prefHeight="46.0" prefWidth="906.0" style="-fx-background-color: #FAFAFA;">
+                        <AnchorPane fx:id="pageNumbersPane" layoutX="2.0" layoutY="42.0" prefHeight="46.0" prefWidth="906.0" style="-fx-background-color: #FAFAFA;">
             </AnchorPane>
+                     <DatePicker fx:id="toDate" layoutX="739.0" layoutY="5.0" prefHeight="25.0" prefWidth="106.0" />
+                     <DatePicker fx:id="fromDate" layoutX="608.0" layoutY="5.0" prefHeight="25.0" prefWidth="106.0" />
+                     <Label fx:id="toHint" layoutX="718.0" layoutY="9.0" prefHeight="17.0" prefWidth="19.0" text="To">
+                        <font>
+                           <Font name="System Bold" size="13.0" />
+                        </font>
+                     </Label>
+                     <Label layoutX="483.0" fx:id="filterHint" layoutY="9.0" prefHeight="19.0" prefWidth="121.0" text="Filter by date: From">
+                        <font>
+                           <Font name="System Bold" size="13.0" />
+                        </font>
+                     </Label>
+                     <ImageView fx:id="search" fitHeight="22.0" fitWidth="23.0" layoutX="855.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                        <image>
+                           <Image url="@../image/galochka.png" />
+                        </image>
+                     </ImageView>
                   </children></AnchorPane>
-                    <ScrollPane fx:id="scrollPane" layoutY="62.0" prefHeight="599.0" prefWidth="906.0">
+                    <ScrollPane fx:id="scrollPane" layoutY="92.0" prefHeight="611.0" prefWidth="906.0">
                         <content>
-                            <FlowPane fx:id="floxPane" prefHeight="597.0" prefWidth="897.0" style="-fx-alignment: center;" />
+                            <FlowPane fx:id="floxPane" prefHeight="607.0" prefWidth="897.0" style="-fx-alignment: center;" />
 
                         </content>
                     </ScrollPane>

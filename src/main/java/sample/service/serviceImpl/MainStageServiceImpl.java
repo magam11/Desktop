@@ -127,7 +127,7 @@ public class MainStageServiceImpl implements MainStageService {
             label = new Label(String.valueOf(i + 1));
             label.setLayoutX(widthPrp.getValue() / 2 - (totoalPageCount - 1) * 20 + i * 20);
             label.setFont(Font.font(null, FontWeight.BOLD, 14));
-            label.setId(String.valueOf(i + 1));
+            label.setId(String.valueOf("page_"+i + 1));
             if ((i + 1) == loadedPageNumber) {
                 label.setTextFill(Paint.valueOf("#388e3c"));
                 label.setUnderline(true);
