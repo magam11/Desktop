@@ -139,7 +139,7 @@ public class LoginServiceImpl implements LoginService {
             Platform.runLater(() -> {
                 FXMLLoader finalFxmlLoader = finalFxmlLoader1;
                 MainStageController controller = (MainStageController) finalFxmlLoader.getController();
-                MainStageServiceImpl.getInstance().loadMainStageData(baseUserData, loadedPageNumber);
+                MainStageServiceImpl.getInstance().loadMainStageData(baseUserData, loadedPageNumber,"general");
 //                closeLoader(mainStageController);
                 controller.mainStage = mainStage;
                 mainStage.widthProperty().addListener((obs, oldVal, newVal) -> {

@@ -212,6 +212,7 @@ public class ApiConnection {
                 // TODO something
                 System.out.println("/image/many -failure");
             }
+
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 Platform.runLater(() -> {
@@ -241,7 +242,8 @@ public class ApiConnection {
                                 .picturesData(data)
                                 .phoneNumber(responseJson.getString("phoneNumber"))
                                 .build();
-                        MainStageServiceImpl.getInstance().loadMainStageData(baseUserData, imageData.getPage());
+
+                        MainStageServiceImpl.getInstance().loadMainStageData(baseUserData, imageData.getPage(), "general");
                     } else {
                         //TODO something
                     }
@@ -249,5 +251,69 @@ public class ApiConnection {
 
             }
         });
+    }
+
+    @Connection(uri = "/image/page/{page}", requestParam = {"fromDate", "toDate"}, method = "GET", pathVariable = "page")
+    public void getDataByInterval(String fromDate, String toDate, int page) {
+
+        fromDate = fromDate == null ? "" : fromDate;
+        toDate = toDate == null ? "" : toDate;
+        Request request = new Request.Builder()
+                .url(Constant.SERVER_ADDRESS + String.format("image/page/%s?fromDate=%s&toDate=%s", page, fromDate, toDate))
+                .addHeader(Constant.AUTHORIZATION, storage.getCurrentToken())
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                System.out.println("image/page/{page}?fromDate=%s&toDate=%s -failure");
+                //TODO something
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.code() == 200) {
+                    JSONObject responseJson = null;
+                    List<sample.dataTransferObject.response.ImageData> imageData = new ArrayList<>();
+                    try {
+                        responseJson = new JSONObject(new String(response.body().bytes()));
+                        JSONArray picturesData = responseJson.getJSONArray("picturesData");
+                        JSONObject imageDataJson = null;
+                        if (picturesData != null) {
+                            for (int i = 0; i < picturesData.length(); i++) {
+                                System.out.println();
+                                imageDataJson = picturesData.getJSONObject(i);
+                                imageData.add(sample.dataTransferObject.response.ImageData.builder()
+                                        .createdAt(imageDataJson.getString("createdAt"))
+                                        .picName(imageDataJson.getString("picName"))
+                                        .picSize(imageDataJson.getDouble("picSize"))
+                                        .build());
+                            }
+                        }
+                        JSONObject finalResponseJson = responseJson;
+                        System.out.println("totoalPageCount "+finalResponseJson.getInt("totoalPageCount"));
+
+                        System.out.println("imageData "+imageData);
+                        System.out.println("imageDatasize "+imageData.size());
+                        Platform.runLater(() -> {
+                            MainStageServiceImpl.getInstance().loadMainStageData(BaseUserData.builder()
+                                    .fruction(finalResponseJson.getString("fruction"))
+                                    .totoalPageCount(finalResponseJson.getInt("totoalPageCount"))
+                                    .picturesData(imageData)
+//                                .phoneNumber(responseJson.getString("phoneNumber"))
+                                    .build(), page, "filter_search");
+                        });
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+//                    TODO something
+                    System.out.println("image/page/{page}?fromDate=%s&toDate=%s else blok");
+                    System.out.println(response.code());
+                }
+
+            }
+        });
+
     }
 }

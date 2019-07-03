@@ -13,7 +13,7 @@
 //    @FXML
 //    public ScrollPane scrollPane;
 //    @FXML
-//    public FlowPane floxPane;
+//    public FlowPane flowPane;
 //    @FXML
 //    public AnchorPane filterPane;
 //    @FXML
@@ -30,13 +30,13 @@
 //
 //    public void initialize(){
 //        cellService.initilizeCellController(this);
-//        floxPane.setPadding(new Insets(50,0,0,0));
+//        flowPane.setPadding(new Insets(50,0,0,0));
 //        scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 //        scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 //    }
 //
 //    public void responsiveWidthForCe(double stageWith) {
-//        floxPane.setPrefWidth(stageWith-10);
+//        flowPane.setPrefWidth(stageWith-10);
 //
 //    }
 //

@@ -16,7 +16,7 @@ public interface MainStageService {
 
     void initializeMainStageController(MainStageController mainStageController);
 
-    void loadMainStageData(BaseUserData baseUserData,int loadedPageNumber);
+    void loadMainStageData(BaseUserData baseUserData,int loadedPageNumber,String filter_search);
 
 
     void logOut() throws IOException;

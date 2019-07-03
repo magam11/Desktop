@@ -2,6 +2,8 @@ package sample.controller;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
@@ -15,12 +17,12 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import sample.connection.ApiConnection;
 import sample.service.MainStageService;
 import sample.service.serviceImpl.MainStageServiceImpl;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.MonthDay;
 
 public class MainStageController {
     @FXML
@@ -70,7 +72,7 @@ public class MainStageController {
     @FXML
     public AnchorPane pageNumbersPane;
     @FXML
-    public FlowPane floxPane;
+    public FlowPane flowPane;
     @FXML
     public Label memoryHint;
     @FXML
@@ -95,12 +97,16 @@ public class MainStageController {
     public ImageView search;
     @FXML
     public DatePicker toDate;
-    @FXML
-    public Label toHint;
+
     @FXML
     public DatePicker fromDate;
     @FXML
     public Label filterHint;
+    @FXML
+    public Button fromDateCancel;
+    public Button toDateCancel;
+    StringProperty startDate = new SimpleStringProperty();
+    StringProperty endDate = new SimpleStringProperty();
 //    @FXML
 //    public RecicleBinController recicleBinController;
 
@@ -109,26 +115,49 @@ public class MainStageController {
     private MainStageService mainStageService = MainStageServiceImpl.getInstance();
 
     public void initialize() {
+        fromDateCancel.setVisible(false);
+        toDateCancel.setVisible(false);
+        fromDateCancel.setStyle("-fx-background-image: url('/image/cancelFilter.png');-fx-background-repeat: no-repeat;" +
+                "    -fx-background-position: center; -fx-background-size: 25px 25px;-fx-cursor: hand");
+        toDateCancel.setStyle("-fx-background-image: url('/image/cancelFilter.png');-fx-background-repeat: no-repeat;" +
+                "    -fx-background-position: center; -fx-background-size: 25px 25px;-fx-cursor: hand");
+        search.setVisible(false);
+        fromDate.valueProperty().addListener((observable, oldValue, newValue) -> {
+
+            if(newValue!=null){
+                startDate.setValue(newValue.toString());
+                search.setVisible(true);
+                fromDateCancel.setVisible(true);
+            }
+            else {
+                startDate.setValue(null);
+                if(endDate.get()==null)
+                    search.setVisible(false);
+            }
+        });
+        toDate.valueProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue!=null){
+                endDate.setValue(newValue.toString());
+                search.setVisible(true);
+                toDateCancel.setVisible(true);
+            }else {
+                endDate.setValue(null);
+                if(startDate.get()==null)
+                    search.setVisible(false);
+            }
+        });
+        fromDate.setPromptText("From");
+        toDate.setPromptText("To");
         final Callback<DatePicker, DateCell> dayCellFactory = new Callback<DatePicker, DateCell>() {
             public DateCell call(final DatePicker datePicker) {
                 return new DateCell() {
 
-                    @Override public void updateItem(LocalDate item, boolean empty) {
+                    @Override
+                    public void updateItem(LocalDate item, boolean empty) {
                         super.updateItem(item, empty);
-
-                        if (MonthDay.from(item).equals(MonthDay.of(7, 15)) &&
-                                !(getStyleClass().contains("next-month") || getStyleClass().contains("previous-month"))
-                        ) {
-                            setTooltip(new Tooltip("Beware the Ides of March!"));
-                            setStyle("-fx-background-color: #ff4444;");
-                       }
-//                        if(empty){
-//                            setStyle("-fx-background-color: #ff4444;");
-//                        }
-//                        else {
-//                            setTooltip(null);
-//                            setStyle(null);
-//                        }
+                        if (item.equals(LocalDate.now())) {
+                            setStyle("-fx-background-color: #dbffb7;");
+                        }
                     }
                 };
             }
@@ -136,15 +165,15 @@ public class MainStageController {
 
 //        DatePicker picker = new DatePicker();
         toDate.setDayCellFactory(dayCellFactory);
-
+        fromDate.setDayCellFactory(dayCellFactory);
 
 
         cancel.setVisible(false);
         selectALL_checkBox.setText("");
         selectAllHint.setVisible(false);
         selectALL_checkBox.setVisible(false);
-        floxPane.setPrefHeight(581);
-        floxPane.setPrefWidth(897);
+        flowPane.setPrefHeight(581);
+        flowPane.setPrefWidth(897);
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         recycleImageView.setImage(new Image(this.getClass().getResourceAsStream("/image/recicleBin.png")));
@@ -159,18 +188,20 @@ public class MainStageController {
     }
 
     public void responsivWidth(double stageWith) {
-        fromDate.setLayoutX(stageWith-298);
-        filterHint.setLayoutX(stageWith-423);
-        toHint.setLayoutX(stageWith-188);
-        search.setLayoutX(stageWith-51);
-        toDate.setLayoutX(stageWith-167);
+        fromDate.setLayoutX(stageWith - 298);
+        filterHint.setLayoutX(stageWith - 400);
+        fromDateCancel.setLayoutX(stageWith-216);
+        toDateCancel.setLayoutX(stageWith-85);
+        search.setLayoutX(stageWith - 51);
+        toDate.setLayoutX(stageWith - 167);
+        toDate.setFocusTraversable(false);
         mainStageService.responsivWidth(stageWith);
     }
 
     public void responsivHeight(double stageHeight) {
         cell_containerAnchorPane.setPrefHeight(mainContent.getHeight() - 179);
         scrollPane.setPrefHeight(mainContent.getHeight() - 220);
-        floxPane.setPrefHeight(mainContent.getHeight() - 220);
+        flowPane.setPrefHeight(mainContent.getHeight() - 220);
         slideController.responsiveHeght(stageHeight);
     }
 
@@ -220,5 +251,28 @@ public class MainStageController {
             mainStageService.downloadSelectedImages();
 //            action
         }
+    }
+
+    @FXML
+    public void cancelFromDate(MouseEvent mouseEvent) {
+        fromDateCancel.setVisible(false);
+        startDate.setValue(null);
+        fromDate.setValue(null);
+
+    }
+
+    @FXML
+    public void cancelToDate(MouseEvent mouseEvent) {
+        toDateCancel.setVisible(false);
+        endDate.setValue(null);
+        toDate.setValue(null);
+
+    }
+
+    @FXML
+    public void filter(MouseEvent mouseEvent) {
+        ApiConnection.getInstance().getDataByInterval(startDate.get(),endDate.get(),1);
+        System.out.println("startdate "+startDate.get());
+        System.out.println("endDate "+endDate.get());
     }
 }

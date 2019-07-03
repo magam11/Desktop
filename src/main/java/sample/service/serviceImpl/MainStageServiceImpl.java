@@ -1,9 +1,5 @@
 package sample.service.serviceImpl;
 
-import com.restfb.DefaultFacebookClient;
-import com.restfb.FacebookClient;
-import com.restfb.Parameter;
-import com.restfb.types.FacebookType;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.beans.property.*;
@@ -42,12 +38,10 @@ import sample.service.MainStageService;
 import sample.storage.Storage;
 import sample.util.Helper;
 
-import java.awt.*;
 import java.io.BufferedOutputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URI;
 import java.net.URL;
 import java.net.URLConnection;
 import java.util.*;
@@ -82,7 +76,7 @@ public class MainStageServiceImpl implements MainStageService {
         mainStageController.memoryProgressBar.setLayoutX(81);
         mainStageController.memoryHint.setLayoutX(28.0);
 //        +++layoutX="14.0"
-        mainStageController.floxPane.setPrefWidth(stageWith - 10);
+        mainStageController.flowPane.setPrefWidth(stageWith - 10);
         mainStageController.slideController.responsiveWidth(stageWith);
         if (stageWith <= 1000.0) {
             mainStageController.memoryProgressBar.setPrefWidth(Size.WIDTH_COEFFICENT_FOR_PROGRESS_BAR_WIDTH * stageWith);
@@ -110,7 +104,7 @@ public class MainStageServiceImpl implements MainStageService {
 
 
     @Override
-    public void loadMainStageData(BaseUserData baseUserData, int loadedPageNumber) {
+    public void loadMainStageData(BaseUserData baseUserData, int loadedPageNumber, String filter_search) {
         selectedImage.clear();
         mainStageController.download.setDisable(false);
         mainStageController.delete.setDisable(false);
@@ -118,16 +112,18 @@ public class MainStageServiceImpl implements MainStageService {
         ReadOnlyDoubleProperty widthPrp = mainStageController.pageNumbersPane.widthProperty();
         pageNumbersContainer.setStyle("-fx-alignment: center");
         Label label;
+        if (filter_search.equals("filter_search")) {}
+
         if (pageNumbersContainer.getChildren() != null && pageNumbersContainer.getChildren().size() > 0) {
             pageNumbersContainer.getChildren().removeAll(pageNumbersContainer.getChildren());
             pageNumbersContainer = new AnchorPane();
             pages.clear();
         }
-        for (int i = 0; i < totoalPageCount; i++) {
+        for (int i = 0; i < totoalPageCount; i++) {  //addes pages
             label = new Label(String.valueOf(i + 1));
             label.setLayoutX(widthPrp.getValue() / 2 - (totoalPageCount - 1) * 20 + i * 20);
             label.setFont(Font.font(null, FontWeight.BOLD, 14));
-            label.setId(String.valueOf("page_"+i + 1));
+            label.setId(String.valueOf("page_" + i + 1));
             if ((i + 1) == loadedPageNumber) {
                 label.setTextFill(Paint.valueOf("#388e3c"));
                 label.setUnderline(true);
@@ -155,18 +151,36 @@ public class MainStageServiceImpl implements MainStageService {
             }
         });
         mainStageController.pageNumbersPane.setStyle("-fx-alignment: center");
+        if(mainStageController.pageNumbersPane.getChildren()!=null){
+            mainStageController.pageNumbersPane.getChildren().remove(0,mainStageController.pageNumbersPane.getChildren().size());
+        }
         mainStageController.pageNumbersPane.getChildren().add(pageNumbersContainer);
-        mainStageController.fraction.setText(baseUserData.getFruction());
-        myImageCount = new SimpleIntegerProperty(Integer.parseInt(baseUserData.getFruction().split("/")[0]));
         int imagesConunt = baseUserData.getPicturesData() == null ? 0 : baseUserData.getPicturesData().size();
-        mainStageController.imageCountInto.setText("Storage (" + imagesConunt + ")");
-        mainStageController.phoneNumber.setText(baseUserData.getPhoneNumber());
-        phoneNumberLenth = new SimpleDoubleProperty(mainStageController.phoneNumber.getLayoutBounds().getWidth());
-        mainStageController.phoneNumber.setLayoutX(mainStageController.recycle_btn.getLayoutX() - phoneNumberLenth.getValue() - 8);
-        mainStageController.memoryProgressBar.setProgress((double) imagesConunt / 500.0);
+        if (!filter_search.equals("filter_search")) {
+            mainStageController.phoneNumber.setText(baseUserData.getPhoneNumber());
+            phoneNumberLenth = new SimpleDoubleProperty(mainStageController.phoneNumber.getLayoutBounds().getWidth());
+            mainStageController.phoneNumber.setLayoutX(mainStageController.recycle_btn.getLayoutX() - phoneNumberLenth.getValue() - 8);
+            mainStageController.fraction.setText(baseUserData.getFruction());
+            myImageCount = new SimpleIntegerProperty(Integer.parseInt(baseUserData.getFruction().split("/")[0]));
+            mainStageController.imageCountInto.setText("Storage (" + imagesConunt + ")");
+            mainStageController.memoryProgressBar.setProgress((double) imagesConunt / 500.0);
+        }
         if (imagesConunt != 0) {
             drawImagesInMainStage(baseUserData.getPicturesData(), Storage.getInstance().getCurrentToken());
         } else {
+            mainStageController.pageNumbersPane.getChildren().remove(0,mainStageController.pageNumbersPane.getChildren().size());
+            pageNumbersContainer.getChildren().remove(0, pageNumbersContainer.getChildren().size());
+            Label no_content = new Label("No Content");
+            no_content.setFont(Font.font(null, FontWeight.BOLD, 14));
+            no_content.setTextFill(Paint.valueOf("#388e3c"));
+            pageNumbersContainer.getChildren().add(no_content);
+            mainStageController.pageNumbersPane.widthProperty().addListener((observable, oldValue, newValue) -> {
+                no_content.setLayoutX(newValue.doubleValue()/2-5);
+            });
+            mainStageController.pageNumbersPane.getChildren().add(pageNumbersContainer);
+            no_content.setLayoutX(mainStageController.mainStage.getWidth()/2-5);
+            if(mainStageController.flowPane.getChildren()!=null) //jnjel flowPane-i naxkin parunakutyuny
+            mainStageController.flowPane.getChildren().remove(0, mainStageController.flowPane.getChildren().size());
             // TODO something when user does not have pictures ...
         }
     }
@@ -317,21 +331,21 @@ public class MainStageServiceImpl implements MainStageService {
             cellContent.getChildren().addAll(imageView, imageDate, delete, share, progressBar,
                     percent, download, checkBox, viewImg);
 
-            if (firstTime && mainStageController.floxPane.getChildren() != null && mainStageController.floxPane.getChildren().size() > 0) {
+            if (firstTime && mainStageController.flowPane.getChildren() != null && mainStageController.flowPane.getChildren().size() > 0) {
 
-                mainStageController.floxPane.getChildren().remove(0, mainStageController.floxPane.getChildren().size());
+                mainStageController.flowPane.getChildren().remove(0, mainStageController.flowPane.getChildren().size());
             }
-            mainStageController.floxPane.getChildren().add(cellContent);
+            mainStageController.flowPane.getChildren().add(cellContent);
             firstTime = false;
 
             viewImg.setOnMouseClicked(mouseEvent -> {
                 SliderServiceImpl.getInstance().openSlider(pictureData.getPicName(), (
-                        currentPageIndex.getValue() - 1) * 50 + mainStageController.floxPane.getChildren().indexOf(cellContent));
+                        currentPageIndex.getValue() - 1) * 50 + mainStageController.flowPane.getChildren().indexOf(cellContent));
             });
 
             delete.setOnMouseClicked(mouseEvent -> {
                 DeleteDialogServiceImpl.getInstance().openConfirmationDialog(pictureData.getPicName(), "cell",
-                        mainStageController.floxPane.getChildren().indexOf(cellContent));
+                        mainStageController.flowPane.getChildren().indexOf(cellContent));
             });
             download.setOnMouseClicked(mouseEvent -> {
                 downloadImage(pictureData.getPicName(), progressBar);
@@ -342,7 +356,7 @@ public class MainStageServiceImpl implements MainStageService {
             imageView.setOnMouseClicked(mouseEvent -> {
                 if (!checkBox.isVisible()) {
                     SliderServiceImpl.getInstance().openSlider(pictureData.getPicName(),
-                            (currentPageIndex.getValue() - 1) * 50 + mainStageController.floxPane.getChildren().indexOf(cellContent));
+                            (currentPageIndex.getValue() - 1) * 50 + mainStageController.flowPane.getChildren().indexOf(cellContent));
                 } else {
                     if (checkBox.isSelected()) {
                         checkBox.setSelected(false);
@@ -410,7 +424,7 @@ public class MainStageServiceImpl implements MainStageService {
             if (checkBoxIntegerEntry.getValue() == indexOfImageFromCell) checkboxes.remove(checkBoxIntegerEntry);
         }
         selectedImage.keySet().removeIf(key -> key.equals(indexOfImageFromCell));
-        mainStageController.floxPane.getChildren().remove(indexOfImageFromCell);
+        mainStageController.flowPane.getChildren().remove(indexOfImageFromCell);
     }
 
     @Override
@@ -442,7 +456,7 @@ public class MainStageServiceImpl implements MainStageService {
                         .totoalPageCount(responseJson.getInt("totoalPageCount"))
                         .picturesData(imageData)
                         .phoneNumber(responseJson.getString("phoneNumber"))
-                        .build(), loadedPageNumber);
+                        .build(), loadedPageNumber,"general");
             } else if (response.code() == 401) {
 //          TODO something
 //          TODO something
@@ -467,8 +481,8 @@ public class MainStageServiceImpl implements MainStageService {
 
     @Override
     public void selectOrCancelItems() {
-        Scene scene = mainStageController.floxPane.getScene();
-        ObservableList<Node> items = mainStageController.floxPane.getChildren();
+        Scene scene = mainStageController.flowPane.getScene();
+        ObservableList<Node> items = mainStageController.flowPane.getChildren();
         String imageName;
         if (mainStageController.selectALL_checkBox.isSelected()) {
             for (Map.Entry<CheckBox, Integer> checkBoxIntegerEntry : checkboxes.entrySet()) {

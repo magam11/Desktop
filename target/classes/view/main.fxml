@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.CheckBox?>
 <?import javafx.scene.control.DatePicker?>
 <?import javafx.scene.control.Label?>
@@ -14,12 +15,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<StackPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-           minWidth="-Infinity"
-           prefHeight="840.0" prefWidth="906.0" style="-fx-background-color: #FAFAFA"
-           stylesheets="/css/main.css"
-           xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="sample.controller.MainStageController">
+<StackPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0" prefWidth="906.0" style="-fx-background-color: #FAFAFA" stylesheets="/css/main.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.MainStageController">
     <children>
         <AnchorPane fx:id="mainContent" prefHeight="840.0" prefWidth="906.0">
 
@@ -114,7 +110,10 @@
                                     </ImageView>
                                 </children>
                             </AnchorPane>
-                            <AnchorPane fx:id="delete" layoutX="680.0" layoutY="32.0" onMouseClicked="#showCheckBoxesՕrDelete" prefHeight="27.0" prefWidth="91.0" style="-fx-background-radius: 15; -fx-background-color: #FFFFFF; -fx-cursor: hand;">
+                            <AnchorPane fx:id="delete" layoutX="680.0" layoutY="32.0"
+                                        onMouseClicked="#showCheckBoxesՕrDelete" prefHeight="27.0"
+                                        prefWidth="91.0"
+                                        style="-fx-background-radius: 15; -fx-background-color: #FFFFFF; -fx-cursor: hand;">
                                 <children>
                                     <Label fx:id="deleteTxt" layoutX="46.0" layoutY="5.0" prefHeight="17.0" prefWidth="39.0" text="Delete">
                                         <font>
@@ -151,25 +150,22 @@
             </AnchorPane>
                      <DatePicker fx:id="toDate" layoutX="739.0" layoutY="5.0" prefHeight="25.0" prefWidth="106.0" />
                      <DatePicker fx:id="fromDate" layoutX="608.0" layoutY="5.0" prefHeight="25.0" prefWidth="106.0" />
-                     <Label fx:id="toHint" layoutX="718.0" layoutY="9.0" prefHeight="17.0" prefWidth="19.0" text="To">
+                     <Label fx:id="filterHint" layoutX="506.0" layoutY="9.0" prefHeight="19.0" prefWidth="89.0" text="Filter by date:">
                         <font>
                            <Font name="System Bold" size="13.0" />
                         </font>
                      </Label>
-                     <Label layoutX="483.0" fx:id="filterHint" layoutY="9.0" prefHeight="19.0" prefWidth="121.0" text="Filter by date: From">
-                        <font>
-                           <Font name="System Bold" size="13.0" />
-                        </font>
-                     </Label>
-                     <ImageView fx:id="search" fitHeight="22.0" fitWidth="23.0" layoutX="855.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
+                     <ImageView fx:id="search" fitHeight="22.0" onMouseClicked="#filter" fitWidth="23.0" layoutX="855.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true" style="-fx-cursor: hand;">
                         <image>
                            <Image url="@../image/galochka.png" />
                         </image>
                      </ImageView>
+                     <Button fx:id="fromDateCancel" layoutX="690.0" layoutY="5.0" mnemonicParsing="false" onMouseClicked="#cancelFromDate" prefHeight="25.0" prefWidth="23.0" style="-fx-background-image: url('@../../image/cancelFilter.png');" />
+                     <Button fx:id="toDateCancel" layoutX="821.0"  layoutY="5.0" mnemonicParsing="false" onMouseClicked="#cancelToDate" prefHeight="25.0" prefWidth="23.0" style="-fx-background-image: url('@../../image/cancelFilter.png');" />
                   </children></AnchorPane>
                     <ScrollPane fx:id="scrollPane" layoutY="92.0" prefHeight="611.0" prefWidth="906.0">
                         <content>
-                            <FlowPane fx:id="floxPane" prefHeight="607.0" prefWidth="897.0" style="-fx-alignment: center;" />
+                            <FlowPane fx:id="flowPane" prefHeight="607.0" prefWidth="897.0" style="-fx-alignment: center;" />
 
                         </content>
                     </ScrollPane>
