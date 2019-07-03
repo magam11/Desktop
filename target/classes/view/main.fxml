@@ -49,7 +49,7 @@
                                             </Label>
                                         </children>
                                     </AnchorPane>
-                                    <AnchorPane fx:id="recycle_btn" layoutX="679.0" layoutY="11.0" prefHeight="34.0" prefWidth="89.0" style="-fx-cursor: hand;">
+                                    <AnchorPane fx:id="recycle_btn" layoutX="679.0" layoutY="11.0" onMouseClicked="#openRecycleBinPage" prefHeight="34.0" prefWidth="89.0" style="-fx-cursor: hand;">
                                         <children>
                                             <Label layoutX="29.0" layoutY="1.0" prefHeight="28.0" prefWidth="60.0" text="Recycle">
                                                 <font>
@@ -173,7 +173,11 @@
             </AnchorPane>
         </AnchorPane>
         <fx:include fx:id="slide" source="part/slid.fxml"/>
-<!--        <fx:include fx:id="recycleBin" source="part/recycleBin.fxml"/>-->
+        <AnchorPane fx:id="recycleBinContainer" visible="false">
+            <children>
+                <fx:include fx:id="recycleBin" source="part/recycleBin.fxml"/>
+            </children>
+        </AnchorPane>
         <Label fx:id="currentPageNumber" text="1" visible="false" />
 <!--        <fx:include source="part/loader.fxml" />-->
     </children>

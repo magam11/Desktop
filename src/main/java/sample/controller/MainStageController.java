@@ -20,6 +20,7 @@ import javafx.util.Callback;
 import sample.connection.ApiConnection;
 import sample.service.MainStageService;
 import sample.service.serviceImpl.MainStageServiceImpl;
+import sample.storage.Storage;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -105,16 +106,19 @@ public class MainStageController {
     @FXML
     public Button fromDateCancel;
     public Button toDateCancel;
+    @FXML
+    public AnchorPane recycleBinContainer;
     StringProperty startDate = new SimpleStringProperty();
     StringProperty endDate = new SimpleStringProperty();
-//    @FXML
-//    public RecicleBinController recicleBinController;
+    @FXML
+    public RecycleBinController recycleBinController;
 
 
     //services
     private MainStageService mainStageService = MainStageServiceImpl.getInstance();
 
     public void initialize() {
+        recycleBinController.initializeMainStageController(this);
         fromDateCancel.setVisible(false);
         toDateCancel.setVisible(false);
         fromDateCancel.setStyle("-fx-background-image: url('/image/cancelFilter.png');-fx-background-repeat: no-repeat;" +
@@ -274,5 +278,13 @@ public class MainStageController {
         ApiConnection.getInstance().getDataByInterval(startDate.get(),endDate.get(),1);
         System.out.println("startdate "+startDate.get());
         System.out.println("endDate "+endDate.get());
+    }
+
+
+    @FXML
+    public void openRecycleBinPage(MouseEvent mouseEvent) {
+        recycleBinContainer.setVisible(true);
+        ApiConnection.getInstance().getDeletedImageg(1);
+
     }
 }

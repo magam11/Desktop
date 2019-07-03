@@ -12,6 +12,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import sample.service.MainStageService;
 import sample.service.SliderService;
 import sample.service.serviceImpl.DeleteDialogServiceImpl;
 import sample.service.serviceImpl.MainStageServiceImpl;
@@ -137,5 +138,10 @@ public class SlideController {
     @FXML
     public void downloadImageFromSlidePage(MouseEvent mouseEvent) {
         sliderService.downloadImage();
+    }
+
+    @FXML
+    public void openShareDialog(MouseEvent mouseEvent) {
+        MainStageServiceImpl.getInstance().shareImage(shownImageName.getText());
     }
 }

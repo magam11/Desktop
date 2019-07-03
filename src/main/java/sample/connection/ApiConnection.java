@@ -12,10 +12,7 @@ import sample.dataTransferObject.request.ImageManagerRequest;
 import sample.dataTransferObject.response.AuthenticationResponse;
 import sample.dataTransferObject.response.BaseUserData;
 import sample.service.LoginService;
-import sample.service.serviceImpl.DeleteDialogServiceImpl;
-import sample.service.serviceImpl.LoginServiceImpl;
-import sample.service.serviceImpl.MainStageServiceImpl;
-import sample.service.serviceImpl.SliderServiceImpl;
+import sample.service.serviceImpl.*;
 import sample.storage.Storage;
 
 import java.io.IOException;
@@ -291,10 +288,10 @@ public class ApiConnection {
                             }
                         }
                         JSONObject finalResponseJson = responseJson;
-                        System.out.println("totoalPageCount "+finalResponseJson.getInt("totoalPageCount"));
+                        System.out.println("totoalPageCount " + finalResponseJson.getInt("totoalPageCount"));
 
-                        System.out.println("imageData "+imageData);
-                        System.out.println("imageDatasize "+imageData.size());
+                        System.out.println("imageData " + imageData);
+                        System.out.println("imageDatasize " + imageData.size());
                         Platform.runLater(() -> {
                             MainStageServiceImpl.getInstance().loadMainStageData(BaseUserData.builder()
                                     .fruction(finalResponseJson.getString("fruction"))
@@ -315,5 +312,60 @@ public class ApiConnection {
             }
         });
 
+    }
+
+    @Connection(uri = "image/deleted/page/{page}", method = "GET", pathVariable = "page")
+    public void getDeletedImageg(int page) {
+        Request request = new Request.Builder()
+                .url(Constant.SERVER_ADDRESS + "image/deleted/page/" + page)
+                .addHeader(Constant.AUTHORIZATION, storage.getCurrentToken())
+                .build();
+        OkHttpClient client1 = new OkHttpClient();
+        client1.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                //TODO something
+                System.out.println("/image/deleted/page/{page} -failure");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.code() == 200) {
+                    try {
+                        JSONObject  responseJson = new JSONObject(new String(response.body().bytes()));
+                        List<sample.dataTransferObject.response.ImageData> imageData = new ArrayList<>();
+                        JSONArray picturesData = responseJson.getJSONArray("picturesData");
+                        JSONObject imageDataJson = null;
+                        if (picturesData != null) {
+                            for (int i = 0; i < picturesData.length(); i++) {
+                                System.out.println();
+                                imageDataJson = picturesData.getJSONObject(i);
+                                imageData.add(sample.dataTransferObject.response.ImageData.builder()
+                                        .createdAt(imageDataJson.getString("deletedAt"))
+                                        .picName(imageDataJson.getString("picName"))
+                                        .picSize(imageDataJson.getDouble("picSize"))
+                                        .build());
+                            }
+                        }
+                        Platform.runLater(()->{
+                            RecycleBinServiceImpl.getInstance().loadDataInRecycleBin(BaseUserData.builder()
+                                    .totoalPageCount(responseJson.getInt("totoalPageCount"))
+                                    .picturesData(imageData)
+                                    .build(), page);
+                        });
+
+
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
+
+                } else {
+//                  TODO something
+                    System.out.println("image/deleted/page/{page} else block");
+                }
+
+            }
+        });
     }
 }

@@ -34,7 +34,6 @@ sample\controller\SlideController.class
 sample\service\serviceImpl\LoginServiceImpl.class
 sample\storage\Storage.class
 sample\service\MainStageService.class
-sample\controller\RecicleBinController.class
 sample\service\serviceImpl\LoginServiceImpl$LoaderTask.class
 sample\service\SliderService.class
 sample\service\LoginService.class
