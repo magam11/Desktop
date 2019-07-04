@@ -222,7 +222,7 @@ public class MainStageServiceImpl implements MainStageService {
             cellContent.setPrefHeight(177.0);
             FlowPane.setMargin(cellContent, new Insets(5.0, 5.0, 5.0, 5.0));
             cellContent.setId(pictureData.getPicName());
-            cellContent.setStyle("-fx-cursor: hand");
+//            cellContent.setStyle("-fx-cursor: hand");
 
             Image image = new Image(Constant.SERVER_ADDRESS + Constant.IMAGE_URI + pictureData.getPicName());
             ImageView imageView = new ImageView(image);
@@ -302,17 +302,25 @@ public class MainStageServiceImpl implements MainStageService {
             viewImg.setVisible(false);
             viewImg.setLayoutY(cellContent.getLayoutY() + cellContent.getPrefHeight() - 31);
 
+
+
             int finalIndex = index;
             checkBox.setOnMouseClicked(mouseEvent -> {
                 singleSelectOrCancelItem(checkBox, finalIndex, pictureData.getPicName());
             });
+            AnchorPane fone = new AnchorPane();
+            fone.setPrefWidth(200.0);
+            fone.setPrefHeight(177.0);
+            fone.setStyle("-fx-background-color:  rgba(0,0,0,0.36) #000000;-fx-cursor: hand");
 
+            fone.setVisible(false);
 
             cellContent.setOnMouseEntered(mouseEvent -> {
 //                imageView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(148,135,135,0.23), 0.0, 25.0, 0.0,  19.0);-fx-cursor: hand");
 //                imageView.setStyle("-fx-effect: dropshadow(gaussian, limegreen, 50, 0, 0, 0);-fx-background-insets: 2;-fx-background-color: rgba(255, 255, 255, 0.5);");
 //                imageView.setStyle("-fx-effect: innershadow(gaussian, rgba(125,133,132,0.31), 50, 0, 0, 0);-fx-background-insets: 2;-fx-background-color: rgba(255, 255, 255, 0.5);");
                 if (!checkBox.isVisible()) {
+                    fone.setVisible(true);
                     imageDate.setVisible(true);
                     delete.setVisible(true);
                     share.setVisible(true);
@@ -324,6 +332,7 @@ public class MainStageServiceImpl implements MainStageService {
 
             });
             cellContent.setOnMouseExited(mouseEvent -> {
+                fone.setVisible(false);
                 imageView.setStyle("-fx-cursor: hand");
                 imageDate.setVisible(false);
                 delete.setVisible(false);
@@ -333,8 +342,12 @@ public class MainStageServiceImpl implements MainStageService {
             });
 
 
-            cellContent.getChildren().addAll(imageView, imageDate, delete, share, progressBar,
-                    percent, download, checkBox, viewImg);
+            fone.getChildren().addAll(imageDate);
+            share.setStyle("-fx-cursor: hand");
+            delete.setStyle("-fx-cursor: hand");
+            download.setStyle("-fx-cursor: hand");
+            cellContent.getChildren().addAll(imageView,   progressBar,
+                    percent, checkBox, viewImg,fone,share,download,delete);
 
             if (firstTime && mainStageController.flowPane.getChildren() != null && mainStageController.flowPane.getChildren().size() > 0) {
 
@@ -343,7 +356,8 @@ public class MainStageServiceImpl implements MainStageService {
             mainStageController.flowPane.getChildren().add(cellContent);
             firstTime = false;
 
-            viewImg.setOnMouseClicked(mouseEvent -> {
+            fone.setOnMouseClicked(mouseEvent -> {
+                System.out.println("fone click");
                 SliderServiceImpl.getInstance().openSlider(pictureData.getPicName(), (
                         currentPageIndex.getValue() - 1) * 50 + mainStageController.flowPane.getChildren().indexOf(cellContent));
             });
@@ -360,6 +374,7 @@ public class MainStageServiceImpl implements MainStageService {
             });
             imageView.setOnMouseClicked(mouseEvent -> {
                 if (!checkBox.isVisible()) {
+                    System.out.println("----");
                     SliderServiceImpl.getInstance().openSlider(pictureData.getPicName(),
                             (currentPageIndex.getValue() - 1) * 50 + mainStageController.flowPane.getChildren().indexOf(cellContent));
                 } else {
