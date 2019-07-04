@@ -6,7 +6,9 @@ import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import sample.connection.ApiConnection;
 import sample.service.RecycleBinService;
+import sample.service.serviceImpl.MainStageServiceImpl;
 import sample.service.serviceImpl.RecycleBinServiceImpl;
 
 public class RecycleBinController {
@@ -22,6 +24,8 @@ public class RecycleBinController {
     public FlowPane bin_flowPane;
     @FXML
     public Label countData;
+    @FXML
+    public Label recycleTitle;
 
     RecycleBinService recycleBinService = RecycleBinServiceImpl.getInstance();
     MainStageController mainStageController;
@@ -34,7 +38,10 @@ public class RecycleBinController {
     }
 
 
-    public void initialize(){
+    public void initialize(
+
+    ){
+
         recycleBinService.initializeRecycleController(this);
     }
 
@@ -47,7 +54,10 @@ public class RecycleBinController {
 
     @FXML
     public void backToMain(MouseEvent mouseEvent) {
+        String text = mainStageController.currentPageNumber.getText();
+        ApiConnection.getInstance().loadBaseData(text);
         mainStageController.recycleBinContainer.setVisible(false);
+
 
 
     }

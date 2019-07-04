@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 public class ImageManagerRequest {
 
    private String picName;
-   private String  actionType;
+   private String  actionType; //delete or remake
 
     @Override
     public String toString() {

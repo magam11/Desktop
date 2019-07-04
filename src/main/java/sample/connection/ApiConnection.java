@@ -278,7 +278,6 @@ public class ApiConnection {
                         JSONObject imageDataJson = null;
                         if (picturesData != null) {
                             for (int i = 0; i < picturesData.length(); i++) {
-                                System.out.println();
                                 imageDataJson = picturesData.getJSONObject(i);
                                 imageData.add(sample.dataTransferObject.response.ImageData.builder()
                                         .createdAt(imageDataJson.getString("createdAt"))
@@ -288,10 +287,6 @@ public class ApiConnection {
                             }
                         }
                         JSONObject finalResponseJson = responseJson;
-                        System.out.println("totoalPageCount " + finalResponseJson.getInt("totoalPageCount"));
-
-                        System.out.println("imageData " + imageData);
-                        System.out.println("imageDatasize " + imageData.size());
                         Platform.runLater(() -> {
                             MainStageServiceImpl.getInstance().loadMainStageData(BaseUserData.builder()
                                     .fruction(finalResponseJson.getString("fruction"))
@@ -315,7 +310,7 @@ public class ApiConnection {
     }
 
     @Connection(uri = "image/deleted/page/{page}", method = "GET", pathVariable = "page")
-    public void getDeletedImageg(int page) {
+    public void getDeletedImagePage(int page) {
         Request request = new Request.Builder()
                 .url(Constant.SERVER_ADDRESS + "image/deleted/page/" + page)
                 .addHeader(Constant.AUTHORIZATION, storage.getCurrentToken())
@@ -338,10 +333,9 @@ public class ApiConnection {
                         JSONObject imageDataJson = null;
                         if (picturesData != null) {
                             for (int i = 0; i < picturesData.length(); i++) {
-                                System.out.println();
                                 imageDataJson = picturesData.getJSONObject(i);
                                 imageData.add(sample.dataTransferObject.response.ImageData.builder()
-                                        .createdAt(imageDataJson.getString("deletedAt"))
+                                        .deletedAt(imageDataJson.getString("deletedAt"))
                                         .picName(imageDataJson.getString("picName"))
                                         .picSize(imageDataJson.getDouble("picSize"))
                                         .build());
@@ -349,6 +343,7 @@ public class ApiConnection {
                         }
                         Platform.runLater(()->{
                             RecycleBinServiceImpl.getInstance().loadDataInRecycleBin(BaseUserData.builder()
+                                    .totalElementCount(responseJson.getLong("totalElementCount"))
                                     .totoalPageCount(responseJson.getInt("totoalPageCount"))
                                     .picturesData(imageData)
                                     .build(), page);
@@ -365,6 +360,109 @@ public class ApiConnection {
                     System.out.println("image/deleted/page/{page} else block");
                 }
 
+            }
+        });
+    }
+
+    @Connection(uri="/image/", method = "PUT",requestBody = ImageManagerRequest.class)
+    public void recoverImageStatus(ImageManagerRequest jsonBody) {
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        RequestBody body = RequestBody.create(JSON, jsonBody.toString());
+        Request request = new Request.Builder()
+                .url(Constant.SERVER_ADDRESS + Constant.IMAGE_URI)
+                .put(body) //PUT
+                .addHeader(Constant.AUTHORIZATION, storage.getCurrentToken())
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                System.out.println("recoverImageStatus falilure");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                System.out.println("recoverImageStatus onResponse");
+
+            }
+        });
+    }
+
+    @Connection(uri = "/image/{picture}", method = "DELETE", pathVariable = "picture")
+    public void deleteImage(String picName) {
+        Request request = new Request.Builder()
+                .addHeader(Constant.AUTHORIZATION,storage.getCurrentToken())
+                .url(Constant.SERVER_ADDRESS + Constant.IMAGE_URI+"picture/" + picName)
+                .delete()
+                .addHeader(Constant.AUTHORIZATION, storage.getCurrentToken())
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                System.out.println("deleteImage -failure");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                System.out.println("deleteImage -onresponse "+response.code());
+
+            }
+        });
+    }
+
+
+    @Connection(uri = "user/data/page/{pageNumber}", method = "GET", pathVariable = "pageNumber")
+    public void loadBaseData(String pageNumber) {
+        Request request = new Request.Builder()
+                .url(Constant.SERVER_ADDRESS + Constant.BASE_DATA_URI + pageNumber)
+                .addHeader(Constant.AUTHORIZATION, storage.getCurrentToken())
+                .build();
+        OkHttpClient client1 = new OkHttpClient();
+        client1.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                /**
+                 * TODO  something
+                 * */
+                System.out.println("user/data/{pageNumber} ---- failure");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.code() == 200) {
+                    JSONObject responseJson = null;
+                    List<sample.dataTransferObject.response.ImageData> imageData = new ArrayList<>();
+                    try {
+                        responseJson = new JSONObject(new String(response.body().bytes()));
+                        JSONArray picturesData = responseJson.getJSONArray("picturesData");
+                        JSONObject imageDataJson = null;
+                        if (picturesData != null) {
+                            for (int i = 0; i < picturesData.length(); i++) {
+                                imageDataJson = picturesData.getJSONObject(i);
+                                imageData.add(sample.dataTransferObject.response.ImageData.builder()
+                                        .picSize(imageDataJson.getDouble("picSize"))
+                                        .createdAt(imageDataJson.getString("createdAt"))
+                                        .picName(imageDataJson.getString("picName"))
+                                        .build());
+                            }
+                        }
+                        JSONObject finalResponseJson = responseJson;
+                        Platform.runLater(() -> {
+                            MainStageServiceImpl.getInstance().loadMainStageData(BaseUserData.builder()
+                                    .totoalPageCount(finalResponseJson.getInt("totoalPageCount"))
+                                    .fruction(finalResponseJson.getString("fruction"))
+                                    .picturesData(imageData)
+//                                .phoneNumber(responseJson.getString("phoneNumber"))
+                                    .build(), Integer.parseInt(pageNumber), "filter_search");
+                        });
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                } else {
+//                    TODO something
+                    System.out.println("image/page/{page}?fromDate=%s&toDate=%s else blok");
+                    System.out.println(response.code());
+                }
             }
         });
     }

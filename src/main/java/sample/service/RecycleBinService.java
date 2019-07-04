@@ -1,5 +1,6 @@
 package sample.service;
 
+import sample.controller.MainStageController;
 import sample.controller.RecycleBinController;
 import sample.dataTransferObject.response.BaseUserData;
 
@@ -10,4 +11,6 @@ public interface RecycleBinService {
     void loadDataInRecycleBin(BaseUserData totoalPageCount, int page);
 
     void drawPagination(BaseUserData baseUserData, int page);
+
+    void initializeMainStageController(MainStageController mainStageController);
 }

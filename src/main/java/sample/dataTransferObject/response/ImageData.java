@@ -15,7 +15,7 @@ public class ImageData {
     private String picName;
     private double picSize;
     private String createdAt;
-    private Date deletedAt;
+    private String deletedAt;
 
 
 }

@@ -16,4 +16,5 @@ public class BaseUserData {
     private int totoalPageCount;
     private String fruction;
     private String phoneNumber;
+    private long totalElementCount;
 }

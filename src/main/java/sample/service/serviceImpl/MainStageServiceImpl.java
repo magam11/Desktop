@@ -135,6 +135,7 @@ public class MainStageServiceImpl implements MainStageService {
             int finalI = i;
             label.setOnMouseClicked(mouseEvent -> {
                 if (currentPageIndex.get() != (finalI + 1)) {
+                    mainStageController.currentPageNumber.setText(""+(finalI + 1));
                     ApiConnection.getInstance().getPage(Constant.BASE_DATA_URI, finalI + 1,
                             Storage.getInstance().getCurrentToken());
                     currentPageIndex.set(finalI + 1);
@@ -308,6 +309,9 @@ public class MainStageServiceImpl implements MainStageService {
 
 
             cellContent.setOnMouseEntered(mouseEvent -> {
+//                imageView.setStyle("-fx-effect: dropshadow(three-pass-box, rgba(148,135,135,0.23), 0.0, 25.0, 0.0,  19.0);-fx-cursor: hand");
+//                imageView.setStyle("-fx-effect: dropshadow(gaussian, limegreen, 50, 0, 0, 0);-fx-background-insets: 2;-fx-background-color: rgba(255, 255, 255, 0.5);");
+//                imageView.setStyle("-fx-effect: innershadow(gaussian, rgba(125,133,132,0.31), 50, 0, 0, 0);-fx-background-insets: 2;-fx-background-color: rgba(255, 255, 255, 0.5);");
                 if (!checkBox.isVisible()) {
                     imageDate.setVisible(true);
                     delete.setVisible(true);
@@ -320,6 +324,7 @@ public class MainStageServiceImpl implements MainStageService {
 
             });
             cellContent.setOnMouseExited(mouseEvent -> {
+                imageView.setStyle("-fx-cursor: hand");
                 imageDate.setVisible(false);
                 delete.setVisible(false);
                 share.setVisible(false);
@@ -442,7 +447,6 @@ public class MainStageServiceImpl implements MainStageService {
                 JSONObject imageDataJson = null;
                 if (picturesData != null) {
                     for (int i = 0; i < picturesData.length(); i++) {
-                        System.out.println();
                         imageDataJson = picturesData.getJSONObject(i);
                         imageData.add(ImageData.builder()
                                 .createdAt(imageDataJson.getString("createdAt"))
@@ -506,11 +510,6 @@ public class MainStageServiceImpl implements MainStageService {
             selectedImage.put(index, imageName);
         } else {
             selectedImage.keySet().removeIf(key -> key.equals(index));
-//            for (Map.Entry<Integer, String> entry : selectedImage.entrySet()) {
-//                if (entry.getKey().equals(index)) {
-//                    selectedImage.remove(entry.getKey());
-//                }
-//            }
         }
     }
 

@@ -15,12 +15,13 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 import sample.connection.ApiConnection;
 import sample.service.MainStageService;
 import sample.service.serviceImpl.MainStageServiceImpl;
-import sample.storage.Storage;
+import sample.service.serviceImpl.RecycleBinServiceImpl;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -113,11 +114,15 @@ public class MainStageController {
     @FXML
     public RecycleBinController recycleBinController;
 
+    private Text title;
+
 
     //services
     private MainStageService mainStageService = MainStageServiceImpl.getInstance();
 
     public void initialize() {
+        RecycleBinServiceImpl.getInstance().initializeMainStageController(this);
+        title = new Text(recycleBinController.recycleTitle.getText());
         recycleBinController.initializeMainStageController(this);
         fromDateCancel.setVisible(false);
         toDateCancel.setVisible(false);
@@ -189,6 +194,7 @@ public class MainStageController {
         delete.setEffect(new DropShadow(19, Color.rgb(0, 0, 0, 0.1)));
         headerRow1.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.2)));
         headerRow2.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.2)));
+        headerRow2.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.2)));
     }
 
     public void responsivWidth(double stageWith) {
@@ -200,6 +206,16 @@ public class MainStageController {
         toDate.setLayoutX(stageWith - 167);
         toDate.setFocusTraversable(false);
         mainStageService.responsivWidth(stageWith);
+
+        recycleBinContainer.setPrefWidth(stageWith);
+        recycleBinController.bin_scroll.setPrefWidth(stageWith);
+        recycleBinController.bin_flowPane.setPrefWidth(stageWith);
+        recycleBinController.recicleBin.setPrefWidth(stageWith);
+        recycleBinController.bin_header.setPrefWidth(stageWith);
+        recycleBinController.bin_pagination.setPrefWidth(stageWith);
+
+        recycleBinController.recycleTitle.setLayoutX((stageWith- title.getLayoutBounds().getWidth())/2);
+        recycleBinController.countData.setLayoutX(stageWith/2-3);
     }
 
     public void responsivHeight(double stageHeight) {
@@ -207,6 +223,12 @@ public class MainStageController {
         scrollPane.setPrefHeight(mainContent.getHeight() - 220);
         flowPane.setPrefHeight(mainContent.getHeight() - 220);
         slideController.responsiveHeght(stageHeight);
+
+        recycleBinController.recicleBin.setPrefHeight(stageHeight);
+        recycleBinController.recicleBin.setPrefHeight(stageHeight);
+        recycleBinController.recicleBin.setPrefHeight(stageHeight);
+        recycleBinController.bin_scroll.setPrefHeight(stageHeight-118);
+        recycleBinController.bin_flowPane.setPrefHeight(stageHeight-118);
     }
 
     @FXML
@@ -284,7 +306,7 @@ public class MainStageController {
     @FXML
     public void openRecycleBinPage(MouseEvent mouseEvent) {
         recycleBinContainer.setVisible(true);
-        ApiConnection.getInstance().getDeletedImageg(1);
+        ApiConnection.getInstance().getDeletedImagePage(1);
 
     }
 }

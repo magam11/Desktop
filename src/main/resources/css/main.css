@@ -35,7 +35,9 @@
 .check-box:selected .box {
     -fx-border-color: #388e3c;
 }
-
+.tooltip {
+    -fx-show-delay: 0ms;
+}
 
 
 
