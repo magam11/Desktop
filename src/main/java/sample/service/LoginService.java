@@ -1,5 +1,6 @@
 package sample.service;
 
+import javafx.stage.Stage;
 import okhttp3.Response;
 import sample.controller.LoginController;
 import sample.controller.MainStageController;
@@ -20,7 +21,7 @@ public interface LoginService {
 
      void openMainStage(BaseUserData baseUserData,int loadedPageNumber);
 
-     void showLoader(MainStageController mainStageController);
+     void showLoader(MainStageController mainStageController, Stage stage);
 
      void closeLoader(MainStageController mainStageController);
 

@@ -1,16 +1,25 @@
 package sample.service.serviceImpl;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.concurrent.Task;
+import javafx.concurrent.WorkerStateEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import okhttp3.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -30,6 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 public class LoginServiceImpl implements LoginService {
     private static LoginServiceImpl instance = new LoginServiceImpl();
@@ -38,6 +48,9 @@ public class LoginServiceImpl implements LoginService {
     Timer timer;
     ProgressIndicator pb = new ProgressIndicator();
     MainStageController mainStageController;
+
+    public Timeline loader;
+    public BorderPane loaderPane = new BorderPane();
 
     public static LoginServiceImpl getInstance() {
         return instance;
@@ -132,16 +145,23 @@ public class LoginServiceImpl implements LoginService {
             mainStage.setMinHeight(427.0);
             mainStage.setMinWidth(906.0);
             mainStageController = (MainStageController) fxmlLoader.getController();
+
             mainStage.show();
-//                showLoader(mainStageController);
+//            showLoader(mainStageController, mainStage);
+//
 
             FXMLLoader finalFxmlLoader1 = fxmlLoader;
+
             Platform.runLater(() -> {
+
+
                 FXMLLoader finalFxmlLoader = finalFxmlLoader1;
                 MainStageController controller = (MainStageController) finalFxmlLoader.getController();
-                MainStageServiceImpl.getInstance().loadMainStageData(baseUserData, loadedPageNumber,"general");
+                MainStageServiceImpl.getInstance().loadMainStageData(baseUserData, loadedPageNumber, "general");
 //                closeLoader(mainStageController);
                 controller.mainStage = mainStage;
+//                loader.stop();
+                mainStageController.mainPane.getChildren().remove(loaderPane);
                 mainStage.widthProperty().addListener((obs, oldVal, newVal) -> {
                     ((MainStageController) finalFxmlLoader.getController()).responsivWidth(newVal.doubleValue());
                 });
@@ -156,17 +176,112 @@ public class LoginServiceImpl implements LoginService {
 
         });
 
-
     }
 
 
     @Override
-    public void showLoader(MainStageController mainStageController) {
+    public void showLoader(MainStageController mainStageController, Stage mainStage) {
 
-        LoaderTask loaderTask = new LoaderTask();
-        timer = new Timer("loader");
-        timer.scheduleAtFixedRate(loaderTask, 0, 999999999);
 
+//        Task longTask = new Task<Void>() {
+//            @Override
+//            protected Void call() throws Exception {
+////                System.out.println("ashxatec call methody");
+////                StackPane r = new StackPane();
+////                BorderPane loadPane = new BorderPane();
+////                ProgressIndicator pb = new ProgressIndicator();
+////                pb.setStyle("-fx-progress-color: #388e3c;");
+////                pb.setMaxHeight(300);
+////                pb.setMaxWidth(300);
+////                loadPane.setCenter(pb);
+////                r.getChildren().add(loadPane);
+////
+////                Scene scene = new Scene(r);
+////                Stage stage = new Stage();
+////                stage.setScene(scene);
+////                stage.showAndWait();
+////                stage.initOwner(mainStage);
+//
+//                loader = new Timeline(
+//                        new KeyFrame(Duration.seconds(0), event -> {
+//                            System.out.println("---");
+//                            AtomicBoolean firsTime = new AtomicBoolean(true);
+//                            System.out.println("---");
+//                            if (firsTime.get()) {
+//                                System.out.println("if-i mej");
+//                                ProgressIndicator pb = new ProgressIndicator();
+//                                pb.setStyle("-fx-progress-color: #388e3c;");
+//                                pb.setMaxHeight(300);
+//                                pb.setMaxWidth(300);
+//                                loaderPane.setCenter(pb);
+//                                mainStageController.mainPane.getChildren().add(loaderPane);
+//                                firsTime.set(false);
+//                            }
+//                        }),
+//                        new KeyFrame(Duration.seconds(5)));
+//                loader.setCycleCount(Animation.INDEFINITE);
+//                loader.play();
+//                return null;
+//            }
+//        };
+////        longTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+////            @Override
+////            public void handle(WorkerStateEvent t) {
+//////                loader.stop();
+//////                mainStageController.mainPane.getChildren().remove(loaderPane);
+////            }
+////        });
+//        Thread thread = new Thread(longTask);
+//        thread.setDaemon(true);
+//        thread.start();
+
+
+//        Platform.runLater(() -> {
+
+
+//        final boolean[] b = {true};
+//        loader = new Timeline(
+//                new KeyFrame(Duration.seconds(0), event -> {
+//                    if (b[0]) {
+//                        System.out.println("---");
+//                        System.out.println("ashxatec call methody");
+//                        StackPane r = new StackPane();
+//                        BorderPane loadPane = new BorderPane();
+//                        ProgressIndicator pb = new ProgressIndicator();
+//                        pb.setStyle("-fx-progress-color: #388e3c;");
+//                        pb.setMaxHeight(300);
+//                        pb.setMaxWidth(300);
+//                        loadPane.setCenter(pb);
+//                        r.getChildren().add(loadPane);
+//
+//                        Scene scene = new Scene(r);
+//                        Stage stage = new Stage();
+//                        stage.setScene(scene);
+//                        stage.initOwner(mainStage);
+//                        stage.show();
+//                        b[0] = false;
+//                    }
+//
+//                }),
+//                new KeyFrame(Duration.seconds(5)));
+////
+//        loader.setCycleCount(Animation.INDEFINITE);
+//        loader.play();
+            AtomicBoolean firsTime = new AtomicBoolean(true);
+            System.out.println("---");
+            if (firsTime.get()) {
+                System.out.println("if-i mej");
+                ProgressBar pb = new ProgressBar();
+                pb.setId("pb");
+//                pb.setStyle("-fx-progress-color: #388e3c;");
+                pb.setMaxHeight(300);
+                pb.setProgress(50);
+                pb.setMaxWidth(300);
+                loaderPane.setCenter(pb);
+                mainStageController.mainPane.getChildren().add(loaderPane);
+                firsTime.set(false);
+            }
+//        });
 
     }
 

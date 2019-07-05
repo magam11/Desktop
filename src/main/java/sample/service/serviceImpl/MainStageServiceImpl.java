@@ -9,10 +9,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.ProgressBar;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -105,6 +102,7 @@ public class MainStageServiceImpl implements MainStageService {
 
     @Override
     public void loadMainStageData(BaseUserData baseUserData, int loadedPageNumber, String filter_search) {
+        Scene scene = mainStageController.delete.getScene();
         selectedImage.clear();
         mainStageController.download.setDisable(false);
         mainStageController.delete.setDisable(false);
@@ -112,14 +110,19 @@ public class MainStageServiceImpl implements MainStageService {
         ReadOnlyDoubleProperty widthPrp = mainStageController.pageNumbersPane.widthProperty();
         pageNumbersContainer.setStyle("-fx-alignment: center");
         Label label;
-        if (filter_search.equals("filter_search")) {}
-
         if (pageNumbersContainer.getChildren() != null && pageNumbersContainer.getChildren().size() > 0) {
             pageNumbersContainer.getChildren().removeAll(pageNumbersContainer.getChildren());
             pageNumbersContainer = new AnchorPane();
             pages.clear();
         }
         for (int i = 0; i < totoalPageCount; i++) {  //addes pages
+
+            try {
+                Thread.sleep(5000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
             label = new Label(String.valueOf(i + 1));
             label.setLayoutX(widthPrp.getValue() / 2 - (totoalPageCount - 1) * 20 + i * 20);
             label.setFont(Font.font(null, FontWeight.BOLD, 14));

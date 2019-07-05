@@ -25,24 +25,17 @@ public class progressi extends Application {
 
 
 
-        BorderPane anchorPane = new BorderPane();
-//        anchorPane.setStyle("-fx-alignment: center");
 
-
-
+        BorderPane loaderPane = new BorderPane();
+//        loaderPane.setStyle("-fx-alignment: center");
         StackPane r = new StackPane();
-
-
 //        r.setStyle("-fx-alignment: center");
-
-
-
         ProgressIndicator pb = new ProgressIndicator();
         pb.setStyle("-fx-progress-color: #388e3c;");
         pb.setMaxHeight(300);
         pb.setMaxWidth(300);
-        anchorPane.setCenter(pb);
-        r.getChildren().add(anchorPane);
+        loaderPane.setCenter(pb);
+        r.getChildren().add(loaderPane);
         Scene sc = new Scene(r, 200, 200);
 
         stage.setScene(sc);
