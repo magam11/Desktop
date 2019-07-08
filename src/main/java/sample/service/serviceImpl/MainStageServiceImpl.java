@@ -69,29 +69,26 @@ public class MainStageServiceImpl implements MainStageService {
 
     @Override
     public void responsivWidth(double stageWith) {
-        mainStageController.imageCountInto.setLayoutX(28.0);
         mainStageController.memoryProgressBar.setLayoutX(81);
         mainStageController.memoryHint.setLayoutX(28.0);
 //        +++layoutX="14.0"
-        mainStageController.flowPane.setPrefWidth(stageWith - 10);
+//        mainStageController.flowPane.setPrefWidth(stageWith - 10);
         mainStageController.slideController.responsiveWidth(stageWith);
         if (stageWith <= 1000.0) {
             mainStageController.memoryProgressBar.setPrefWidth(Size.WIDTH_COEFFICENT_FOR_PROGRESS_BAR_WIDTH * stageWith);
             mainStageController.fraction
                     .setLayoutX(Size.WIDTH_COEFFICENT_FOR_PROGRESS_BAR_WIDTH * stageWith + mainStageController.memoryProgressBar.getLayoutX() + 7);
         }
-        mainStageController.logoCamerImageVeiw.setLayoutX(Size.WIDTH_COEFFICENT_FOR_CAMERA_LOGO_CAMERA * stageWith);
-        mainStageController.delete.setLayoutX(stageWith - 202);
-        mainStageController.download.setLayoutX(stageWith - 105);
-        mainStageController.logOut_btn.setLayoutX(stageWith - 130);
-        mainStageController.recycle_btn.setLayoutX(stageWith - 227);
-        mainStageController.scrollPane.setPrefWidth(stageWith - 40);
-        mainStageController.cell_containerAnchorPane.setPrefWidth(stageWith);
-        mainStageController.cell_containerAnchorPane.setLayoutX(20);
-        mainStageController.filterPane.setPrefWidth(stageWith);
-        mainStageController.pageNumbersPane.setPrefWidth(stageWith);
-        mainStageController.headerRow1.setPrefWidth(stageWith);
-        mainStageController.phoneNumber.setLayoutX(mainStageController.recycle_btn.getLayoutX() - phoneNumberLenth.getValue() - 8);
+//        mainStageController.logoCamerImageVeiw.setLayoutX(Size.WIDTH_COEFFICENT_FOR_CAMERA_LOGO_CAMERA * stageWith);
+//        mainStageController.delete.setLayoutX(stageWith - 202);
+//        mainStageController.download.setLayoutX(stageWith - 105);
+//        mainStageController.logOut_btn.setLayoutX(stageWith - 130);
+//        mainStageController.recycle_btn.setLayoutX(stageWith - 227);
+//        mainStageController.cell_containerAnchorPane.setPrefWidth(stageWith);
+//        mainStageController.cell_containerAnchorPane.setLayoutX(20);
+//        mainStageController.filterPane.setPrefWidth(stageWith);
+//        mainStageController.pageNumbersPane.setPrefWidth(stageWith);
+//        mainStageController.phoneNumber.setLayoutX(mainStageController.recycle_btn.getLayoutX() - phoneNumberLenth.getValue() - 8);
     }
 
     @Override
@@ -166,7 +163,6 @@ public class MainStageServiceImpl implements MainStageService {
             mainStageController.phoneNumber.setLayoutX(mainStageController.recycle_btn.getLayoutX() - phoneNumberLenth.getValue() - 8);
             mainStageController.fraction.setText(baseUserData.getFruction());
             myImageCount = new SimpleIntegerProperty(Integer.parseInt(baseUserData.getFruction().split("/")[0]));
-            mainStageController.imageCountInto.setText("Storage (" + imagesConunt + ")");
             mainStageController.memoryProgressBar.setProgress((double) imagesConunt / 500.0);
         }
         if (imagesConunt != 0) {
@@ -194,7 +190,7 @@ public class MainStageServiceImpl implements MainStageService {
         Storage storage = Storage.getInstance();
         storage.setCurrentToken("");
         storage.setToken("");
-        ((Stage) mainStageController.headerRow1.getScene().getWindow()).close();
+        ((Stage) mainStageController.header.getScene().getWindow()).close();
         Parent root = FXMLLoader.load(getClass().getResource("/view/login.fxml"));
         Stage primaryStage = new Stage();
         primaryStage.setTitle("Log in");

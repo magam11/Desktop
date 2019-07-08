@@ -33,28 +33,22 @@ public class MainStageController {
     public Label phoneNumber;
     @FXML
     public ProgressBar memoryProgressBar;
-    @FXML
-    public AnchorPane headerRow1;
-    @FXML
-    public AnchorPane headerRow2;
+
     @FXML
     public Label fraction;
     @FXML
     public AnchorPane download;
     @FXML
     public AnchorPane delete;
-    //    @FXML
-//    public AnchorPane share;
+
     @FXML
     public ImageView downloadImageView;
     @FXML
     public ImageView deleteImageView;
-    //    @FXML
-//    public ImageView shareImageView;
     @FXML
     public SlideController slideController;
-    @FXML
-    public Label imageCountInto;
+//    @FXML
+//    public Label imageCountInto;
 
     public Stage mainStage;
     @FXML
@@ -89,7 +83,6 @@ public class MainStageController {
     public Label deleteTxt;
     @FXML
     public Label cancel;
-    public Label shareTxt;
     public Label downloadTxt;
     @FXML
     public BooleanProperty isShowCheckBox = new SimpleBooleanProperty(true); //else go to action
@@ -102,13 +95,20 @@ public class MainStageController {
 
     @FXML
     public DatePicker fromDate;
-    @FXML
-    public Label filterHint;
+
     @FXML
     public Button fromDateCancel;
     public Button toDateCancel;
     @FXML
     public AnchorPane recycleBinContainer;
+    @FXML
+    public AnchorPane header;
+    @FXML
+    public AnchorPane row_1;
+    @FXML
+    public AnchorPane row_2;
+    @FXML
+    public AnchorPane slideContainer;
     StringProperty startDate = new SimpleStringProperty();
     StringProperty endDate = new SimpleStringProperty();
     @FXML
@@ -124,12 +124,12 @@ public class MainStageController {
         RecycleBinServiceImpl.getInstance().initializeMainStageController(this);
         title = new Text(recycleBinController.recycleTitle.getText());
         recycleBinController.initializeMainStageController(this);
-        fromDateCancel.setVisible(false);
-        toDateCancel.setVisible(false);
-        fromDateCancel.setStyle("-fx-background-image: url('/image/cancelFilter.png');-fx-background-repeat: no-repeat;" +
-                "    -fx-background-position: center; -fx-background-size: 25px 25px;-fx-cursor: hand");
-        toDateCancel.setStyle("-fx-background-image: url('/image/cancelFilter.png');-fx-background-repeat: no-repeat;" +
-                "    -fx-background-position: center; -fx-background-size: 25px 25px;-fx-cursor: hand");
+//        fromDateCancel.setVisible(false);
+//        toDateCancel.setVisible(false);
+//        fromDateCancel.setStyle("-fx-background-image: url('/image/cancelFilter.png');-fx-background-repeat: no-repeat;" +
+//                "    -fx-background-position: center; -fx-background-size: 25px 25px;-fx-cursor: hand");
+//        toDateCancel.setStyle("-fx-background-image: url('/image/cancelFilter.png');-fx-background-repeat: no-repeat;" +
+//                "    -fx-background-position: center; -fx-background-size: 25px 25px;-fx-cursor: hand");
         search.setVisible(false);
         fromDate.valueProperty().addListener((observable, oldValue, newValue) -> {
 
@@ -177,12 +177,11 @@ public class MainStageController {
         fromDate.setDayCellFactory(dayCellFactory);
 
 
-        cancel.setVisible(false);
-        selectALL_checkBox.setText("");
-        selectAllHint.setVisible(false);
+//        cancel.setVisible(false);
+//        selectALL_checkBox.setText("");
+//        selectAllHint.setVisible(false);
         selectALL_checkBox.setVisible(false);
-        flowPane.setPrefHeight(581);
-        flowPane.setPrefWidth(897);
+
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         recycleImageView.setImage(new Image(this.getClass().getResourceAsStream("/image/recicleBin.png")));
@@ -192,19 +191,17 @@ public class MainStageController {
         memoryProgressBar.setProgress(125.0 / 400.0);
         download.setEffect(new DropShadow(19, Color.rgb(0, 0, 0, 0.1)));
         delete.setEffect(new DropShadow(19, Color.rgb(0, 0, 0, 0.1)));
-        headerRow1.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.2)));
-        headerRow2.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.2)));
-        headerRow2.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.2)));
+        header.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.2)));
+        row_1.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.2)));
+        row_2.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.2)));
     }
 
     public void responsivWidth(double stageWith) {
-        fromDate.setLayoutX(stageWith - 298);
-        filterHint.setLayoutX(stageWith - 400);
-        fromDateCancel.setLayoutX(stageWith-216);
-        toDateCancel.setLayoutX(stageWith-85);
-        search.setLayoutX(stageWith - 51);
-        toDate.setLayoutX(stageWith - 167);
-        toDate.setFocusTraversable(false);
+//        fromDateCancel.setLayoutX(stageWith-216);
+//        toDateCancel.setLayoutX(stageWith-85);
+//        search.setLayoutX(stageWith - 51);
+//        toDate.setLayoutX(stageWith - 167);
+//        toDate.setFocusTraversable(false);
         mainStageService.responsivWidth(stageWith);
 
         recycleBinContainer.setPrefWidth(stageWith);
@@ -219,9 +216,8 @@ public class MainStageController {
     }
 
     public void responsivHeight(double stageHeight) {
-        cell_containerAnchorPane.setPrefHeight(mainContent.getHeight() - 179);
-        scrollPane.setPrefHeight(mainContent.getHeight() - 220);
-        flowPane.setPrefHeight(mainContent.getHeight() - 220);
+//        cell_containerAnchorPane.setPrefHeight(mainContent.getHeight() - 179);
+//        flowPane.setPrefHeight(mainContent.getHeight() - 220);
         slideController.responsiveHeght(stageHeight);
 
         recycleBinController.recicleBin.setPrefHeight(stageHeight);
