@@ -100,17 +100,17 @@ public class SlideController {
 
     }
 
-    public void responsiveHeght(double stageHeight) {
-        scrollPane.setPrefHeight(stageHeight - 100);
-        rightContent.setLayoutY(0);
-        flutter.setLayoutY(stageHeight - 60);
-        nextLabel.setLayoutY(stageHeight / 2 - halfHeghtOfNextLabel.getValue());
-        previousLabel.setLayoutY(stageHeight / 2 - halfHeghtOfPreviousLabel.getValue());
-        sliderContent.setPrefHeight(stageHeight);
-        rightContent.setPrefHeight(stageHeight);
-        leftContent.setPrefHeight(stageHeight);
-
-    }
+//    public void responsiveHeght(double stageHeight) {
+//        scrollPane.setPrefHeight(stageHeight - 100);
+//        rightContent.setLayoutY(0);
+//        flutter.setLayoutY(stageHeight - 60);
+//        nextLabel.setLayoutY(stageHeight / 2 - halfHeghtOfNextLabel.getValue());
+//        previousLabel.setLayoutY(stageHeight / 2 - halfHeghtOfPreviousLabel.getValue());
+//        sliderContent.setPrefHeight(stageHeight);
+//        rightContent.setPrefHeight(stageHeight);
+//        leftContent.setPrefHeight(stageHeight);
+//
+//    }
 
     @FXML
     public void closeSlide(MouseEvent mouseEvent) {

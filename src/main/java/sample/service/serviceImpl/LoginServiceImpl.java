@@ -135,7 +135,7 @@ public class LoginServiceImpl implements LoginService {
             mainStage.getIcons().add(new Image(this.getClass().getResourceAsStream("/image/logo.png")));
             Scene scene = new Scene(root, 906, 840);
             mainStage.setScene(scene);
-            mainStage.setMinHeight(427.0);
+            mainStage.setMinHeight(500);
             mainStage.setMinWidth(906.0);
             mainStageController = (MainStageController) fxmlLoader.getController();
 
@@ -155,12 +155,12 @@ public class LoginServiceImpl implements LoginService {
                 controller.mainStage = mainStage;
 //                loader.stop();
                 mainStageController.mainPane.getChildren().remove(loaderPane);
-                mainStage.widthProperty().addListener((obs, oldVal, newVal) -> {
-                    ((MainStageController) finalFxmlLoader.getController()).responsivWidth(newVal.doubleValue());
-                });
-                mainStage.heightProperty().addListener((obs, oldVal, newVal) -> {
-                    ((MainStageController) finalFxmlLoader.getController()).responsivHeight(newVal.doubleValue());
-                });
+//                mainStage.widthProperty().addListener((obs, oldVal, newVal) -> {
+//                    ((MainStageController) finalFxmlLoader.getController()).responsivWidth(newVal.doubleValue());
+//                });
+//                mainStage.heightProperty().addListener((obs, oldVal, newVal) -> {
+//                    ((MainStageController) finalFxmlLoader.getController()).responsivHeight(newVal.doubleValue());
+//                });
                 mainStage.setOnCloseRequest(we -> {
                     System.exit(0);
                 });

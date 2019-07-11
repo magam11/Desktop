@@ -4,12 +4,14 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
@@ -22,6 +24,7 @@ import sample.connection.ApiConnection;
 import sample.service.MainStageService;
 import sample.service.serviceImpl.MainStageServiceImpl;
 import sample.service.serviceImpl.RecycleBinServiceImpl;
+import sample.service.serviceImpl.SliderServiceImpl;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -75,14 +78,14 @@ public class MainStageController {
     public AnchorPane mainContent;
     @FXML
     public Label currentPageNumber;
-    @FXML
-    public Label selectAllHint;
+//    @FXML
+//    public Label selectAllHint;
     @FXML
     public CheckBox selectALL_checkBox;
     @FXML
     public Label deleteTxt;
-    @FXML
-    public Label cancel;
+//    @FXML
+//    public Label cancel;
     public Label downloadTxt;
     @FXML
     public BooleanProperty isShowCheckBox = new SimpleBooleanProperty(true); //else go to action
@@ -111,8 +114,8 @@ public class MainStageController {
     public AnchorPane slideContainer;
     StringProperty startDate = new SimpleStringProperty();
     StringProperty endDate = new SimpleStringProperty();
-    @FXML
-    public RecycleBinController recycleBinController;
+//    @FXML
+//    public RecycleBinController recycleBinController;
 
     private Text title;
 
@@ -121,9 +124,13 @@ public class MainStageController {
     private MainStageService mainStageService = MainStageServiceImpl.getInstance();
 
     public void initialize() {
+        SliderServiceImpl.getInstance().initializeMainStageController(this);
+
+//        recycleBinContainer.setVisible(false);
+//        slideContainer.setVisible(false);
         RecycleBinServiceImpl.getInstance().initializeMainStageController(this);
-        title = new Text(recycleBinController.recycleTitle.getText());
-        recycleBinController.initializeMainStageController(this);
+//        title = new Text(recycleBinController.recycleTitle.getText());
+//        recycleBinController.initializeMainStageController(this);
 //        fromDateCancel.setVisible(false);
 //        toDateCancel.setVisible(false);
 //        fromDateCancel.setStyle("-fx-background-image: url('/image/cancelFilter.png');-fx-background-repeat: no-repeat;" +
@@ -187,7 +194,7 @@ public class MainStageController {
         recycleImageView.setImage(new Image(this.getClass().getResourceAsStream("/image/recicleBin.png")));
         logoutImageView.setImage(new Image(this.getClass().getResourceAsStream("/image/logout.png")));
         mainStageService.initializeMainStageController(this);
-        slideController.sliderContent.setVisible(false);
+//        slideController.sliderContent.setVisible(false);
         memoryProgressBar.setProgress(125.0 / 400.0);
         download.setEffect(new DropShadow(19, Color.rgb(0, 0, 0, 0.1)));
         delete.setEffect(new DropShadow(19, Color.rgb(0, 0, 0, 0.1)));
@@ -196,36 +203,36 @@ public class MainStageController {
         row_2.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.2)));
     }
 
-    public void responsivWidth(double stageWith) {
+//    public void responsivWidth(double stageWith) {
 //        fromDateCancel.setLayoutX(stageWith-216);
 //        toDateCancel.setLayoutX(stageWith-85);
 //        search.setLayoutX(stageWith - 51);
 //        toDate.setLayoutX(stageWith - 167);
 //        toDate.setFocusTraversable(false);
-        mainStageService.responsivWidth(stageWith);
+//        mainStageService.responsivWidth(stageWith);
 
-        recycleBinContainer.setPrefWidth(stageWith);
-        recycleBinController.bin_scroll.setPrefWidth(stageWith);
-        recycleBinController.bin_flowPane.setPrefWidth(stageWith);
-        recycleBinController.recicleBin.setPrefWidth(stageWith);
-        recycleBinController.bin_header.setPrefWidth(stageWith);
-        recycleBinController.bin_pagination.setPrefWidth(stageWith);
+//        recycleBinContainer.setPrefWidth(stageWith);
+//        recycleBinController.bin_scroll.setPrefWidth(stageWith);
+//        recycleBinController.bin_flowPane.setPrefWidth(stageWith);
+//        recycleBinController.recicleBin.setPrefWidth(stageWith);
+//        recycleBinController.bin_header.setPrefWidth(stageWith);
+//        recycleBinController.bin_pagination.setPrefWidth(stageWith);
+//
+//        recycleBinController.recycleTitle.setLayoutX((stageWith- title.getLayoutBounds().getWidth())/2);
+//        recycleBinController.countData.setLayoutX(stageWith/2-3);
+//    }
 
-        recycleBinController.recycleTitle.setLayoutX((stageWith- title.getLayoutBounds().getWidth())/2);
-        recycleBinController.countData.setLayoutX(stageWith/2-3);
-    }
-
-    public void responsivHeight(double stageHeight) {
-//        cell_containerAnchorPane.setPrefHeight(mainContent.getHeight() - 179);
-//        flowPane.setPrefHeight(mainContent.getHeight() - 220);
-        slideController.responsiveHeght(stageHeight);
-
-        recycleBinController.recicleBin.setPrefHeight(stageHeight);
-        recycleBinController.recicleBin.setPrefHeight(stageHeight);
-        recycleBinController.recicleBin.setPrefHeight(stageHeight);
-        recycleBinController.bin_scroll.setPrefHeight(stageHeight-118);
-        recycleBinController.bin_flowPane.setPrefHeight(stageHeight-118);
-    }
+//    public void responsivHeight(double stageHeight) {
+////        cell_containerAnchorPane.setPrefHeight(mainContent.getHeight() - 179);
+////        flowPane.setPrefHeight(mainContent.getHeight() - 220);
+////        slideController.responsiveHeght(stageHeight);
+//
+////        recycleBinController.recicleBin.setPrefHeight(stageHeight);
+////        recycleBinController.recicleBin.setPrefHeight(stageHeight);
+////        recycleBinController.recicleBin.setPrefHeight(stageHeight);
+////        recycleBinController.bin_scroll.setPrefHeight(stageHeight-118);
+////        recycleBinController.bin_flowPane.setPrefHeight(stageHeight-118);
+//    }
 
     @FXML
     public void logOut(MouseEvent mouseEvent) throws IOException {
@@ -239,7 +246,6 @@ public class MainStageController {
             download.setStyle("-fx-cursor: default;-fx-background-radius: 15; -fx-background-color: #FFFFFF;");
             delete.setStyle("-fx-cursor: hand;-fx-background-radius: 15; -fx-background-color: #388e3c;");
             deleteTxt.setTextFill(Paint.valueOf("#FAFAFA"));
-            cancel.setVisible(true);
             mainStageService.showCheckBoxes();
             isShowCheckBox.set(false);
         } else {
@@ -266,7 +272,6 @@ public class MainStageController {
             downloadTxt.setTextFill(Paint.valueOf("#FAFAFA"));
             delete.setStyle("-fx-cursor: default;-fx-background-radius: 15; -fx-background-color: #FFFFFF;");
             download.setStyle("-fx-cursor: hand;-fx-background-radius: 15; -fx-background-color: #388e3c;");
-            cancel.setVisible(true);
             mainStageService.showCheckBoxes();
             isShowCheckBox.set(false);
         } else {

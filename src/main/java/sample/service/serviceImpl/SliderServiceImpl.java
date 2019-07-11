@@ -4,15 +4,23 @@ import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.Duration;
 import okhttp3.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import sample.Constant;
+import sample.Main;
 import sample.connection.ApiConnection;
+import sample.controller.MainStageController;
 import sample.controller.SlideController;
 import sample.service.SliderService;
 import sample.util.Helper;
@@ -26,6 +34,7 @@ import java.net.URLConnection;
 
 public class SliderServiceImpl implements SliderService {
     private static SliderServiceImpl sliderService = new SliderServiceImpl();
+    private MainStageController mainStageController;
 
     private SlideController slideController;
 
@@ -46,6 +55,8 @@ public class SliderServiceImpl implements SliderService {
 
     @Override
     public void openSlider(String picName, int indexOf) {
+        AnchorPane slider =(AnchorPane) Main.getScreen("slider");
+        mainStageController.mainPane.getChildren().add(1,slider);
         if (indexOf == 0) {
             slideController.previousLabel.setVisible(false);
         } else {
@@ -59,6 +70,14 @@ public class SliderServiceImpl implements SliderService {
         slideController.fraction.setText(indexOf+1 + "/" + MainStageServiceImpl.myImageCount.get());
         slideController.sliderContent.setVisible(true);
         slideController.sliderPercent.setVisible(false);
+        Stage mainStage = (Stage) mainStageController.header.getScene().getWindow();
+        mainStage.widthProperty().addListener((observable, oldValue, newValue) -> {
+            slider.setPrefWidth(newValue.doubleValue());
+            slideController.menuBar.setLayoutX(newValue.doubleValue()-226);
+        });
+        mainStage.heightProperty().addListener((observable, oldValue, newValue) -> {
+            slider.setPrefHeight(newValue.doubleValue());
+        });
     }
 
     @Override
@@ -174,5 +193,10 @@ public class SliderServiceImpl implements SliderService {
     @Override
     public void updateFruction(int numerator) {
         slideController.fraction.setText(numerator+"/"+slideController.fraction.getText().split("/")[1]);
+    }
+
+    @Override
+    public void initializeMainStageController(MainStageController mainStageController) {
+        this.mainStageController = mainStageController;
     }
 }

@@ -1,6 +1,7 @@
 package sample.service;
 
 import okhttp3.Response;
+import sample.controller.MainStageController;
 import sample.controller.SlideController;
 
 public interface SliderService {
@@ -21,4 +22,6 @@ public interface SliderService {
     void closeSlidePage();
 
     void updateFruction(int numerator);
+
+    void initializeMainStageController(MainStageController mainStageController);
 }

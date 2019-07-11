@@ -13,25 +13,18 @@
 
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.geometry.Insets?>
+
+<?import com.sun.javafx.scene.control.skin.DoubleField?>
 <StackPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
            prefHeight="840.0" prefWidth="906.0" xmlns="http://javafx.com/javafx/8.0.171" stylesheets="/css/main.css"
            xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.MainStageController">
     <children>
-        <AnchorPane fx:id="slideContainer"><children>
-            <fx:include fx:id="slide" source="part/slid.fxml"/>
-        </children></AnchorPane>
-        <AnchorPane fx:id="recycleBinContainer" visible="false">
-            <children>
-                <fx:include fx:id="recycleBin" source="part/recycleBin.fxml"/>
-            </children>
-        </AnchorPane>
-        <!--        <fx:include source="part/loader.fxml" />-->
 
         <AnchorPane fx:id="mainContent" prefHeight="200.0" prefWidth="${mainPane.width}">
             <children>
                 <Label fx:id="currentPageNumber" text="1" visible="false" />
                 <AnchorPane fx:id="header" prefHeight="63.0" prefWidth="${mainPane.width}"
-                            style="-fx-background-color: #9812;">
+                            style="-fx-background-color: #fafafa;">
                     <children>
                         <ImageView fitHeight="50.0" fitWidth="228.0" layoutX="21.0" layoutY="7.0" pickOnBounds="true"
                                    preserveRatio="true">
@@ -61,7 +54,7 @@
                                 </Label>
                             </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="logOut_btn" onMouseClicked="#logOut" layoutX="785.0" AnchorPane.rightAnchor="25" layoutY="13.0"
+                        <AnchorPane fx:id="logOut_btn" style="-fx-cursor: hand" onMouseClicked="#logOut" layoutX="785.0" AnchorPane.rightAnchor="25" layoutY="13.0"
                                     prefHeight="37.0" prefWidth="96.0">
                             <children>
                                 <ImageView fx:id="logoutImageView" fitHeight="21.0" fitWidth="24.0" layoutX="1.0"
@@ -103,7 +96,7 @@
                                         <Image url="@../image/deleteBlack.png"/>
                                     </image>
                                 </ImageView>
-                                <Label layoutX="42.0" layoutY="5.0" prefHeight="27.0" prefWidth="100.0"
+                                <Label fx:id="deleteTxt"  layoutX="42.0" layoutY="5.0" prefHeight="27.0" prefWidth="100.0"
                                        text="Delete Photoes">
                                     <font>
                                         <Font size="14.0"/>
@@ -121,7 +114,7 @@
                                         <Image url="@../image/downloadBlack.png"/>
                                     </image>
                                 </ImageView>
-                                <Label layoutX="31.0" layoutY="5.0" prefHeight="27.0" prefWidth="121.0"
+                                <Label fx:id="downloadTxt" layoutX="31.0" layoutY="5.0" prefHeight="27.0" prefWidth="121.0"
                                        text="Download Photoes">
                                     <font>
                                         <Font size="14.0"/>
@@ -132,7 +125,7 @@
                     </children>
                 </AnchorPane>
                 <AnchorPane fx:id="row_2" layoutY="123.0" prefHeight="97.0" prefWidth="${mainPane.width}"
-                            style="-fx-background-color: #4127;">
+                            style="-fx-background-color: #fafafa;">
                     <children>
                         <CheckBox fx:id="selectALL_checkBox" layoutX="14.0" layoutY="22.0" mnemonicParsing="false" prefHeight="20.0"
                                   onMouseClicked="#selectOrCancelItems" prefWidth="96.0" text=" Select All">
@@ -167,20 +160,32 @@
                                     style="-fx-background-color: #5123;"/>
                     </children>
                 </AnchorPane>
-                <ScrollPane fx:id="scrollPane" layoutY="219.0" prefHeight="${ mainPane.height-header.height -row_1.height-row_2.height}" prefWidth="${mainPane.width}">
+<!--                <ScrollPane fx:id="scrollPane" layoutY="219.0" prefHeight="620" prefWidth="906" style="-fx-background-color: green">-->
+                <ScrollPane fx:id="scrollPane" layoutY="219.0" prefHeight="${ mainPane.height - 220}" prefWidth="${mainPane.width}">
+<!--                <ScrollPane fx:id="scrollPane" layoutY="219.0" prefHeight="400" prefWidth="906" style="-fx-background-color: green">-->
                     <padding>
                         <Insets left="15.0" right="15.0"/>
-
                     </padding>
                     <content>
-                        <FlowPane fx:id="flowPane" layoutX="20" minHeight="0.0" minWidth="0.0"  style="-fx-alignment: center;"
+                        <FlowPane fx:id="flowPane" layoutX="20"   style="-fx-alignment: center;"
                                   prefHeight="${ mainPane.height-header.height -row_1.height-row_2.height}" prefWidth="${ mainPane.width-30}">
-
+<!--                        <FlowPane fx:id="flowPane" layoutX="20" minHeight="0.0" minWidth="0.0"  style="-fx-alignment: center;"-->
+<!--                                  prefHeight="620" prefWidth="906">-->
                         </FlowPane>
                     </content>
                 </ScrollPane>
+<!--                </AnchorPane>-->
             </children>
         </AnchorPane>
+
+<!--        <AnchorPane fx:id="slideContainer"><children>-->
+<!--            <fx:include fx:id="slide" source="part/slid.fxml"/>-->
+<!--        </children></AnchorPane>-->
+<!--        <AnchorPane fx:id="recycleBinContainer" visible="false">-->
+<!--            <children>-->
+<!--                <fx:include fx:id="recycleBin" source="part/recycleBin.fxml"/>-->
+<!--            </children>-->
+<!--        </AnchorPane>-->
     </children>
 
 </StackPane>

@@ -26,7 +26,6 @@ import okhttp3.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import sample.Constant;
-import sample.Size;
 import sample.connection.ApiConnection;
 import sample.controller.MainStageController;
 import sample.dataTransferObject.response.BaseUserData;
@@ -69,16 +68,16 @@ public class MainStageServiceImpl implements MainStageService {
 
     @Override
     public void responsivWidth(double stageWith) {
-        mainStageController.memoryProgressBar.setLayoutX(81);
-        mainStageController.memoryHint.setLayoutX(28.0);
+//        mainStageController.memoryProgressBar.setLayoutX(81);
+//        mainStageController.memoryHint.setLayoutX(28.0);
 //        +++layoutX="14.0"
 //        mainStageController.flowPane.setPrefWidth(stageWith - 10);
-        mainStageController.slideController.responsiveWidth(stageWith);
-        if (stageWith <= 1000.0) {
-            mainStageController.memoryProgressBar.setPrefWidth(Size.WIDTH_COEFFICENT_FOR_PROGRESS_BAR_WIDTH * stageWith);
-            mainStageController.fraction
-                    .setLayoutX(Size.WIDTH_COEFFICENT_FOR_PROGRESS_BAR_WIDTH * stageWith + mainStageController.memoryProgressBar.getLayoutX() + 7);
-        }
+//        mainStageController.slideController.responsiveWidth(stageWith);
+//        if (stageWith <= 1000.0) {
+//            mainStageController.memoryProgressBar.setPrefWidth((200.0/722.0) * stageWith);
+//            mainStageController.fraction
+//                    .setLayoutX((200.0/722.0) * stageWith + mainStageController.memoryProgressBar.getLayoutX() + 7);
+//        }
 //        mainStageController.logoCamerImageVeiw.setLayoutX(Size.WIDTH_COEFFICENT_FOR_CAMERA_LOGO_CAMERA * stageWith);
 //        mainStageController.delete.setLayoutX(stageWith - 202);
 //        mainStageController.download.setLayoutX(stageWith - 105);
@@ -99,7 +98,7 @@ public class MainStageServiceImpl implements MainStageService {
 
     @Override
     public void loadMainStageData(BaseUserData baseUserData, int loadedPageNumber, String filter_search) {
-        Scene scene = mainStageController.delete.getScene();
+        Scene scene = mainStageController.flowPane.getScene();
         selectedImage.clear();
         mainStageController.download.setDisable(false);
         mainStageController.delete.setDisable(false);
@@ -477,7 +476,6 @@ public class MainStageServiceImpl implements MainStageService {
                         .build(), loadedPageNumber,"general");
             } else if (response.code() == 401) {
 //          TODO something
-//          TODO something
             } else if (response.code() == 403) {
 //          TODO something
             } else if (response.code() == 410) {
@@ -493,7 +491,6 @@ public class MainStageServiceImpl implements MainStageService {
         for (CheckBox checkBox : checkboxes.keySet()) {
             checkBox.setVisible(true);
         }
-        mainStageController.selectAllHint.setVisible(true);
         mainStageController.selectALL_checkBox.setVisible(true);
     }
 
@@ -532,7 +529,6 @@ public class MainStageServiceImpl implements MainStageService {
         if (selectedImage != null && selectedImage.size() > 0) {
             DeleteDialogServiceImpl.getInstance().openConfirmationDialogForBatch();
         } else {
-            mainStageController.selectAllHint.setVisible(false);
             cancelSelect();
         }
 
@@ -545,7 +541,6 @@ public class MainStageServiceImpl implements MainStageService {
         mainStageController.delete.setStyle("-fx-cursor: hand; -fx-background-radius: 15; -fx-background-color: #FFFFFF;");
         mainStageController.deleteTxt.setTextFill(Paint.valueOf("#000"));
         mainStageController.isShowCheckBox.set(true);
-        mainStageController.cancel.setVisible(false);
         mainStageController.selectALL_checkBox.setSelected(false);
         mainStageController.selectALL_checkBox.setVisible(false);
         ApiConnection.getInstance().updateImagesStatusBatch(sample.dataTransferObject.request.
@@ -560,9 +555,7 @@ public class MainStageServiceImpl implements MainStageService {
     @Override
     public void cancelSelect() {
         mainStageController.selectALL_checkBox.setSelected(false);
-        mainStageController.selectAllHint.setVisible(false);
         mainStageController.selectALL_checkBox.setVisible(false);
-        mainStageController.cancel.setVisible(false);
         mainStageController.deleteTxt.setTextFill(Paint.valueOf("#000"));
         mainStageController.downloadTxt.setTextFill(Paint.valueOf("#000"));
         mainStageController.delete.setStyle("-fx-cursor: hand;-fx-background-radius: 15; -fx-background-color: #FFFFFF;");
@@ -586,14 +579,13 @@ public class MainStageServiceImpl implements MainStageService {
 
     @Override
     public void downloadSelectedImages() {
-        Scene scene = mainStageController.selectAllHint.getScene();
+        Scene scene = mainStageController.header.getScene();
         if (selectedImage != null && selectedImage.size() > 0) {
             for (Map.Entry<Integer, String> entry : selectedImage.entrySet()) {
                 downloadImage(entry.getValue(), (ProgressBar) scene.lookup("#progressBar_" + entry.getKey()));
             }
             cancelSelect();
         } else {
-            mainStageController.selectAllHint.setVisible(false);
             cancelSelect();
         }
     }
