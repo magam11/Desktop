@@ -4,6 +4,8 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -20,6 +22,7 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.util.Callback;
+import sample.Main;
 import sample.connection.ApiConnection;
 import sample.service.MainStageService;
 import sample.service.serviceImpl.MainStageServiceImpl;
@@ -114,8 +117,7 @@ public class MainStageController {
     public AnchorPane slideContainer;
     StringProperty startDate = new SimpleStringProperty();
     StringProperty endDate = new SimpleStringProperty();
-//    @FXML
-//    public RecycleBinController recycleBinController;
+
 
     private Text title;
 
@@ -126,9 +128,6 @@ public class MainStageController {
     public void initialize() {
         SliderServiceImpl.getInstance().initializeMainStageController(this);
 
-//        recycleBinContainer.setVisible(false);
-//        slideContainer.setVisible(false);
-        RecycleBinServiceImpl.getInstance().initializeMainStageController(this);
 //        title = new Text(recycleBinController.recycleTitle.getText());
 //        recycleBinController.initializeMainStageController(this);
 //        fromDateCancel.setVisible(false);
@@ -143,7 +142,7 @@ public class MainStageController {
             if(newValue!=null){
                 startDate.setValue(newValue.toString());
                 search.setVisible(true);
-                fromDateCancel.setVisible(true);
+//                fromDateCancel.setVisible(true);
             }
             else {
                 startDate.setValue(null);
@@ -155,7 +154,7 @@ public class MainStageController {
             if (newValue!=null){
                 endDate.setValue(newValue.toString());
                 search.setVisible(true);
-                toDateCancel.setVisible(true);
+//                toDateCancel.setVisible(true);
             }else {
                 endDate.setValue(null);
                 if(startDate.get()==null)
@@ -203,36 +202,7 @@ public class MainStageController {
         row_2.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.2)));
     }
 
-//    public void responsivWidth(double stageWith) {
-//        fromDateCancel.setLayoutX(stageWith-216);
-//        toDateCancel.setLayoutX(stageWith-85);
-//        search.setLayoutX(stageWith - 51);
-//        toDate.setLayoutX(stageWith - 167);
-//        toDate.setFocusTraversable(false);
-//        mainStageService.responsivWidth(stageWith);
 
-//        recycleBinContainer.setPrefWidth(stageWith);
-//        recycleBinController.bin_scroll.setPrefWidth(stageWith);
-//        recycleBinController.bin_flowPane.setPrefWidth(stageWith);
-//        recycleBinController.recicleBin.setPrefWidth(stageWith);
-//        recycleBinController.bin_header.setPrefWidth(stageWith);
-//        recycleBinController.bin_pagination.setPrefWidth(stageWith);
-//
-//        recycleBinController.recycleTitle.setLayoutX((stageWith- title.getLayoutBounds().getWidth())/2);
-//        recycleBinController.countData.setLayoutX(stageWith/2-3);
-//    }
-
-//    public void responsivHeight(double stageHeight) {
-////        cell_containerAnchorPane.setPrefHeight(mainContent.getHeight() - 179);
-////        flowPane.setPrefHeight(mainContent.getHeight() - 220);
-////        slideController.responsiveHeght(stageHeight);
-//
-////        recycleBinController.recicleBin.setPrefHeight(stageHeight);
-////        recycleBinController.recicleBin.setPrefHeight(stageHeight);
-////        recycleBinController.recicleBin.setPrefHeight(stageHeight);
-////        recycleBinController.bin_scroll.setPrefHeight(stageHeight-118);
-////        recycleBinController.bin_flowPane.setPrefHeight(stageHeight-118);
-//    }
 
     @FXML
     public void logOut(MouseEvent mouseEvent) throws IOException {
@@ -306,7 +276,15 @@ public class MainStageController {
 
     @FXML
     public void openRecycleBinPage(MouseEvent mouseEvent) {
-        recycleBinContainer.setVisible(true);
+        AnchorPane recycle =(AnchorPane) Main.getScreen("recycle");
+//        mainPane.getScene().setRoot(recycle);
+
+
+        mainPane.getChildren().add(1,recycle);
+        recycle.setLayoutX(0);
+        recycle.setLayoutY(0);
+        recycle.setPrefHeight(mainPane.getPrefHeight());
+        recycle.setPrefWidth(mainPane.getPrefWidth());
         ApiConnection.getInstance().getDeletedImagePage(1);
 
     }

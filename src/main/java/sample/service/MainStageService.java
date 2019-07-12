@@ -2,6 +2,8 @@ package sample.service;
 
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import okhttp3.Response;
 import sample.controller.MainStageController;
 import sample.dataTransferObject.response.BaseUserData;
@@ -47,4 +49,8 @@ public interface MainStageService {
     void downloadSelectedImages();
 
     void shareImage(String picName);
+
+    StackPane getMainPane();
+
+    MainStageController getMainStageController();
 }

@@ -68,6 +68,7 @@ public class SlideController {
     private DoubleProperty halfHeghtOfPreviousLabel;
     private DoubleProperty fractionWidth;
     private DoubleProperty sliderPercentWidth;
+    private MainStageService mainStageService = MainStageServiceImpl.getInstance();
 
 
     public void initialize() {
@@ -114,8 +115,7 @@ public class SlideController {
 
     @FXML
     public void closeSlide(MouseEvent mouseEvent) {
-        sliderContent.setVisible(false);
-
+        mainStageService.getMainPane().getChildren().remove(1);
     }
 
     @FXML

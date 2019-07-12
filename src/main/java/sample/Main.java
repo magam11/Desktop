@@ -21,6 +21,7 @@ public class Main extends Application {
         javafx.scene.image.Image logo = new Image(this.getClass().getResourceAsStream("/image/logo.png"));
         primaryStage.getIcons().add(logo);
         loadScreen("slider","/view/part/slid.fxml");
+        loadScreen("recycle","/view/part/recycleBin.fxml");
         primaryStage.setResizable(false);
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);

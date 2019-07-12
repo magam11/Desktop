@@ -74,9 +74,21 @@ public class SliderServiceImpl implements SliderService {
         mainStage.widthProperty().addListener((observable, oldValue, newValue) -> {
             slider.setPrefWidth(newValue.doubleValue());
             slideController.menuBar.setLayoutX(newValue.doubleValue()-226);
+            slideController.rightContent.setLayoutX(newValue.doubleValue()-60);
+            slideController.scrollPane.setPrefWidth(newValue.doubleValue()-210);
+            slideController.fraction.setLayoutX(newValue.doubleValue()-271);
+            slideController.shownImage_container.setPrefWidth(newValue.doubleValue()-210);
+            slideController.shownImage.setFitWidth(newValue.doubleValue()-220);
         });
         mainStage.heightProperty().addListener((observable, oldValue, newValue) -> {
             slider.setPrefHeight(newValue.doubleValue());
+            slideController.nextLabel.setLayoutY(newValue.doubleValue()/2);
+            slideController.previousLabel.setLayoutY(newValue.doubleValue()/2);
+            slideController.scrollPane.setPrefHeight(newValue.doubleValue()-105);
+            slideController.shownImage_container.setPrefHeight(newValue.doubleValue()-105);
+            slideController.shownImage.setFitHeight(newValue.doubleValue()-120);
+
+
         });
     }
 

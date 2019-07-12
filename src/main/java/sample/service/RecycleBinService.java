@@ -12,5 +12,5 @@ public interface RecycleBinService {
 
     void drawPagination(BaseUserData baseUserData, int page);
 
-    void initializeMainStageController(MainStageController mainStageController);
+
 }

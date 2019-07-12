@@ -2,35 +2,22 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="logini ejn e havaqvum&#10;mejy ka shadowi orinak&#10;verjacel e logini eji viewi havaqumy&#10;havaqvel e main eji headery">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/view/part/slidOld.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sample/BackgroundWorkerDemo.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sample/Constant.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/Constant.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sample/CopyTask.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/sample/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sample/Size.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/sample/controller/MainStageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/controller/MainStageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sample/controller/RecycleBinController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/controller/RecycleBinController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/sample/controller/SlideController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/controller/SlideController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sample/progressi.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sample/service/SliderService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/service/SliderService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/LoginServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/LoginServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sample/service/MainStageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/service/MainStageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sample/service/RecycleBinService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/service/RecycleBinService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/MainStageServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/MainStageServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/RecycleBinServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/RecycleBinServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/SliderServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/SliderServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/image/deleteWhiteIco.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/image/deleteWhiteIco.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/image/downloadWhite.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/image/downloadWhite.png" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/image/shareWhite.png" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/image/shareWhite.png" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/view/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/main.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/view/part/cell.fxml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/view/part/recycleBin.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/part/recycleBin.fxml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/view/part/slid.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/view/part/slid.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/sample/Constant.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/sample/Constant.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/sample/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/sample/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/sample/Size.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/sample/connection/ApiConnection.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/sample/connection/ApiConnection.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/sample/controller/MainStageController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/sample/controller/MainStageController.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/sample/service/SliderService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/sample/service/SliderService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/sample/service/serviceImpl/LoginServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/sample/service/serviceImpl/LoginServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/sample/service/serviceImpl/MainStageServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/sample/service/serviceImpl/MainStageServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/sample/service/serviceImpl/SliderServiceImpl.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/sample/service/serviceImpl/SliderServiceImpl.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/view/main.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/main.fxml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/view/part/cell.fxml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/view/part/slid.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/view/part/slid.fxml" afterDir="false" />
     </list>
     <ignored path="JavaFxApplication.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -91,47 +78,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/LoginServiceImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="190">
-              <caret line="156" column="78" lean-forward="true" selection-start-line="156" selection-start-column="78" selection-end-line="156" selection-end-column="78" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/sample/service/SliderService.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="170">
-              <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/MainStageServiceImpl.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="173">
-              <caret line="375" column="58" lean-forward="true" selection-start-line="375" selection-start-column="58" selection-end-line="375" selection-end-column="58" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/SliderServiceImpl.java">
+        <entry file="file://$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/RecycleBinServiceImpl.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="292">
-              <caret line="78" column="33" selection-start-line="78" selection-start-column="33" selection-end-line="78" selection-end-column="33" />
+            <state relative-caret-position="3395">
+              <caret line="231" column="4" selection-start-line="231" selection-start-column="4" selection-end-line="231" selection-end-column="4" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -140,49 +91,50 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/view/main.fxml">
-          <provider editor-type-id="JavaFX-Scene-Builder" />
+        <entry file="file://$PROJECT_DIR$/src/main/java/sample/controller/RecycleBinController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="156">
-              <caret line="34" column="78" selection-start-line="34" selection-start-column="67" selection-end-line="34" selection-end-column="78" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/java/sample/controller/SlideController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="181">
-              <caret line="102" column="24" lean-forward="true" selection-start-line="102" selection-start-column="24" selection-end-line="102" selection-end-column="24" />
+            <state relative-caret-position="-42">
+              <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
             </state>
           </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/view/part/slid.fxml">
-          <provider editor-type-id="JavaFX-Scene-Builder" />
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="323">
-              <caret line="37" column="40" selection-start-line="37" selection-start-column="40" selection-end-line="37" selection-end-column="40" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/resources/view/part/slidOld.fxml">
-          <provider editor-type-id="JavaFX-Scene-Builder" />
-          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/view/part/recycleBin.fxml">
           <provider editor-type-id="JavaFX-Scene-Builder" />
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="24" column="57" selection-start-line="24" selection-start-column="57" selection-end-line="24" selection-end-column="57" />
+            <state relative-caret-position="442">
+              <caret line="50" column="22" selection-start-line="50" selection-start-column="22" selection-end-line="50" selection-end-column="22" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/sample/service/RecycleBinService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="10" column="40" lean-forward="true" selection-start-line="10" selection-start-column="9" selection-end-line="10" selection-end-column="40" />
+              <folding>
+                <element signature="imports" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/sample/connection/ApiConnection.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="104">
+              <caret line="312" column="28" selection-start-line="312" selection-start-column="28" selection-end-line="312" selection-end-column="28" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="method#recoverImageStatus#0;class#ApiConnection#0" />
+                <element signature="method#deleteImage#0;class#ApiConnection#0" />
+                <element signature="method#loadBaseData#0;class#ApiConnection#0" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -190,8 +142,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/sample/controller/MainStageController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="173">
-              <caret line="224" selection-start-line="224" selection-start-column="2" selection-end-line="234" selection-end-column="7" />
+            <state relative-caret-position="131">
+              <caret line="281" column="32" lean-forward="true" selection-start-line="281" selection-start-column="32" selection-end-line="281" selection-end-column="32" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -215,23 +167,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>responsiv</find>
-      <find>recycleTitle</find>
-      <find>finalI + 1</find>
-      <find>dropshadow</find>
-      <find>pa</find>
-      <find>openSlider</find>
-      <find>Log in</find>
-      <find>login(String</find>
-      <find>onRespoinseOfDataApiAnalysis(Response</find>
-      <find>Recycle</find>
-      <find>mainOld</find>
-      <find>stackPane</find>
-      <find>mainContent</find>
-      <find>filterHint</find>
-      <find>frac</find>
-      <find>login(Stri</find>
-      <find>authenticationSuccessful(AuthenticationResponse</find>
       <find>onRespoinseOfDataApiAnalysis(Resp</find>
       <find>loadPage(</find>
       <find>memory</find>
@@ -245,6 +180,23 @@
       <find>responsivWidth(double</find>
       <find>Anch</find>
       <find>AnchorPane.</find>
+      <find>X</find>
+      <find>mainPane</find>
+      <find>responsive</find>
+      <find>fra</find>
+      <find>heder</find>
+      <find>cancelSelect()</find>
+      <find>selectOrCancelItems()</find>
+      <find>Cancel</find>
+      <find>Canc</find>
+      <find>f</find>
+      <find>fone click</find>
+      <find>Log</find>
+      <find>loadDataInRecycleBin(</find>
+      <find>Rec</find>
+      <find>title</find>
+      <find>X&quot;</find>
+      <find>loadDataInRecycleBin(BaseUserDa</find>
     </findStrings>
   </component>
   <component name="FindManager">
@@ -279,7 +231,6 @@
         <option value="$PROJECT_DIR$/src/main/resources/view/dialog/shareDialog.fxml" />
         <option value="$PROJECT_DIR$/src/main/java/sample/controller/dialogController/ShareDialogController.java" />
         <option value="$PROJECT_DIR$/src/main/java/sample/psvm.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sample/service/MainStageService.java" />
         <option value="$PROJECT_DIR$/src/main/java/sample/controller/RecicleBinController.java" />
         <option value="$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/RecicleBinServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/sample/service/RecicleBinService.java" />
@@ -288,10 +239,6 @@
         <option value="$PROJECT_DIR$/src/main/java/sample/dataTransferObject/request/ImageManagerRequest.java" />
         <option value="$PROJECT_DIR$/src/main/java/sample/dataTransferObject/response/BaseUserData.java" />
         <option value="$PROJECT_DIR$/src/main/java/sample/connection/ApiConnection.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sample/controller/RecycleBinController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sample/service/RecycleBinService.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/view/part/recycleBin.fxml" />
-        <option value="$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/RecycleBinServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/java/sample/BackgroundWorkerDemo.java" />
         <option value="$PROJECT_DIR$/src/main/java/sample/progressi.java" />
         <option value="$PROJECT_DIR$/src/main/java/sample/service/LoginService.java" />
@@ -301,14 +248,19 @@
         <option value="$PROJECT_DIR$/src/main/java/sample/Constant.java" />
         <option value="$PROJECT_DIR$/src/main/resources/view/part/cell.fxml" />
         <option value="$PROJECT_DIR$/src/main/java/sample/service/SliderService.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/view/main.fxml" />
-        <option value="$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/MainStageServiceImpl.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sample/Main.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/view/part/slid.fxml" />
-        <option value="$PROJECT_DIR$/src/main/java/sample/controller/SlideController.java" />
-        <option value="$PROJECT_DIR$/src/main/java/sample/controller/MainStageController.java" />
         <option value="$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/LoginServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sample/controller/SlideController.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/view/part/slid.fxml" />
         <option value="$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/SliderServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sample/Main.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/view/main.fxml" />
+        <option value="$PROJECT_DIR$/src/main/java/sample/service/RecycleBinService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sample/service/MainStageService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/MainStageServiceImpl.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sample/controller/RecycleBinController.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/view/part/recycleBin.fxml" />
+        <option value="$PROJECT_DIR$/src/main/java/sample/controller/MainStageController.java" />
+        <option value="$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/RecycleBinServiceImpl.java" />
       </list>
     </option>
   </component>
@@ -445,6 +397,14 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
               <item name="resources" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="Desktop" type="b2602c69:ProjectViewProjectNode" />
+              <item name="Desktop" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="resources" type="462c0819:PsiDirectoryNode" />
+              <item name="image" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="Desktop" type="b2602c69:ProjectViewProjectNode" />
@@ -696,7 +656,8 @@
       <workItem from="1562239577575" duration="9217000" />
       <workItem from="1562302773463" duration="19233000" />
       <workItem from="1562562509042" duration="11991000" />
-      <workItem from="1562818832814" duration="12744000" />
+      <workItem from="1562818832814" duration="13428000" />
+      <workItem from="1562907117619" duration="16297000" />
     </task>
     <task id="LOCAL-00001" summary="logini ejn e havaqvum">
       <created>1559823561250</created>
@@ -737,7 +698,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="429411000" />
+    <option name="totallyTimeSpent" value="446392000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -752,7 +713,7 @@
     <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.21748401" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.22121535" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Favorites" order="2" />
       <window_info id="Designer" order="3" />
@@ -762,7 +723,7 @@
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32827735" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.3261105" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.3802817" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.156013" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32936078" />
@@ -775,7 +736,7 @@
       <window_info anchor="bottom" id="Messages" order="13" weight="0.32827735" />
       <window_info anchor="bottom" id="Docker" order="14" show_stripe_button="false" />
       <window_info anchor="bottom" id="Database Changes" order="15" />
-      <window_info anchor="bottom" id="Terminal" order="16" weight="0.1603467" />
+      <window_info anchor="bottom" id="Terminal" order="16" weight="0.15817985" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -851,14 +812,6 @@
     </SUITE>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/resources/view/dialog/deleteConfirmationDialog.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="164">
-          <caret line="19" column="114" selection-start-line="19" selection-start-column="114" selection-end-line="19" selection-end-column="114" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/view/dialog/shareDialog.fxml">
       <provider editor-type-id="JavaFX-Scene-Builder" />
       <provider selected="true" editor-type-id="text-editor">
@@ -956,16 +909,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sample/service/RecycleBinService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="238">
-          <caret line="16" selection-start-line="16" selection-end-line="16" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/sample/controller/LoaderController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -987,40 +930,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/RecycleBinServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="713">
-          <caret line="186" column="17" selection-start-line="186" selection-start-column="17" selection-end-line="186" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/DeleteDialogServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="292">
-          <caret line="64" column="19" selection-start-line="64" selection-start-column="19" selection-end-line="64" selection-end-column="19" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/sample/controller/LoginController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="536">
           <caret line="93" column="26" selection-start-line="93" selection-start-column="26" selection-end-line="93" selection-end-column="26" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sample/controller/RecycleBinController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="19" column="30" selection-start-line="19" selection-start-column="30" selection-end-line="19" selection-end-column="30" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1048,20 +961,8 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sample/BackgroundWorkerDemo.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-134">
-          <caret line="65" selection-start-line="65" selection-end-line="65" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sample/progressi.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="38" column="30" selection-start-line="38" selection-start-column="29" selection-end-line="38" selection-end-column="30" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sample/BackgroundWorkerDemo.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/sample/progressi.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/sample/test/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-321">
@@ -1069,32 +970,12 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sample/CopyTask.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="85">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sample/Size.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="68">
-          <caret line="4" column="57" lean-forward="true" selection-start-line="4" selection-start-column="57" selection-end-line="4" selection-end-column="57" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sample/CopyTask.java" />
+    <entry file="file://$PROJECT_DIR$/src/main/java/sample/Size.java" />
     <entry file="file://$PROJECT_DIR$/src/main/java/sample/MessageNotifications.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
           <caret line="7" selection-start-line="7" selection-end-line="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/view/mainOld.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="677">
-          <caret line="181" column="5" selection-start-line="181" selection-start-column="5" selection-end-line="181" selection-end-column="5" />
         </state>
       </provider>
     </entry>
@@ -1106,27 +987,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/view/part/cell.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="164" lean-forward="true" selection-start-line="8" selection-start-column="164" selection-end-line="8" selection-end-column="164" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sample/connection/ApiConnection.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="560">
-          <caret line="131" column="60" selection-start-line="131" selection-start-column="51" selection-end-line="131" selection-end-column="60" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#recoverImageStatus#0;class#ApiConnection#0" />
-            <element signature="method#deleteImage#0;class#ApiConnection#0" />
-            <element signature="method#loadBaseData#0;class#ApiConnection#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/view/part/cell.fxml" />
     <entry file="file://$PROJECT_DIR$/src/main/resources/view/login.fxml">
       <provider editor-type-id="JavaFX-Scene-Builder" />
       <provider selected="true" editor-type-id="text-editor">
@@ -1145,74 +1006,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sample/service/MainStageService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="14" column="30" lean-forward="true" selection-start-line="14" selection-start-column="9" selection-end-line="14" selection-end-column="30" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sample/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="230">
-          <caret line="25" column="37" selection-start-line="25" selection-start-column="37" selection-end-line="25" selection-end-column="37" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/view/main.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder" />
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="156">
-          <caret line="34" column="78" selection-start-line="34" selection-start-column="67" selection-end-line="34" selection-end-column="78" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sample/controller/SlideController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="181">
-          <caret line="102" column="24" lean-forward="true" selection-start-line="102" selection-start-column="24" selection-end-line="102" selection-end-column="24" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sample/controller/MainStageController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="224" selection-start-line="224" selection-start-column="2" selection-end-line="234" selection-end-column="7" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/LoginServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="190">
-          <caret line="156" column="78" lean-forward="true" selection-start-line="156" selection-start-column="78" selection-end-line="156" selection-end-column="78" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sample/service/SliderService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk1.8.0_201/javafx-src.zip!/javafx/beans/binding/IntegerExpression.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="181">
@@ -1224,10 +1017,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/MainStageServiceImpl.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/LoginServiceImpl.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="173">
-          <caret line="375" column="58" lean-forward="true" selection-start-line="375" selection-start-column="58" selection-end-line="375" selection-end-column="58" />
+        <state relative-caret-position="2040">
+          <caret line="156" column="78" selection-start-line="156" selection-start-column="78" selection-end-line="156" selection-end-column="78" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sample/service/SliderService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="153">
+          <caret line="11" column="17" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -1238,26 +1041,154 @@
       <provider editor-type-id="JavaFX-Scene-Builder" />
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/view/part/recycleBin.fxml">
+    <entry file="file://$PROJECT_DIR$/src/main/resources/view/mainOld.fxml">
       <provider editor-type-id="JavaFX-Scene-Builder" />
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="57" selection-start-line="24" selection-start-column="57" selection-end-line="24" selection-end-column="57" />
+        <state relative-caret-position="160">
+          <caret line="164" column="228" lean-forward="true" selection-start-line="164" selection-start-column="228" selection-end-line="164" selection-end-column="228" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/image/deleteWhiteIco.png">
+      <provider selected="true" editor-type-id="images" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/view/main.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="128">
+          <caret line="33" column="113" selection-start-line="33" selection-start-column="113" selection-end-line="33" selection-end-column="113" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/DeleteDialogServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="287">
+          <caret line="77" column="59" lean-forward="true" selection-start-line="77" selection-start-column="59" selection-end-line="77" selection-end-column="59" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sample/controller/SlideController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="151">
+          <caret line="117" column="63" lean-forward="true" selection-start-line="117" selection-start-column="7" selection-end-line="117" selection-end-column="63" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#4217#4218#0" expanded="true" />
+            <element signature="e#4287#4288#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sample/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="196">
+          <caret line="23" column="27" selection-start-line="23" selection-start-column="20" selection-end-line="23" selection-end-column="27" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sample/service/MainStageService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="279">
+          <caret line="54" column="49" selection-start-line="54" selection-start-column="49" selection-end-line="54" selection-end-column="49" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/MainStageServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="262">
+          <caret line="644" column="13" lean-forward="true" selection-start-line="644" selection-start-column="13" selection-end-line="644" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#29226#29227#0" expanded="true" />
+            <element signature="e#29253#29254#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/SliderServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="160">
+          <caret line="72" column="84" lean-forward="true" selection-start-line="72" selection-start-column="8" selection-end-line="72" selection-end-column="84" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#6732#6733#0" expanded="true" />
+            <element signature="e#6795#6796#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/view/part/slid.fxml">
       <provider editor-type-id="JavaFX-Scene-Builder" />
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="323">
-          <caret line="37" column="40" selection-start-line="37" selection-start-column="40" selection-end-line="37" selection-end-column="40" />
+        <state relative-caret-position="109">
+          <caret line="102" column="91" selection-start-line="102" selection-start-column="91" selection-end-line="102" selection-end-column="91" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/SliderServiceImpl.java">
+    <entry file="file://$PROJECT_DIR$/src/main/java/sample/controller/RecycleBinController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="292">
-          <caret line="78" column="33" selection-start-line="78" selection-start-column="33" selection-end-line="78" selection-end-column="33" />
+        <state relative-caret-position="-42">
+          <caret line="14" column="13" selection-start-line="14" selection-start-column="13" selection-end-line="14" selection-end-column="13" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/view/part/recycleBin.fxml">
+      <provider editor-type-id="JavaFX-Scene-Builder" />
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="442">
+          <caret line="50" column="22" selection-start-line="50" selection-start-column="22" selection-end-line="50" selection-end-column="22" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sample/service/RecycleBinService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="40" lean-forward="true" selection-start-line="10" selection-start-column="9" selection-end-line="10" selection-end-column="40" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sample/connection/ApiConnection.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="104">
+          <caret line="312" column="28" selection-start-line="312" selection-start-column="28" selection-end-line="312" selection-end-column="28" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="method#recoverImageStatus#0;class#ApiConnection#0" />
+            <element signature="method#deleteImage#0;class#ApiConnection#0" />
+            <element signature="method#loadBaseData#0;class#ApiConnection#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sample/controller/MainStageController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="131">
+          <caret line="281" column="32" lean-forward="true" selection-start-line="281" selection-start-column="32" selection-end-line="281" selection-end-column="32" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/sample/service/serviceImpl/RecycleBinServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3395">
+          <caret line="231" column="4" selection-start-line="231" selection-start-column="4" selection-end-line="231" selection-end-column="4" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

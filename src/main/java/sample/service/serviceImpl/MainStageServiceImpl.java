@@ -14,6 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
@@ -216,8 +217,8 @@ public class MainStageServiceImpl implements MainStageService {
         for (ImageData pictureData : picturesData) {
 
             AnchorPane cellContent = new AnchorPane();
-            cellContent.setPrefWidth(200.0);
-            cellContent.setPrefHeight(177.0);
+            cellContent.setPrefWidth(308);
+            cellContent.setPrefHeight(208);
             FlowPane.setMargin(cellContent, new Insets(5.0, 5.0, 5.0, 5.0));
             cellContent.setId(pictureData.getPicName());
 //            cellContent.setStyle("-fx-cursor: hand");
@@ -237,22 +238,22 @@ public class MainStageServiceImpl implements MainStageService {
 
             Image deleteWհiteIco = new Image(this.getClass().getResourceAsStream("/image/deleteWhiteIco.png"));
             ImageView deleteIco = new ImageView(deleteWհiteIco);
-            deleteIco.setFitHeight(25.0);
-            deleteIco.setFitWidth(25.0);
+            deleteIco.setFitHeight(36.0);
+            deleteIco.setFitWidth(36.0);
             Label delete = new Label();
             delete.setGraphic(deleteIco);
             delete.setVisible(false);
-            delete.setLayoutX(cellContent.getLayoutX() + cellContent.getPrefWidth() - 30);
-            delete.setLayoutY(cellContent.getLayoutY() + cellContent.getPrefHeight() - 31);
+            delete.setLayoutX(cellContent.getLayoutX() + cellContent.getPrefWidth() - 36);
+            delete.setLayoutY(cellContent.getLayoutY() + cellContent.getPrefHeight() - 40);
 
             Image shateWհiteIco = new Image(this.getClass().getResourceAsStream("/image/shareWhite.png"));
             ImageView shareIco = new ImageView(shateWհiteIco);
-            shareIco.setFitHeight(25.0);
-            shareIco.setFitWidth(25.0);
+            shareIco.setFitHeight(36.0);
+            shareIco.setFitWidth(36.0);
             Label share = new Label();
             share.setGraphic(shareIco);
-            share.setLayoutX(cellContent.getLayoutX() + cellContent.getPrefWidth() - 62);
-            share.setLayoutY(cellContent.getLayoutY() + cellContent.getPrefHeight() - 31);
+            share.setLayoutX(cellContent.getLayoutX() + cellContent.getPrefWidth() - 75);
+            share.setLayoutY(cellContent.getLayoutY() + cellContent.getPrefHeight() - 40);
             share.setVisible(false);
 
             ProgressBar progressBar = new ProgressBar();
@@ -265,18 +266,43 @@ public class MainStageServiceImpl implements MainStageService {
 
 
             Image downlodWհiteIco = new Image(this.getClass().getResourceAsStream("/image/downloadWhite.png"));
+            Image deleteGrin = new Image(this.getClass().getResourceAsStream("/image/delete_green.png"));
+            Image shareGreen = new Image(this.getClass().getResourceAsStream("/image/share_green.png"));
+            Image downloadGreen = new Image(this.getClass().getResourceAsStream("/image/download_green.png"));
             ImageView downloadIco = new ImageView(downlodWհiteIco);
-            downloadIco.setFitHeight(25.0);
-            downloadIco.setFitWidth(25.0);
+            downloadIco.setFitHeight(36.0);
+            downloadIco.setFitWidth(36.0);
             Label download = new Label();
             download.setGraphic(downloadIco);
-            download.setLayoutX(cellContent.getLayoutX() + cellContent.getPrefWidth() - 94);
-            download.setLayoutY(cellContent.getLayoutY() + cellContent.getPrefHeight() - 31);
-            download.setPrefHeight(25.0);
-            download.setPrefWidth(25.0);
+            download.setLayoutX(cellContent.getLayoutX() + cellContent.getPrefWidth() - 114);
+            download.setLayoutY(cellContent.getLayoutY() + cellContent.getPrefHeight() - 40);
+            download.setPrefHeight(36.0);
+            download.setPrefWidth(36.0);
             download.setVisible(false);
             Label percent = new Label("0 %");
             Text text = new Text(percent.getText());
+
+            delete.setOnMouseEntered(event -> {
+                deleteIco.setImage(deleteGrin);
+            });
+            delete.setOnMouseExited(event -> {
+                deleteIco.setImage(deleteWհiteIco);
+            });
+
+            share.setOnMouseEntered(event -> {
+                shareIco.setImage(shareGreen);
+            });
+            share.setOnMouseExited(event -> {
+                shareIco.setImage(shateWհiteIco);
+
+            });
+
+            download.setOnMouseEntered(event -> {
+                downloadIco.setImage(downloadGreen);
+            });
+            download.setOnMouseExited(event -> {
+                downloadIco.setImage(downlodWհiteIco);
+            });
 
             percent.setLayoutX(progressBar.getLayoutX() + progressBar.getPrefWidth() / 2 - text.getLayoutBounds().getWidth() / 2);
             percent.setLayoutY(progressBar.getLayoutY() - 20);
@@ -307,8 +333,8 @@ public class MainStageServiceImpl implements MainStageService {
                 singleSelectOrCancelItem(checkBox, finalIndex, pictureData.getPicName());
             });
             AnchorPane fone = new AnchorPane();
-            fone.setPrefWidth(200.0);
-            fone.setPrefHeight(177.0);
+            fone.setPrefWidth(308);
+            fone.setPrefHeight(208);
             fone.setStyle("-fx-background-color:  rgba(0,0,0,0.36) #000000;-fx-cursor: hand");
 
             fone.setVisible(false);
@@ -355,7 +381,6 @@ public class MainStageServiceImpl implements MainStageService {
             firstTime = false;
 
             fone.setOnMouseClicked(mouseEvent -> {
-                System.out.println("fone click");
                 SliderServiceImpl.getInstance().openSlider(pictureData.getPicName(), (
                         currentPageIndex.getValue() - 1) * 50 + mainStageController.flowPane.getChildren().indexOf(cellContent));
             });
@@ -511,6 +536,7 @@ public class MainStageServiceImpl implements MainStageService {
                 checkBoxIntegerEntry.getKey().setSelected(false);
                 selectedImage.clear();
             }
+            cancelSelect();
         }
 
     }
@@ -554,7 +580,6 @@ public class MainStageServiceImpl implements MainStageService {
 
     @Override
     public void cancelSelect() {
-        mainStageController.selectALL_checkBox.setSelected(false);
         mainStageController.selectALL_checkBox.setVisible(false);
         mainStageController.deleteTxt.setTextFill(Paint.valueOf("#000"));
         mainStageController.downloadTxt.setTextFill(Paint.valueOf("#000"));
@@ -610,6 +635,16 @@ public class MainStageServiceImpl implements MainStageService {
         TextField sharedImageLink = (TextField) scene.lookup("#sharedImageLink");
         sharedImageLink.setText(Constant.SERVER_ADDRESS + Constant.IMAGE_URI + picName);
         shareDialogStage.show();
+    }
+
+    @Override
+    public StackPane getMainPane() {
+        return mainStageController.mainPane;
+    }
+
+    @Override
+    public MainStageController getMainStageController() {
+        return this.mainStageController;
     }
 
 }
