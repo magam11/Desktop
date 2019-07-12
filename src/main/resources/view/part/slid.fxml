@@ -17,7 +17,7 @@
          <children>
             <ScrollPane fx:id="scrollPane" layoutX="2.0" layoutY="-1.0" prefHeight="729.0" prefWidth="673.0" style="-fx-background-color: rgba(0,0,0,0) rgba(0,0,0,0.18);">
                <content>
-                  <StackPane fx:id="shownImage_container" prefHeight="726.0" prefWidth="669.0" >
+                  <StackPane fx:id="shownImage_container" prefHeight="726.0" prefWidth="669.0">
                      <children>
                         <ImageView fx:id="shownImage" fitHeight="733.0" fitWidth="596.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -129,7 +129,7 @@
                </padding>
             </Label>
          </children></AnchorPane>
-      <AnchorPane fx:id="flutter" layoutX="59.0" layoutY="781.0" prefHeight="45.0" prefWidth="789.0">
+      <AnchorPane fx:id="flutter" layoutY="781.0" prefHeight="60.0" prefWidth="906.0">
          <children>
             <ProgressBar fx:id="sliderProgressBar" layoutX="231.0" layoutY="19.0" prefHeight="18.0" prefWidth="328.0" progress="0.0" />
             <Label fx:id="sliderPercent" layoutX="381.0" layoutY="3.0" prefHeight="17.0" prefWidth="60.0" text="87%" textFill="#d7d7d7">

@@ -8,46 +8,38 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="recicleBin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="840.0" prefWidth="906.0" style="-fx-background-color: #fafafa"
-            xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="sample.controller.RecycleBinController">
+<AnchorPane fx:id="recicleBin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0" prefWidth="906.0" style="-fx-background-color: #fafafa" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.RecycleBinController">
     <children>
         <AnchorPane fx:id="bin_header" layoutX="-1.0" layoutY="-1.0" prefHeight="77.0" prefWidth="906.0">
             <children>
-                <Label fx:id="recycleTitle" layoutX="412.0" layoutY="14.0" prefHeight="27.0" prefWidth="82.0"
-                       text="Recycle Bin">
+                <Label fx:id="recycleTitle" layoutX="412.0" layoutY="14.0" prefHeight="27.0" prefWidth="82.0" text="Recycle Bin">
                     <font>
-                        <Font name="System Bold" size="14.0"/>
+                        <Font name="System Bold" size="14.0" />
                     </font>
                 </Label>
                 <Label fx:id="countData" layoutX="432.0" layoutY="39.0" prefHeight="21.0" prefWidth="42.0" text="(*)">
                     <font>
-                        <Font name="System Bold" size="13.0"/>
+                        <Font name="System Bold" size="13.0" />
                     </font>
                 </Label>
-                <Button fx:id="backTomain" layoutX="26.0" layoutY="11.0" mnemonicParsing="false"
-                        onMouseClicked="#backToMain"
-                        prefHeight="56.0" prefWidth="120.0" style="-fx-background-color: #fafafa; -fx-cursor: hand;"
-                        text="&lt; Back" textFill="#388e3c">
+                <Button fx:id="backTomain" layoutX="26.0" layoutY="11.0" mnemonicParsing="false" onMouseClicked="#backToMain" prefHeight="56.0" prefWidth="120.0" style="-fx-background-color: #fafafa; -fx-cursor: hand;" text="&lt; Back" textFill="#388e3c">
                     <font>
-                        <Font name="System Bold" size="26.0"/>
+                        <Font name="System Bold" size="26.0" />
                     </font>
                 </Button>
             </children>
         </AnchorPane>
         <ScrollPane fx:id="bin_scroll" layoutX="-1.0" layoutY="121.0" prefHeight="722.0" prefWidth="906.0">
             <content>
-                <FlowPane fx:id="bin_flowPane" prefHeight="708.0" prefWidth="903.0" style="-fx-alignment: center;">
+                <FlowPane fx:id="bin_flowPane" prefHeight="715.0" prefWidth="870.0" style="-fx-alignment: center;">
 
                 </FlowPane>
             </content>
             <padding>
-                <Insets left="15.0" right="15.0"/>
+                <Insets left="15.0" right="15.0" />
             </padding>
         </ScrollPane>
-        <AnchorPane fx:id="bin_pagination" layoutX="1.0" layoutY="65.0" prefHeight="56.0" prefWidth="906.0"
-                    style="-fx-alignment: center;">
+        <AnchorPane fx:id="bin_pagination" layoutX="1.0" layoutY="65.0" prefHeight="64.0" prefWidth="906.0" style="-fx-alignment: center;">
             <children>
             </children>
         </AnchorPane>

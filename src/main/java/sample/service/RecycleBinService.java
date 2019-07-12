@@ -12,5 +12,9 @@ public interface RecycleBinService {
 
     void drawPagination(BaseUserData baseUserData, int page);
 
+    void animationForPagination();
+
+    void stopAnimationForPagination();
+
 
 }

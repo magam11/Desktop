@@ -1,8 +1,13 @@
 package sample.service.serviceImpl;
 
 import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
+import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ReadOnlyDoubleProperty;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
@@ -45,9 +50,8 @@ public class RecycleBinServiceImpl implements RecycleBinService {
     AnchorPane pageNumbersContainer = new AnchorPane();
     Map<Label, Integer> pages = new HashMap<>();
     private MainStageService mainStageService = MainStageServiceImpl.getInstance();
-
-
-
+    private volatile Timeline anim;
+    private volatile Timeline fadeIn;
 
 
     @Override
@@ -65,24 +69,81 @@ public class RecycleBinServiceImpl implements RecycleBinService {
         Stage mainStage = (Stage) recycleBinController.countData.getScene().getWindow();
         double countDiwth = new Text(recycleBinController.countData.getText()).getLayoutBounds().getWidth();
         double titleWidth = new Text("Recycle Bin").getLayoutBounds().getWidth();
+        animationForPagination();
         mainStage.widthProperty().addListener((observable, oldValue, newValue) -> {
             recycleBinController.recicleBin.setPrefWidth(newValue.doubleValue());
             recycleBinController.bin_scroll.setPrefWidth(newValue.doubleValue());
             recycleBinController.bin_pagination.setPrefWidth(newValue.doubleValue());
             recycleBinController.bin_flowPane.setPrefWidth(newValue.doubleValue());
-            recycleBinController.countData.setLayoutX((newValue.doubleValue()-countDiwth)/2-3);
-            recycleBinController.recycleTitle.setLayoutX((newValue.doubleValue()-titleWidth)/2-3);
+            recycleBinController.menuBar.setPrefWidth(newValue.doubleValue());
+            recycleBinController.bin_header.setPrefWidth(newValue.doubleValue());
+            recycleBinController.bin_delete_batch.setLayoutX(newValue.doubleValue() - 330);
+            recycleBinController.recover.setLayoutX(newValue.doubleValue() - 172);
+            recycleBinController.countData.setLayoutX((newValue.doubleValue() - countDiwth) / 2 - 3);
+            recycleBinController.recycleTitle.setLayoutX((newValue.doubleValue() - titleWidth) / 2 - 3);
+
         });
         mainStage.heightProperty().addListener((observable, oldValue, newValue) -> {
+            recycleBinController.bin_pagination.setLayoutY(newValue.doubleValue() - 60);
             recycleBinController.recicleBin.setPrefHeight(newValue.doubleValue());
-            recycleBinController.bin_scroll.setPrefHeight(newValue.doubleValue());
-            recycleBinController.bin_flowPane.setPrefHeight(newValue.doubleValue());
+            recycleBinController.bin_scroll.setPrefHeight(newValue.doubleValue()-150);
+            recycleBinController.bin_flowPane.setPrefHeight(newValue.doubleValue()-155);
 //            recycleBinController.bin_pagination.setPrefHeight(newValue.doubleValue());
         });
 
 
-
     }
+
+
+    @Override
+    public void animationForPagination(){
+        recycleBinController.bin_pagination.setVisible(true);
+        final DoubleProperty opacity =recycleBinController.bin_pagination.opacityProperty();
+//        Timeline showPage = new Timeline(
+//                new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
+//                new KeyFrame(new Duration(1000), new EventHandler<ActionEvent>() {
+//                    @Override
+//                    public void handle(ActionEvent t) {
+////
+//
+//                        Timeline fadeIn = new Timeline(
+//                                new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
+//                                new KeyFrame(new Duration(800), new KeyValue(opacity, 1.0)));
+//                        fadeIn.play();
+//                    }
+//                }, new KeyValue(opacity, 0.0)));
+//        showPage.play();
+         anim = new Timeline(
+                new KeyFrame(Duration.ZERO, new KeyValue(opacity, 1.0)),
+                new KeyFrame(new Duration(5000), new EventHandler<ActionEvent>() {
+                    @Override
+                    public void handle(ActionEvent t) {
+                         fadeIn = new Timeline(
+                                new KeyFrame(Duration.ZERO, new KeyValue(opacity, 1.0)),
+                                new KeyFrame(new Duration(1000), new KeyValue(opacity, 0.0)));
+                        recycleBinController.bin_pagination.setVisible(false);
+                        fadeIn.play();
+                    }
+                }, new KeyValue(opacity, 1.0)));
+        anim.play();
+    }
+
+    @Override
+    public void stopAnimationForPagination(){
+        this.fadeIn.stop();
+        this.anim.stop();
+    }
+
+
+
+
+
+
+
+
+
+
+
 
 
     public void drawRecycleContent(BaseUserData baseUserData) {
@@ -149,19 +210,19 @@ public class RecycleBinServiceImpl implements RecycleBinService {
             fone.setStyle("-fx-background-color:  rgba(0,0,0,0.36) #000000;");
             fone.setVisible(false);
 
-            cellContainer.getChildren().addAll(imageView, fone,imageDate, revoverButton,delete);
+            cellContainer.getChildren().addAll(imageView, fone, imageDate, revoverButton, delete);
             FlowPane.setMargin(cellContainer, new Insets(5, 5, 5, 5));
 
             revoverButton.setTooltip(recover);
             delete.setTooltip(deleteTooltip);
 
-            delete.setOnMouseClicked(mouseEvent->{
+            delete.setOnMouseClicked(mouseEvent -> {
                 ApiConnection.getInstance().deleteImage(pictureData.getPicName());
                 recycleBinController.bin_flowPane.getChildren().remove(cellContainer);
 
             });
 
-            revoverButton.setOnMouseClicked(mouseEvent->{
+            revoverButton.setOnMouseClicked(mouseEvent -> {
                 ApiConnection.getInstance().recoverImageStatus(ImageManagerRequest.builder()
                         .picName(pictureData.getPicName())
                         .actionType("remake")
@@ -191,6 +252,13 @@ public class RecycleBinServiceImpl implements RecycleBinService {
 
 
 
+
+
+
+
+
+
+
     @Override
     public void drawPagination(BaseUserData baseUserData, int page) {
         pages.clear();
@@ -205,19 +273,20 @@ public class RecycleBinServiceImpl implements RecycleBinService {
         }
         for (int i = 0; i < baseUserData.getTotoalPageCount(); i++) {  //addes pages
             label = new Label(String.valueOf(i + 1));
-            label.setLayoutX(widthPrp.getValue() / 2 - (baseUserData.getTotoalPageCount() - 1) * 20 + (i-1) * 20);
+            label.setLayoutX(widthPrp.getValue() / 2 - (baseUserData.getTotoalPageCount() - 1) * 20 + (i - 1) * 20);
             label.setFont(Font.font(null, FontWeight.BOLD, 14));
             label.setId(String.valueOf("page_" + i + 1));
             if ((i + 1) == page) {
-                label.setTextFill(Paint.valueOf("#388e3c"));
+                label.setTextFill(Paint.valueOf("#fff"));
+                label.setStyle("font-weight: bold");
                 label.setUnderline(true);
             }
             if ((i + 1) != page) {
-                label.setStyle("-fx-cursor: hand");
+                label.setStyle("-fx-cursor: hand; -fx-background-color: #fff; -fx-font-weight: regular");
             }
             int finalI = i;
             label.setOnMouseClicked(mouseEvent -> {
-                if (page!= (finalI + 1)) {
+                if (page != (finalI + 1)) {
                     ApiConnection.getInstance().getDeletedImagePage(finalI + 1);
                 }
             });
@@ -233,13 +302,18 @@ public class RecycleBinServiceImpl implements RecycleBinService {
             int numbverIndex;
             for (Label label1 : pages.keySet()) {
                 numbverIndex = pages.get(label1);
-                label1.setLayoutX(newValue.doubleValue() / 2 - (pages.size() - 1) * 20 + (numbverIndex -1)* 20);
+                label1.setLayoutX(newValue.doubleValue() / 2 - (pages.size() - 1) * 20 + (numbverIndex - 1) * 20);
             }
         });
     }
 
 
-    private   void hackTooltipStartTiming(Tooltip tooltip) {
+
+
+
+
+
+    private void hackTooltipStartTiming(Tooltip tooltip) {
         try {
             Field fieldBehavior = tooltip.getClass().getDeclaredField("BEHAVIOR");
             fieldBehavior.setAccessible(true);
