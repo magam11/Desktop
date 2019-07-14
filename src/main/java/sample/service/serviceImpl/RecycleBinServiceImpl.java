@@ -2,13 +2,16 @@ package sample.service.serviceImpl;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
-import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.ReadOnlyDoubleProperty;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.Tooltip;
 import javafx.scene.image.Image;
@@ -38,6 +41,7 @@ import java.util.Map;
 public class RecycleBinServiceImpl implements RecycleBinService {
     private static RecycleBinService ourInstance = new RecycleBinServiceImpl();
 
+
     public static RecycleBinService getInstance() {
         return ourInstance;
     }
@@ -50,6 +54,8 @@ public class RecycleBinServiceImpl implements RecycleBinService {
     AnchorPane pageNumbersContainer = new AnchorPane();
     Map<Label, Integer> pages = new HashMap<>();
     private MainStageService mainStageService = MainStageServiceImpl.getInstance();
+    public volatile Map<Integer, String> selectedImage = new HashMap<>();
+    private HashMap<CheckBox, Integer> checkboxes = new HashMap();
     private volatile Timeline anim;
     private volatile Timeline fadeIn;
 
@@ -86,8 +92,8 @@ public class RecycleBinServiceImpl implements RecycleBinService {
         mainStage.heightProperty().addListener((observable, oldValue, newValue) -> {
             recycleBinController.bin_pagination.setLayoutY(newValue.doubleValue() - 60);
             recycleBinController.recicleBin.setPrefHeight(newValue.doubleValue());
-            recycleBinController.bin_scroll.setPrefHeight(newValue.doubleValue()-150);
-            recycleBinController.bin_flowPane.setPrefHeight(newValue.doubleValue()-155);
+            recycleBinController.bin_scroll.setPrefHeight(newValue.doubleValue() - 150);
+            recycleBinController.bin_flowPane.setPrefHeight(newValue.doubleValue() - 155);
 //            recycleBinController.bin_pagination.setPrefHeight(newValue.doubleValue());
         });
 
@@ -96,9 +102,9 @@ public class RecycleBinServiceImpl implements RecycleBinService {
 
 
     @Override
-    public void animationForPagination(){
+    public void animationForPagination() {
         recycleBinController.bin_pagination.setVisible(true);
-        final DoubleProperty opacity =recycleBinController.bin_pagination.opacityProperty();
+        final DoubleProperty opacity = recycleBinController.bin_pagination.opacityProperty();
 //        Timeline showPage = new Timeline(
 //                new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
 //                new KeyFrame(new Duration(1000), new EventHandler<ActionEvent>() {
@@ -113,12 +119,12 @@ public class RecycleBinServiceImpl implements RecycleBinService {
 //                    }
 //                }, new KeyValue(opacity, 0.0)));
 //        showPage.play();
-         anim = new Timeline(
+        anim = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(opacity, 1.0)),
                 new KeyFrame(new Duration(5000), new EventHandler<ActionEvent>() {
                     @Override
                     public void handle(ActionEvent t) {
-                         fadeIn = new Timeline(
+                        fadeIn = new Timeline(
                                 new KeyFrame(Duration.ZERO, new KeyValue(opacity, 1.0)),
                                 new KeyFrame(new Duration(1000), new KeyValue(opacity, 0.0)));
                         recycleBinController.bin_pagination.setVisible(false);
@@ -129,21 +135,64 @@ public class RecycleBinServiceImpl implements RecycleBinService {
     }
 
     @Override
-    public void stopAnimationForPagination(){
+    public void stopAnimationForPagination() {
         this.fadeIn.stop();
         this.anim.stop();
     }
 
+    @Override
+    public void showCheckBoxes() {
+        for (CheckBox checkBox : checkboxes.keySet()) {
+            checkBox.setVisible(true);
+        }
+    }
+
+    @Override
+    public void selecetAllClick() {
+        Scene scene = recycleBinController.bin_flowPane.getScene();
+        String imageName;
+        if(recycleBinController.bin_selectAll.isSelected()){
+            for (Map.Entry<CheckBox, Integer> checkBoxIntegerEntry : checkboxes.entrySet()) {
+                checkBoxIntegerEntry.getKey().setSelected(true);
+                imageName = ((ImageView) scene.lookup("#bin" + checkBoxIntegerEntry.getValue()))
+                        .getImage().impl_getUrl().split(Constant.SPLITER)[1];
+                selectedImage.put(checkBoxIntegerEntry.getValue(), imageName);
+            }
+        }else {
+            clearSelectedImageCollection();
+
+            closeAllCheckBoxes();
+            recoverControllButtons();
+            recycleBinController.bin_selectAll.setSelected(false);
+            recycleBinController.bin_selectAll.setVisible(false);
+        }
+    }
+
+    @Override
+    public void clearSelectedImageCollection(){
+        for (Map.Entry<CheckBox, Integer> checkBoxIntegerEntry : checkboxes.entrySet()) {
+            checkBoxIntegerEntry.getKey().setSelected(false);
+            selectedImage.clear();
+        }
+    }
 
 
 
+    @Override
+    public void recoverControllButtons() {
+        recycleBinController.recover.setDisable(false);
+        recycleBinController.bin_delete_batch.setDisable(false);
+        recycleBinController.bin_delete_batch.setStyle("-fx-cursor: hand;-fx-background-radius: 25; -fx-background-color: #fff;");
+        recycleBinController.recover.setStyle("-fx-cursor: hand;-fx-background-radius: 25; -fx-background-color: #fff;");
+    }
 
-
-
-
-
-
-
+    @Override
+    public void closeAllCheckBoxes() {
+        for (CheckBox checkBox : checkboxes.keySet()) {
+            checkBox.setSelected(false);
+            checkBox.setVisible(false);
+        }
+    }
 
 
     public void drawRecycleContent(BaseUserData baseUserData) {
@@ -155,6 +204,7 @@ public class RecycleBinServiceImpl implements RecycleBinService {
         Tooltip deleteTooltip = new Tooltip("Delete");
         hackTooltipStartTiming(recover);
         hackTooltipStartTiming(deleteTooltip);
+        int index = 0;
         for (ImageData pictureData : picturesData) {
             AnchorPane cellContainer = new AnchorPane();
             cellContainer.setPrefWidth(308.0);
@@ -166,6 +216,7 @@ public class RecycleBinServiceImpl implements RecycleBinService {
             ImageView imageView = new ImageView(image);
             imageView.setFitWidth(cellContainer.getPrefWidth());
             imageView.setFitHeight(cellContainer.getPrefHeight());
+            imageView.setId("bin"+index);
 
             Label imageDate = new Label(pictureData.getDeletedAt().split("T")[0]);
             imageDate.setFont(Font.font(null, FontWeight.BOLD, 13));
@@ -210,7 +261,19 @@ public class RecycleBinServiceImpl implements RecycleBinService {
             fone.setStyle("-fx-background-color:  rgba(0,0,0,0.36) #000000;");
             fone.setVisible(false);
 
-            cellContainer.getChildren().addAll(imageView, fone, imageDate, revoverButton, delete);
+            CheckBox checkBox = new CheckBox();
+            checkBox.setLayoutX(cellContainer.getLayoutX() + cellContainer.getPrefWidth() - 25);
+            checkBox.setLayoutY(cellContainer.getLayoutY() + 5);
+            checkBox.setVisible(false);
+            checkBox.setId("binCheckBox_" + index);
+            checkboxes.put(checkBox, index);
+            int finalIndex = index;
+            checkBox.setOnMouseClicked(event -> {
+                singleSelecOrCancelItem(checkBox, finalIndex, pictureData.getPicName());
+
+            });
+
+            cellContainer.getChildren().addAll(imageView, fone, checkBox, imageDate, revoverButton, delete);
             FlowPane.setMargin(cellContainer, new Insets(5, 5, 5, 5));
 
             revoverButton.setTooltip(recover);
@@ -230,10 +293,12 @@ public class RecycleBinServiceImpl implements RecycleBinService {
                 recycleBinController.bin_flowPane.getChildren().remove(cellContainer);
             });
             cellContainer.setOnMouseEntered(mouseEvent -> {
-                fone.setVisible(true);
-                delete.setVisible(true);
-                revoverButton.setVisible(true);
-                imageDate.setVisible(true);
+                if (!recycleBinController.bin_selectAll.isVisible()) {
+                    fone.setVisible(true);
+                    delete.setVisible(true);
+                    revoverButton.setVisible(true);
+                    imageDate.setVisible(true);
+                }
             });
             cellContainer.setOnMouseExited(mouseEvent -> {
                 fone.setVisible(false);
@@ -243,18 +308,19 @@ public class RecycleBinServiceImpl implements RecycleBinService {
             });
 
             recycleBinController.bin_flowPane.getChildren().add(cellContainer);
+            index++;
         }
 
 
     }
 
-
-
-
-
-
-
-
+    private void singleSelecOrCancelItem(CheckBox checkBox, int index, String picName) {
+        if(checkBox.isSelected()){
+            selectedImage.put(index, picName);
+        }else {
+            selectedImage.keySet().removeIf(key -> key.equals(index));
+        }
+    }
 
 
 
@@ -308,11 +374,6 @@ public class RecycleBinServiceImpl implements RecycleBinService {
     }
 
 
-
-
-
-
-
     private void hackTooltipStartTiming(Tooltip tooltip) {
         try {
             Field fieldBehavior = tooltip.getClass().getDeclaredField("BEHAVIOR");
@@ -327,6 +388,32 @@ public class RecycleBinServiceImpl implements RecycleBinService {
             objTimer.getKeyFrames().add(new KeyFrame(new Duration(1)));
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+
+    @Override
+    public void deleteSelectedImage() {
+        if (selectedImage != null && selectedImage.size() > 0) {
+//          TODO+++++++++++++++
+        } else {
+            recoverControllButtons();
+            recycleBinController.bin_selectAll.setSelected(false);
+            recycleBinController.bin_selectAll.setVisible(false);
+            closeAllCheckBoxes();
+
+        }
+    }
+
+    @Override
+    public void recoverSelectedImages() {
+        if (selectedImage != null && selectedImage.size() > 0) {
+//            TODO+++++++++++++
+        } else {
+            recoverControllButtons();
+            recycleBinController.bin_selectAll.setSelected(false);
+            recycleBinController.bin_selectAll.setVisible(false);
+            closeAllCheckBoxes();
         }
     }
 }

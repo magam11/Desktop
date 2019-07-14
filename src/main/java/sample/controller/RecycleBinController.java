@@ -38,8 +38,8 @@ public class RecycleBinController {
     @FXML
     public CheckBox bin_selectAll;
 
-    RecycleBinService recycleBinService = RecycleBinServiceImpl.getInstance();
-    MainStageService mainStageService = MainStageServiceImpl.getInstance();
+    private   RecycleBinService recycleBinService = RecycleBinServiceImpl.getInstance();
+    private MainStageService mainStageService = MainStageServiceImpl.getInstance();
 
 
     public void initialize() {
@@ -72,6 +72,11 @@ public class RecycleBinController {
         String text = mainStageService.getMainStageController().currentPageNumber.getText();
         ApiConnection.getInstance().loadBaseData(text);
         mainStageService.getMainPane().getChildren().remove(1);
+        bin_selectAll.setSelected(false);
+        bin_selectAll.setVisible(false);
+        recycleBinService.recoverControllButtons();
+        recycleBinService.closeAllCheckBoxes();
+        recycleBinService.clearSelectedImageCollection();
 
 
     }
@@ -83,10 +88,32 @@ public class RecycleBinController {
     @FXML
     public void recover(MouseEvent mouseEvent) {
         System.out.println("recoverClick");
-        bin_selectAll.setSelected(false);
-        bin_selectAll.setVisible(true);
-        bin_delete_batch.setDisable(true);
-        bin_delete_batch.setStyle("-fx-background-radius: 25; -fx-background-color: #fff; -fx-cursor: none;");
+        if(!bin_selectAll.isVisible()){
+            bin_selectAll.setSelected(false);
+            bin_selectAll.setVisible(true);
+            bin_delete_batch.setDisable(true);
+            bin_delete_batch.setStyle("-fx-background-radius: 25; -fx-background-color: #fff; -fx-cursor: none;");
+            recycleBinService.showCheckBoxes();
+        }else {
+            recycleBinService.recoverSelectedImages();
+        }
 
+
+    }
+
+    public void selectAllClick(MouseEvent mouseEvent) {
+        recycleBinService.selecetAllClick();
+    }
+
+    public void deleteInBatchClick(MouseEvent mouseEvent) {
+        if(!bin_selectAll.isVisible()){
+            bin_selectAll.setSelected(false);
+            bin_selectAll.setVisible(true);
+            recover.setDisable(true);
+            recover.setStyle("-fx-background-radius: 25; -fx-background-color: #fff; -fx-cursor: none;");
+            recycleBinService.showCheckBoxes();
+        }else {
+            recycleBinService.deleteSelectedImage();
+        }
     }
 }

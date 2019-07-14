@@ -17,4 +17,17 @@ public interface RecycleBinService {
     void stopAnimationForPagination();
 
 
+    void showCheckBoxes();
+
+    void selecetAllClick();
+
+    void recoverControllButtons();
+
+    void closeAllCheckBoxes();
+
+    void clearSelectedImageCollection();
+
+    void deleteSelectedImage();
+
+    void recoverSelectedImages();
 }

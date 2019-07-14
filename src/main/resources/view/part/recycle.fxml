@@ -34,12 +34,12 @@
       </AnchorPane>
       <AnchorPane fx:id="menuBar" layoutY="81.0" prefHeight="65.0" prefWidth="906.0" style="-fx-background-color: #fafafa;">
          <children>
-            <CheckBox fx:id="bin_selectAll" layoutX="30.0" layoutY="24.0" visible="false" mnemonicParsing="false" prefHeight="20.0" prefWidth="89.0" text="Select All">
+            <CheckBox fx:id="bin_selectAll" layoutX="30.0" layoutY="24.0" onMouseClicked="#selectAllClick" visible="false" mnemonicParsing="false" prefHeight="20.0" prefWidth="89.0" text="Select All">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </CheckBox>
-            <AnchorPane fx:id="bin_delete_batch" layoutX="576.0" layoutY="11.0" prefHeight="44.0" prefWidth="147.0" style="-fx-background-radius: 25; -fx-background-color: #fff; -fx-cursor: hand;">
+            <AnchorPane fx:id="bin_delete_batch" layoutX="576.0" onMouseClicked="#deleteInBatchClick" layoutY="11.0" prefHeight="44.0" prefWidth="147.0" style="-fx-background-radius: 25; -fx-background-color: #fff; -fx-cursor: hand;">
                <children>
                   <Label layoutX="41.0" layoutY="8.0" prefHeight="27.0" prefWidth="96.0" text="Delete Photoes">
                      <font>
