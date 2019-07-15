@@ -156,3 +156,28 @@
 /*    !*-fx-background-color: #efffec;*!*/
 
 /*}*/
+
+/*.choice-box{*/
+/*    -fx-border-color: #388E3C;*/
+/*}*/
+/*.choice-box :focused{*/
+/*    -fx-border-color: #388E3C;*/
+/*}*/
+
+.choice-box {
+    -fx-border-color: #000;
+    -fx-background-color: #fff;
+    -fx-content-display: center;
+    -fx-text-alignment: center;
+    -fx-mark-color: #388E3C;
+}
+
+.choice-box .context-menu {
+    -fx-content-display: center;
+    -fx-text-alignment: center;
+    -fx-pref-width: 104;
+}
+
+.choice-box .menu-item > .label {
+    -fx-font-size: 13;
+}

@@ -250,6 +250,33 @@ public class ApiConnection {
         });
     }
 
+
+    @Connection(uri = "/image/recoverMany", requestBody = ImageData.class, method = "PUT")
+    public void recoverImagesFromRecycle(ImageData imageData) {
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        RequestBody body = RequestBody.create(JSON, imageData.toString());
+        Request request = new Request.Builder()
+                .url(Constant.SERVER_ADDRESS + Constant.RECOVER_MANY)
+                .put(body)
+                .addHeader(Constant.AUTHORIZATION, storage.getCurrentToken())
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.code() == 200) {
+                    updateRecyclePageData(response, imageData);
+                } else {
+                    //TODO something
+                }
+            }
+        });
+    }
+
     @Connection(uri = "/image/page/{page}", requestParam = {"fromDate", "toDate"}, method = "GET", pathVariable = "page")
     public void getDataByInterval(String fromDate, String toDate, int page) {
 
@@ -327,7 +354,7 @@ public class ApiConnection {
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.code() == 200) {
                     try {
-                        JSONObject  responseJson = new JSONObject(new String(response.body().bytes()));
+                        JSONObject responseJson = new JSONObject(new String(response.body().bytes()));
                         List<sample.dataTransferObject.response.ImageData> imageData = new ArrayList<>();
                         JSONArray picturesData = responseJson.getJSONArray("picturesData");
                         JSONObject imageDataJson = null;
@@ -341,7 +368,7 @@ public class ApiConnection {
                                         .build());
                             }
                         }
-                        Platform.runLater(()->{
+                        Platform.runLater(() -> {
                             RecycleBinServiceImpl.getInstance().loadDataInRecycleBin(BaseUserData.builder()
                                     .totalElementCount(responseJson.getLong("totalElementCount"))
                                     .totoalPageCount(responseJson.getInt("totoalPageCount"))
@@ -364,7 +391,7 @@ public class ApiConnection {
         });
     }
 
-    @Connection(uri="/image/", method = "PUT",requestBody = ImageManagerRequest.class)
+    @Connection(uri = "/image/", method = "PUT", requestBody = ImageManagerRequest.class)
     public void recoverImageStatus(ImageManagerRequest jsonBody) {
         MediaType JSON = MediaType.parse("application/json; charset=utf-8");
         RequestBody body = RequestBody.create(JSON, jsonBody.toString());
@@ -391,8 +418,8 @@ public class ApiConnection {
     @Connection(uri = "/image/{picture}", method = "DELETE", pathVariable = "picture")
     public void deleteImage(String picName) {
         Request request = new Request.Builder()
-                .addHeader(Constant.AUTHORIZATION,storage.getCurrentToken())
-                .url(Constant.SERVER_ADDRESS + Constant.IMAGE_URI+"picture/" + picName)
+                .addHeader(Constant.AUTHORIZATION, storage.getCurrentToken())
+                .url(Constant.SERVER_ADDRESS + Constant.IMAGE_URI + "picture/" + picName)
                 .delete()
                 .addHeader(Constant.AUTHORIZATION, storage.getCurrentToken())
                 .build();
@@ -404,7 +431,7 @@ public class ApiConnection {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                System.out.println("deleteImage -onresponse "+response.code());
+                System.out.println("deleteImage -onresponse " + response.code());
 
             }
         });
@@ -464,6 +491,66 @@ public class ApiConnection {
                     System.out.println(response.code());
                 }
             }
+        });
+    }
+
+
+    @Connection(uri = "/image/many", method = "DELETE", requestBody = ImageData.class)
+    public void deleteSelectedImageFromRecycleBin(ImageData imageData) {
+        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        RequestBody body = RequestBody.create(JSON, imageData.toString());
+        Request request = new Request.Builder()
+                .addHeader(Constant.AUTHORIZATION, storage.getCurrentToken())
+                .url(Constant.SERVER_ADDRESS + Constant.IPAGE_UPDATE_MANY)
+                .delete(body)
+                .addHeader(Constant.AUTHORIZATION, storage.getCurrentToken())
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                System.out.println("failure /image/many -deletovy");
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if (response.code() == 200) {
+                    updateRecyclePageData(response, imageData);
+                }else {
+                    System.out.println("else blok ~~ /image/many ");
+                }
+            }
+        });
+
+    }
+
+    private void updateRecyclePageData(Response response, ImageData imageData) {
+        JSONObject responseJson = null;
+        try {
+            responseJson = new JSONObject(new String(response.body().bytes()));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        List<sample.dataTransferObject.response.ImageData> data = new ArrayList<>();
+        JSONObject imageDataJson = null;
+        JSONArray picturesData = responseJson.getJSONArray("picturesData");
+        if (picturesData != null) {
+            for (int i = 0; i < picturesData.length(); i++) {
+                imageDataJson = picturesData.getJSONObject(i);
+                data.add(sample.dataTransferObject.response.ImageData.builder()
+                        .deletedAt(imageDataJson.getString("deletedAt"))
+                        .createdAt(imageDataJson.getString("createdAt"))
+                        .picSize(imageDataJson.getDouble("picSize"))
+                        .picName(imageDataJson.getString("picName"))
+                        .build());
+            }
+        }
+        BaseUserData baseUserData = BaseUserData.builder()
+                .totalElementCount(responseJson.getInt("totalElementCount"))
+                .totoalPageCount(responseJson.getInt("totoalPageCount"))
+                .picturesData(data)
+                .build();
+        Platform.runLater(() -> {
+            RecycleBinServiceImpl.getInstance().loadDataInRecycleBin(baseUserData, imageData.getPage());
         });
     }
 }

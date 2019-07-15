@@ -22,6 +22,7 @@ public class ImageData {
         for (String picName : this.picNames) {
             picNames +="\""+ picName +"\""+ ",";
         }
+        if(picNames.length()>1)
         picNames = picNames.substring(0, picNames.length() - 1);
         return "{" +
                 "\"page\"" + ":\"" + page + '\"' + "," +

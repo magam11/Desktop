@@ -4,16 +4,12 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
-import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
@@ -21,12 +17,11 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
-import javafx.util.Callback;
 import sample.Main;
 import sample.connection.ApiConnection;
+import sample.model.viewModel.FilterMonth;
 import sample.service.MainStageService;
 import sample.service.serviceImpl.MainStageServiceImpl;
-import sample.service.serviceImpl.RecycleBinServiceImpl;
 import sample.service.serviceImpl.SliderServiceImpl;
 
 import java.io.IOException;
@@ -81,13 +76,13 @@ public class MainStageController {
     public AnchorPane mainContent;
     @FXML
     public Label currentPageNumber;
-//    @FXML
+    //    @FXML
 //    public Label selectAllHint;
     @FXML
     public CheckBox selectALL_checkBox;
     @FXML
     public Label deleteTxt;
-//    @FXML
+    //    @FXML
 //    public Label cancel;
     public Label downloadTxt;
     @FXML
@@ -115,6 +110,18 @@ public class MainStageController {
     public AnchorPane row_2;
     @FXML
     public AnchorPane slideContainer;
+    @FXML
+    public ImageView filterImage;
+    @FXML
+    public AnchorPane filterButton;
+    @FXML
+    public Button filterBtn;
+    @FXML
+    public ChoiceBox filterYear;
+    @FXML
+    public ChoiceBox filterMonth;
+
+
     StringProperty startDate = new SimpleStringProperty();
     StringProperty endDate = new SimpleStringProperty();
 
@@ -126,66 +133,16 @@ public class MainStageController {
     private MainStageService mainStageService = MainStageServiceImpl.getInstance();
 
     public void initialize() {
+        filterMonth.setValue(FilterMonth.ALL);
+
+        filterMonth.getItems().addAll(FilterMonth.list());
         SliderServiceImpl.getInstance().initializeMainStageController(this);
-
-//        title = new Text(recycleBinController.recycleTitle.getText());
-//        recycleBinController.initializeMainStageController(this);
-//        fromDateCancel.setVisible(false);
-//        toDateCancel.setVisible(false);
-//        fromDateCancel.setStyle("-fx-background-image: url('/image/cancelFilter.png');-fx-background-repeat: no-repeat;" +
-//                "    -fx-background-position: center; -fx-background-size: 25px 25px;-fx-cursor: hand");
-//        toDateCancel.setStyle("-fx-background-image: url('/image/cancelFilter.png');-fx-background-repeat: no-repeat;" +
-//                "    -fx-background-position: center; -fx-background-size: 25px 25px;-fx-cursor: hand");
-        search.setVisible(false);
-        fromDate.valueProperty().addListener((observable, oldValue, newValue) -> {
-
-            if(newValue!=null){
-                startDate.setValue(newValue.toString());
-                search.setVisible(true);
-//                fromDateCancel.setVisible(true);
-            }
-            else {
-                startDate.setValue(null);
-                if(endDate.get()==null)
-                    search.setVisible(false);
-            }
-        });
-        toDate.valueProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue!=null){
-                endDate.setValue(newValue.toString());
-                search.setVisible(true);
-//                toDateCancel.setVisible(true);
-            }else {
-                endDate.setValue(null);
-                if(startDate.get()==null)
-                    search.setVisible(false);
-            }
-        });
-        fromDate.setPromptText("From");
-        toDate.setPromptText("To");
-        final Callback<DatePicker, DateCell> dayCellFactory = new Callback<DatePicker, DateCell>() {
-            public DateCell call(final DatePicker datePicker) {
-                return new DateCell() {
-
-                    @Override
-                    public void updateItem(LocalDate item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (item.equals(LocalDate.now())) {
-                            setStyle("-fx-background-color: #dbffb7;");
-                        }
-                    }
-                };
-            }
-        };
-
-//        DatePicker picker = new DatePicker();
-        toDate.setDayCellFactory(dayCellFactory);
-        fromDate.setDayCellFactory(dayCellFactory);
-
-
-//        cancel.setVisible(false);
-//        selectALL_checkBox.setText("");
-//        selectAllHint.setVisible(false);
+        LocalDate localDate = LocalDate.now();
+        int currentYear = localDate.getYear();
+        filterYear.setValue(currentYear);
+        for (int i = currentYear; i >= 2019; i--) {
+            filterYear.getItems().add(i);
+        }
         selectALL_checkBox.setVisible(false);
 
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -201,7 +158,6 @@ public class MainStageController {
         row_1.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.2)));
         row_2.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.2)));
     }
-
 
 
     @FXML
@@ -268,24 +224,87 @@ public class MainStageController {
 
     @FXML
     public void filter(MouseEvent mouseEvent) {
-        ApiConnection.getInstance().getDataByInterval(startDate.get(),endDate.get(),1);
-        System.out.println("startdate "+startDate.get());
-        System.out.println("endDate "+endDate.get());
+        ApiConnection.getInstance().getDataByInterval(startDate.get(), endDate.get(), 1);
+        System.out.println("startdate " + startDate.get());
+        System.out.println("endDate " + endDate.get());
     }
 
 
     @FXML
     public void openRecycleBinPage(MouseEvent mouseEvent) {
-        AnchorPane recycle =(AnchorPane) Main.getScreen("recycle");
+        AnchorPane recycle = (AnchorPane) Main.getScreen("recycle");
 //        mainPane.getScene().setRoot(recycle);
 
 
-        mainPane.getChildren().add(1,recycle);
+        mainPane.getChildren().add(1, recycle);
         recycle.setLayoutX(0);
         recycle.setLayoutY(0);
         recycle.setPrefHeight(mainPane.getPrefHeight());
         recycle.setPrefWidth(mainPane.getPrefWidth());
         ApiConnection.getInstance().getDeletedImagePage(1);
 
+    }
+
+
+    public void fillerClick(MouseEvent mouseEvent) {
+        if (!filterPane.isVisible()) {
+            filterPane.setVisible(true);
+            filterImage.setImage(new Image(getClass().getResourceAsStream("/image/controls.png")));
+            filterButton.setStyle("-fx-cursor: hand; -fx-background-color: #388E3C; -fx-background-radius: 5");
+            filterBtn.setStyle("-fx-cursor: hand; -fx-background-color: #388E3C");
+            filterBtn.setTextFill(Paint.valueOf("fff"));
+        } else {
+            filterPane.setVisible(false);
+            filterImage.setImage(new Image(getClass().getResourceAsStream("/image/controlsBlack.png")));
+            filterButton.setStyle("-fx-cursor: hand; -fx-background-color: #FFF; -fx-background-radius: 5");
+            filterBtn.setStyle("-fx-cursor: hand; -fx-background-color: #FFF");
+            filterBtn.setTextFill(Paint.valueOf("000"));
+            String month = (String) filterMonth.getValue();
+            String requestMonth;
+            switch (month) {
+                case FilterMonth.ALL:
+                    requestMonth = FilterMonth.ALL;
+                    break;
+                case FilterMonth.JAN:
+                    requestMonth = "01";
+                    break;
+                case FilterMonth.FEB:
+                    requestMonth = "02";
+                    break;
+                case FilterMonth.MAR:
+                    requestMonth = "03";
+                    break;
+                case FilterMonth.APR:
+                    requestMonth = "04";
+                    break;
+                case FilterMonth.MAY:
+                    requestMonth = "05";
+                    break;
+                case FilterMonth.JUNE:
+                    requestMonth = "06";
+                    break;
+                case FilterMonth.JULY:
+                    requestMonth = "07";
+                    break;
+                case FilterMonth.AUG:
+                    requestMonth = "08";
+                    break;
+                case FilterMonth.SEPT:
+                    requestMonth = "09";
+                    break;
+                case FilterMonth.OCT:
+                    requestMonth = "10";
+                    break;
+                case FilterMonth.NOV:
+                    requestMonth = "11";
+                    break;
+                case FilterMonth.DEC:
+                    requestMonth = "12";
+                    break;
+            }
+            String requestYear =(String) filterYear.getValue();
+
+
+        }
     }
 }

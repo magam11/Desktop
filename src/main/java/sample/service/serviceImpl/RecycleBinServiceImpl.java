@@ -4,12 +4,16 @@ import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
 import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.ReadOnlyDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
@@ -22,8 +26,11 @@ import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.StageStyle;
 import javafx.util.Duration;
+import lombok.Data;
 import sample.Constant;
 import sample.connection.ApiConnection;
 import sample.controller.RecycleBinController;
@@ -33,11 +40,13 @@ import sample.dataTransferObject.response.ImageData;
 import sample.service.MainStageService;
 import sample.service.RecycleBinService;
 
+import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Data
 public class RecycleBinServiceImpl implements RecycleBinService {
     private static RecycleBinService ourInstance = new RecycleBinServiceImpl();
 
@@ -56,9 +65,24 @@ public class RecycleBinServiceImpl implements RecycleBinService {
     private MainStageService mainStageService = MainStageServiceImpl.getInstance();
     public volatile Map<Integer, String> selectedImage = new HashMap<>();
     private HashMap<CheckBox, Integer> checkboxes = new HashMap();
+    private IntegerProperty currentPage = new SimpleIntegerProperty();
     private volatile Timeline anim;
     private volatile Timeline fadeIn;
 
+    @Override
+    public HashMap<CheckBox, Integer> getCheckBoxes() {
+        return checkboxes;
+    }
+
+    @Override
+    public  Map<Integer, String> getSelcetedImages() {
+        return selectedImage;
+    }
+
+    @Override
+    public int getCurrentPage(){
+        return currentPage.get();
+    }
 
     @Override
     public void initializeRecycleController(RecycleBinController recycleBinController) {
@@ -68,6 +92,12 @@ public class RecycleBinServiceImpl implements RecycleBinService {
 
     @Override
     public void loadDataInRecycleBin(BaseUserData baseUserData, int page) {
+        currentPage.set(page);
+        recoverControllButtons();
+        clearSelectedImageCollection();
+        recycleBinController.bin_selectAll.setVisible(false);
+        recycleBinController.bin_selectAll.setSelected(false);
+        closeAllCheckBoxes();
         long count = baseUserData.getPicturesData() == null ? 0 : baseUserData.getTotalElementCount();
         recycleBinController.countData.setText("( " + count + " )");
         drawPagination(baseUserData, page);
@@ -151,16 +181,16 @@ public class RecycleBinServiceImpl implements RecycleBinService {
     public void selecetAllClick() {
         Scene scene = recycleBinController.bin_flowPane.getScene();
         String imageName;
-        if(recycleBinController.bin_selectAll.isSelected()){
+        if (recycleBinController.bin_selectAll.isSelected()) {
             for (Map.Entry<CheckBox, Integer> checkBoxIntegerEntry : checkboxes.entrySet()) {
                 checkBoxIntegerEntry.getKey().setSelected(true);
+                ImageView imageView = (ImageView) scene.lookup("#bin" + checkBoxIntegerEntry.getValue());
                 imageName = ((ImageView) scene.lookup("#bin" + checkBoxIntegerEntry.getValue()))
                         .getImage().impl_getUrl().split(Constant.SPLITER)[1];
                 selectedImage.put(checkBoxIntegerEntry.getValue(), imageName);
             }
-        }else {
+        } else {
             clearSelectedImageCollection();
-
             closeAllCheckBoxes();
             recoverControllButtons();
             recycleBinController.bin_selectAll.setSelected(false);
@@ -169,7 +199,7 @@ public class RecycleBinServiceImpl implements RecycleBinService {
     }
 
     @Override
-    public void clearSelectedImageCollection(){
+    public void clearSelectedImageCollection() {
         for (Map.Entry<CheckBox, Integer> checkBoxIntegerEntry : checkboxes.entrySet()) {
             checkBoxIntegerEntry.getKey().setSelected(false);
             selectedImage.clear();
@@ -177,9 +207,10 @@ public class RecycleBinServiceImpl implements RecycleBinService {
     }
 
 
-
     @Override
     public void recoverControllButtons() {
+        recycleBinController.bin_selectAll.setVisible(false);
+        recycleBinController.bin_selectAll.setSelected(false);
         recycleBinController.recover.setDisable(false);
         recycleBinController.bin_delete_batch.setDisable(false);
         recycleBinController.bin_delete_batch.setStyle("-fx-cursor: hand;-fx-background-radius: 25; -fx-background-color: #fff;");
@@ -216,7 +247,7 @@ public class RecycleBinServiceImpl implements RecycleBinService {
             ImageView imageView = new ImageView(image);
             imageView.setFitWidth(cellContainer.getPrefWidth());
             imageView.setFitHeight(cellContainer.getPrefHeight());
-            imageView.setId("bin"+index);
+            imageView.setId("bin" + index);
 
             Label imageDate = new Label(pictureData.getDeletedAt().split("T")[0]);
             imageDate.setFont(Font.font(null, FontWeight.BOLD, 13));
@@ -315,14 +346,12 @@ public class RecycleBinServiceImpl implements RecycleBinService {
     }
 
     private void singleSelecOrCancelItem(CheckBox checkBox, int index, String picName) {
-        if(checkBox.isSelected()){
+        if (checkBox.isSelected()) {
             selectedImage.put(index, picName);
-        }else {
+        } else {
             selectedImage.keySet().removeIf(key -> key.equals(index));
         }
     }
-
-
 
 
     @Override
@@ -395,7 +424,9 @@ public class RecycleBinServiceImpl implements RecycleBinService {
     @Override
     public void deleteSelectedImage() {
         if (selectedImage != null && selectedImage.size() > 0) {
-//          TODO+++++++++++++++
+
+            openConfirmationDialogForRecycleDeleteInBatch("recycleMany");
+
         } else {
             recoverControllButtons();
             recycleBinController.bin_selectAll.setSelected(false);
@@ -405,10 +436,36 @@ public class RecycleBinServiceImpl implements RecycleBinService {
         }
     }
 
+    private void openConfirmationDialogForRecycleDeleteInBatch(String recycleMany) {
+        if(recycleMany.equals("recycleMany")){
+            Stage mainStage = new Stage();
+            FXMLLoader fxmlLoader = null;
+            Parent root = null;
+            try {
+                fxmlLoader = new FXMLLoader(getClass().getResource("/view/dialog/deleteConfirmationDialogForRecycle.fxml"));
+                root = fxmlLoader.load();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            mainStage.setTitle("Confirmation dialog");
+            mainStage.setResizable(false);
+            mainStage.initModality(Modality.APPLICATION_MODAL);
+            mainStage.initStyle(StageStyle.UNDECORATED);
+            Scene scene = new Scene(root);
+            mainStage.setScene(scene);
+            mainStage.show();
+        }
+    }
+
     @Override
     public void recoverSelectedImages() {
         if (selectedImage != null && selectedImage.size() > 0) {
-//            TODO+++++++++++++
+            closeAllCheckBoxes();
+            checkboxes.clear();
+            ApiConnection.getInstance().recoverImagesFromRecycle(sample.dataTransferObject.request.ImageData.builder()
+                    .picNames(selectedImage.values())
+                    .page(currentPage.get())
+                    .build());
         } else {
             recoverControllButtons();
             recycleBinController.bin_selectAll.setSelected(false);

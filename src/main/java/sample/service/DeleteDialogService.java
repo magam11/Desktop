@@ -9,4 +9,5 @@ public interface DeleteDialogService {
     void closeDeleteDialog();
 
     void openConfirmationDialogForBatch();
+
 }
