@@ -55,4 +55,8 @@ public interface MainStageService {
     MainStageController getMainStageController();
 
     void filterClick();
+
+    void loadStageDataFilterTime(BaseUserData totoalPageCount, int page);
+
+    void setFilterAction(String actionType);
 }

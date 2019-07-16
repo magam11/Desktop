@@ -65,6 +65,14 @@ public class MainStageServiceImpl implements MainStageService {
     public volatile Map<CheckBox, Integer> checkboxes = new HashMap<>();
     public volatile Map<Integer, String> selectedImage = new HashMap<>();
     private StringProperty filterAction = new SimpleStringProperty("FIRST_SHOW");  //NEW_FILTER, SAVE_FILTER
+    private StringProperty filterYear = new SimpleStringProperty();
+    private StringProperty filterMonth = new SimpleStringProperty();
+
+
+    @Override
+    public void setFilterAction(String actionType) {
+        filterAction.set(actionType);
+    }
 
     AnchorPane pageNumbersContainer = new AnchorPane();
 
@@ -657,14 +665,9 @@ public class MainStageServiceImpl implements MainStageService {
             mainStageController.filterBtn.setStyle("-fx-cursor: hand; -fx-background-color: #388E3C");
             mainStageController.filterBtn.setTextFill(Paint.valueOf("fff"));
             filterAction.setValue("SAVE_FILTER");
-        } else if(filterAction.get().equals("NEW_FILTER")) {
-            mainStageController.filterPane.setVisible(false);
-            mainStageController.filterImage.setImage(new Image(getClass().getResourceAsStream("/image/controlsBlack.png")));
-            mainStageController.filterButton.setStyle("-fx-cursor: hand; -fx-background-color: #FFF; -fx-background-radius: 5");
-            mainStageController.filterBtn.setStyle("-fx-cursor: hand; -fx-background-color: #FFF");
-            mainStageController.filterBtn.setTextFill(Paint.valueOf("000"));
+        } else if (filterAction.get().equals("NEW_FILTER")) {
             String month = (String) mainStageController.filterMonth.getValue();
-            String requestMonth ="ALL";
+            String requestMonth = "ALL";
             switch (month) {
                 case FilterMonth.ALL:
                     requestMonth = FilterMonth.ALL;
@@ -705,12 +708,14 @@ public class MainStageServiceImpl implements MainStageService {
                 case FilterMonth.DEC:
                     requestMonth = "12";
                     break;
-
             }
             filterAction.setValue("SAVE_FILTER");
-            String requestYear = (String) mainStageController.filterYear.getValue();
-            ApiConnection.getInstance().getFilterData(1,requestYear,requestMonth);
-        }else if(filterAction.get().equals("SAVE_FILTER")){
+            String requestYear = String.valueOf((int) mainStageController.filterYear.getValue());
+
+            ApiConnection.getInstance().getFilterData(1, requestYear, requestMonth);
+            filterYear.set(requestYear);
+            filterMonth.setValue(requestMonth);
+        } else if (filterAction.get().equals("SAVE_FILTER")) {
             mainStageController.filterPane.setVisible(false);
             mainStageController.filterImage.setImage(new Image(getClass().getResourceAsStream("/image/controlsBlack.png")));
             mainStageController.filterButton.setStyle("-fx-cursor: hand; -fx-background-color: #FFF; -fx-background-radius: 5");
@@ -720,4 +725,83 @@ public class MainStageServiceImpl implements MainStageService {
         }
     }
 
+    public void clearSelectedImageCollection() {
+        selectedImage.clear();
+    }
+
+    public void clearCheckBoxesCollection() {
+        checkboxes.clear();
+    }
+
+    private void buttonsControl() {
+        mainStageController.downloadTxt.setTextFill(Paint.valueOf("#000"));
+        mainStageController.deleteTxt.setTextFill(Paint.valueOf("#000"));
+        mainStageController.delete.setDisable(false);
+        mainStageController.download.setDisable(false);
+        mainStageController.delete.setStyle("-fx-background-radius: 5;-fx-cursor: hand;-fx-background-color: #fff");
+        mainStageController.download.setStyle("-fx-background-radius: 5;-fx-cursor: hand;-fx-background-color: #fff");
+    }
+
+    @Override
+    public void loadStageDataFilterTime(BaseUserData data, int page) {
+        if (mainStageController.flowPane.getChildren() != null) {
+            mainStageController.flowPane.getChildren().remove(0, mainStageController.flowPane.getChildren().size());
+
+        }
+        if (mainStageController.pageNumbersPane.getChildren() != null) {
+            mainStageController.pageNumbersPane.getChildren().remove(0, mainStageController.pageNumbersPane.getChildren().size());
+        }
+        Scene scene = mainStageController.flowPane.getScene();
+        clearSelectedImageCollection();
+        clearCheckBoxesCollection();
+        buttonsControl();
+        if (data.getPicturesData() != null && data.getPicturesData().size() > 0) {
+            drawPagination(page, data.getTotoalPageCount());
+            drawImagesInMainStage(data.getPicturesData(), "");
+        } else {
+            //TODO something
+            System.out.println("NO COntent");
+        }
+        currentPageIndex.set(page);
+    }
+
+    private void drawPagination(int openedPage, int totoalPageCount) {
+        ReadOnlyDoubleProperty widthPrp = mainStageController.pageNumbersPane.widthProperty();
+        if (pageNumbersContainer.getChildren() != null) {
+            pageNumbersContainer.getChildren().remove(0, pageNumbersContainer.getChildren().size());
+        }
+        Label label;
+        pages.clear();
+        for (int i = 0; i < totoalPageCount; i++) {
+
+            label = new Label(String.valueOf(i + 1));
+            label.setFont(Font.font(null, FontWeight.BOLD, 14));
+            label.setLayoutX(widthPrp.getValue() / 2 - (totoalPageCount - 1) * 20 + i * 20);
+            label.setId("page_" + (i + 1));
+            if ((i + 1) == openedPage) {
+                label.setTextFill(Paint.valueOf("#388e3c"));
+                label.setUnderline(true);
+                pages.put(label, i + 1);
+            } else if ((i + 1) != openedPage) {
+                label.setStyle("-fx-cursor: hand");
+            }
+            int finalI = i;
+            label.setOnMouseClicked(mouseEvent -> {
+                if (currentPageIndex.get() != (finalI + 1)) {
+                    ApiConnection.getInstance().getFilterData(finalI + 1, filterYear.get(), filterMonth.get());
+                    mainStageController.currentPageNumber.setText("" + (finalI + 1));
+                    ApiConnection.getInstance().getPage(Constant.BASE_DATA_URI, finalI + 1,
+                            Storage.getInstance().getCurrentToken());
+                    currentPageIndex.set(finalI + 1);
+                }
+            });
+            pageNumbersContainer.getChildren().add(label);
+            if (mainStageController.pageNumbersPane.getChildren() != null) {
+                mainStageController.pageNumbersPane.getChildren().remove(0, mainStageController.pageNumbersPane.getChildren().size());
+            }
+            mainStageController.pageNumbersPane.getChildren().add(pageNumbersContainer);
+
+            pages.put(label, i + 1);
+        }
+    }
 }

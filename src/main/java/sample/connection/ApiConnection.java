@@ -19,6 +19,7 @@ import sample.storage.Storage;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class ApiConnection {
 
@@ -351,12 +352,42 @@ public class ApiConnection {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
+                // TODO something
+                System.out.println("/image/filter/page/{page} -failure");
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-
+                if (response.code()==200){
+                    JSONObject responseJson = null;
+                    List<sample.dataTransferObject.response.ImageData> imageData = new ArrayList<>();
+                    try {
+                        responseJson = new JSONObject(new String(Objects.requireNonNull(response.body()).bytes()));
+                        JSONArray picturesData = responseJson.getJSONArray("picturesData");
+                        JSONObject imageDataJson = null;
+                        if (picturesData != null) {
+                            for (int i = 0; i < picturesData.length(); i++) {
+                                imageDataJson = picturesData.getJSONObject(i);
+                                imageData.add(sample.dataTransferObject.response.ImageData.builder()
+                                        .picName(imageDataJson.getString("picName"))
+                                        .createdAt(imageDataJson.getString("createdAt"))
+                                        .picSize(imageDataJson.getDouble("picSize"))
+                                        .build());
+                            }
+                        }
+                        JSONObject finalResponseJson = responseJson;
+                        Platform.runLater(() -> {
+                            MainStageServiceImpl.getInstance().loadStageDataFilterTime(BaseUserData.builder()
+                                    .totoalPageCount(finalResponseJson.getInt("totoalPageCount"))
+                                    .picturesData(imageData)
+                                    .build(), page);
+                        });
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }else {
+                    System.out.println("");
+                }
             }
         });
     }

@@ -4,6 +4,8 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
@@ -157,6 +159,12 @@ public class MainStageController {
         header.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.2)));
         row_1.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.2)));
         row_2.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.2)));
+        filterYear.valueProperty().addListener((observable, oldValue, newValue) -> {
+            mainStageService.setFilterAction("NEW_FILTER");
+        });
+        filterMonth.valueProperty().addListener((observable, oldValue, newValue) -> {
+            mainStageService.setFilterAction("NEW_FILTER");
+        });
     }
 
 
