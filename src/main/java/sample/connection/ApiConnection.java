@@ -2,6 +2,7 @@ package sample.connection;
 
 
 import javafx.application.Platform;
+import javafx.beans.property.StringProperty;
 import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -277,6 +278,10 @@ public class ApiConnection {
         });
     }
 
+
+
+
+
     @Connection(uri = "/image/page/{page}", requestParam = {"fromDate", "toDate"}, method = "GET", pathVariable = "page")
     public void getDataByInterval(String fromDate, String toDate, int page) {
 
@@ -335,6 +340,31 @@ public class ApiConnection {
         });
 
     }
+
+
+    @Connection(uri="/image/filter/page/{page}",requestParam = {"year","month"},method = "GET")
+    public void getFilterData(int page, String requestYear, String requestMonth) {
+        Request request = new Request.Builder()
+                .url(Constant.SERVER_ADDRESS + String.format("image/filter/page/%s?year=%s&month=%s", page, requestYear, requestMonth))
+                .addHeader(Constant.AUTHORIZATION, storage.getCurrentToken())
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+
+            }
+        });
+    }
+
+
+
+
+
 
     @Connection(uri = "image/deleted/page/{page}", method = "GET", pathVariable = "page")
     public void getDeletedImagePage(int page) {
@@ -553,4 +583,6 @@ public class ApiConnection {
             RecycleBinServiceImpl.getInstance().loadDataInRecycleBin(baseUserData, imageData.getPage());
         });
     }
+
+
 }

@@ -154,7 +154,7 @@
                             </children>
                         </AnchorPane>
 
-                        <AnchorPane fx:id="filterButton"  onMouseClicked="#fillerClick" layoutX="780.0" layoutY="4.0" prefHeight="37.0" AnchorPane.rightAnchor="26"
+                        <AnchorPane fx:id="filterButton"  onMouseClicked="#fillerClick" layoutX="780.0" layoutY="15.0" prefHeight="37.0" AnchorPane.rightAnchor="26"
                                     prefWidth="100.0" style="-fx-background-color: #fff; -fx-background-radius: 25; -fx-cursor: hand;">
                             <children>
                                 <ImageView onMouseClicked="#fillerClick" fx:id="filterImage" fitHeight="27.0" fitWidth="31.0"

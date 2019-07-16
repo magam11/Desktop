@@ -222,12 +222,7 @@ public class MainStageController {
 
     }
 
-    @FXML
-    public void filter(MouseEvent mouseEvent) {
-        ApiConnection.getInstance().getDataByInterval(startDate.get(), endDate.get(), 1);
-        System.out.println("startdate " + startDate.get());
-        System.out.println("endDate " + endDate.get());
-    }
+
 
 
     @FXML
@@ -247,64 +242,9 @@ public class MainStageController {
 
 
     public void fillerClick(MouseEvent mouseEvent) {
-        if (!filterPane.isVisible()) {
-            filterPane.setVisible(true);
-            filterImage.setImage(new Image(getClass().getResourceAsStream("/image/controls.png")));
-            filterButton.setStyle("-fx-cursor: hand; -fx-background-color: #388E3C; -fx-background-radius: 5");
-            filterBtn.setStyle("-fx-cursor: hand; -fx-background-color: #388E3C");
-            filterBtn.setTextFill(Paint.valueOf("fff"));
-        } else {
-            filterPane.setVisible(false);
-            filterImage.setImage(new Image(getClass().getResourceAsStream("/image/controlsBlack.png")));
-            filterButton.setStyle("-fx-cursor: hand; -fx-background-color: #FFF; -fx-background-radius: 5");
-            filterBtn.setStyle("-fx-cursor: hand; -fx-background-color: #FFF");
-            filterBtn.setTextFill(Paint.valueOf("000"));
-            String month = (String) filterMonth.getValue();
-            String requestMonth;
-            switch (month) {
-                case FilterMonth.ALL:
-                    requestMonth = FilterMonth.ALL;
-                    break;
-                case FilterMonth.JAN:
-                    requestMonth = "01";
-                    break;
-                case FilterMonth.FEB:
-                    requestMonth = "02";
-                    break;
-                case FilterMonth.MAR:
-                    requestMonth = "03";
-                    break;
-                case FilterMonth.APR:
-                    requestMonth = "04";
-                    break;
-                case FilterMonth.MAY:
-                    requestMonth = "05";
-                    break;
-                case FilterMonth.JUNE:
-                    requestMonth = "06";
-                    break;
-                case FilterMonth.JULY:
-                    requestMonth = "07";
-                    break;
-                case FilterMonth.AUG:
-                    requestMonth = "08";
-                    break;
-                case FilterMonth.SEPT:
-                    requestMonth = "09";
-                    break;
-                case FilterMonth.OCT:
-                    requestMonth = "10";
-                    break;
-                case FilterMonth.NOV:
-                    requestMonth = "11";
-                    break;
-                case FilterMonth.DEC:
-                    requestMonth = "12";
-                    break;
-            }
-            String requestYear =(String) filterYear.getValue();
+        mainStageService.filterClick();
 
 
-        }
     }
 }
+

@@ -53,4 +53,6 @@ public interface MainStageService {
     StackPane getMainPane();
 
     MainStageController getMainStageController();
+
+    void filterClick();
 }

@@ -31,6 +31,7 @@ import sample.connection.ApiConnection;
 import sample.controller.MainStageController;
 import sample.dataTransferObject.response.BaseUserData;
 import sample.dataTransferObject.response.ImageData;
+import sample.model.viewModel.FilterMonth;
 import sample.service.MainStageService;
 import sample.storage.Storage;
 import sample.util.Helper;
@@ -63,6 +64,7 @@ public class MainStageServiceImpl implements MainStageService {
     public volatile IntegerProperty currentPageIndex = new SimpleIntegerProperty(1);
     public volatile Map<CheckBox, Integer> checkboxes = new HashMap<>();
     public volatile Map<Integer, String> selectedImage = new HashMap<>();
+    private StringProperty filterAction = new SimpleStringProperty("FIRST_SHOW");  //NEW_FILTER, SAVE_FILTER
 
     AnchorPane pageNumbersContainer = new AnchorPane();
 
@@ -135,7 +137,7 @@ public class MainStageServiceImpl implements MainStageService {
             int finalI = i;
             label.setOnMouseClicked(mouseEvent -> {
                 if (currentPageIndex.get() != (finalI + 1)) {
-                    mainStageController.currentPageNumber.setText(""+(finalI + 1));
+                    mainStageController.currentPageNumber.setText("" + (finalI + 1));
                     ApiConnection.getInstance().getPage(Constant.BASE_DATA_URI, finalI + 1,
                             Storage.getInstance().getCurrentToken());
                     currentPageIndex.set(finalI + 1);
@@ -152,8 +154,8 @@ public class MainStageServiceImpl implements MainStageService {
             }
         });
         mainStageController.pageNumbersPane.setStyle("-fx-alignment: center");
-        if(mainStageController.pageNumbersPane.getChildren()!=null){
-            mainStageController.pageNumbersPane.getChildren().remove(0,mainStageController.pageNumbersPane.getChildren().size());
+        if (mainStageController.pageNumbersPane.getChildren() != null) {
+            mainStageController.pageNumbersPane.getChildren().remove(0, mainStageController.pageNumbersPane.getChildren().size());
         }
         mainStageController.pageNumbersPane.getChildren().add(pageNumbersContainer);
         int imagesConunt = baseUserData.getPicturesData() == null ? 0 : baseUserData.getPicturesData().size();
@@ -168,19 +170,19 @@ public class MainStageServiceImpl implements MainStageService {
         if (imagesConunt != 0) {
             drawImagesInMainStage(baseUserData.getPicturesData(), Storage.getInstance().getCurrentToken());
         } else {
-            mainStageController.pageNumbersPane.getChildren().remove(0,mainStageController.pageNumbersPane.getChildren().size());
+            mainStageController.pageNumbersPane.getChildren().remove(0, mainStageController.pageNumbersPane.getChildren().size());
             pageNumbersContainer.getChildren().remove(0, pageNumbersContainer.getChildren().size());
             Label no_content = new Label("No Content");
             no_content.setFont(Font.font(null, FontWeight.BOLD, 14));
             no_content.setTextFill(Paint.valueOf("#388e3c"));
             pageNumbersContainer.getChildren().add(no_content);
             mainStageController.pageNumbersPane.widthProperty().addListener((observable, oldValue, newValue) -> {
-                no_content.setLayoutX(newValue.doubleValue()/2-5);
+                no_content.setLayoutX(newValue.doubleValue() / 2 - 5);
             });
             mainStageController.pageNumbersPane.getChildren().add(pageNumbersContainer);
-            no_content.setLayoutX(mainStageController.mainStage.getWidth()/2-5);
-            if(mainStageController.flowPane.getChildren()!=null) //jnjel flowPane-i naxkin parunakutyuny
-            mainStageController.flowPane.getChildren().remove(0, mainStageController.flowPane.getChildren().size());
+            no_content.setLayoutX(mainStageController.mainStage.getWidth() / 2 - 5);
+            if (mainStageController.flowPane.getChildren() != null) //jnjel flowPane-i naxkin parunakutyuny
+                mainStageController.flowPane.getChildren().remove(0, mainStageController.flowPane.getChildren().size());
             // TODO something when user does not have pictures ...
         }
     }
@@ -327,7 +329,6 @@ public class MainStageServiceImpl implements MainStageService {
             viewImg.setLayoutY(cellContent.getLayoutY() + cellContent.getPrefHeight() - 31);
 
 
-
             int finalIndex = index;
             checkBox.setOnMouseClicked(mouseEvent -> {
                 singleSelectOrCancelItem(checkBox, finalIndex, pictureData.getPicName());
@@ -370,8 +371,8 @@ public class MainStageServiceImpl implements MainStageService {
             share.setStyle("-fx-cursor: hand");
             delete.setStyle("-fx-cursor: hand");
             download.setStyle("-fx-cursor: hand");
-            cellContent.getChildren().addAll(imageView,   progressBar,
-                    percent, checkBox, viewImg,fone,share,download,delete);
+            cellContent.getChildren().addAll(imageView, progressBar,
+                    percent, checkBox, viewImg, fone, share, download, delete);
 
             if (firstTime && mainStageController.flowPane.getChildren() != null && mainStageController.flowPane.getChildren().size() > 0) {
 
@@ -498,7 +499,7 @@ public class MainStageServiceImpl implements MainStageService {
                         .totoalPageCount(responseJson.getInt("totoalPageCount"))
                         .picturesData(imageData)
                         .phoneNumber(responseJson.getString("phoneNumber"))
-                        .build(), loadedPageNumber,"general");
+                        .build(), loadedPageNumber, "general");
             } else if (response.code() == 401) {
 //          TODO something
             } else if (response.code() == 403) {
@@ -645,6 +646,78 @@ public class MainStageServiceImpl implements MainStageService {
     @Override
     public MainStageController getMainStageController() {
         return this.mainStageController;
+    }
+
+    @Override
+    public void filterClick() {
+        if (filterAction.get().equals("FIRST_SHOW")) {
+            mainStageController.filterPane.setVisible(true);
+            mainStageController.filterImage.setImage(new Image(getClass().getResourceAsStream("/image/controls.png")));
+            mainStageController.filterButton.setStyle("-fx-cursor: hand; -fx-background-color: #388E3C; -fx-background-radius: 5");
+            mainStageController.filterBtn.setStyle("-fx-cursor: hand; -fx-background-color: #388E3C");
+            mainStageController.filterBtn.setTextFill(Paint.valueOf("fff"));
+            filterAction.setValue("SAVE_FILTER");
+        } else if(filterAction.get().equals("NEW_FILTER")) {
+            mainStageController.filterPane.setVisible(false);
+            mainStageController.filterImage.setImage(new Image(getClass().getResourceAsStream("/image/controlsBlack.png")));
+            mainStageController.filterButton.setStyle("-fx-cursor: hand; -fx-background-color: #FFF; -fx-background-radius: 5");
+            mainStageController.filterBtn.setStyle("-fx-cursor: hand; -fx-background-color: #FFF");
+            mainStageController.filterBtn.setTextFill(Paint.valueOf("000"));
+            String month = (String) mainStageController.filterMonth.getValue();
+            String requestMonth ="ALL";
+            switch (month) {
+                case FilterMonth.ALL:
+                    requestMonth = FilterMonth.ALL;
+                    break;
+                case FilterMonth.JAN:
+                    requestMonth = "01";
+                    break;
+                case FilterMonth.FEB:
+                    requestMonth = "02";
+                    break;
+                case FilterMonth.MAR:
+                    requestMonth = "03";
+                    break;
+                case FilterMonth.APR:
+                    requestMonth = "04";
+                    break;
+                case FilterMonth.MAY:
+                    requestMonth = "05";
+                    break;
+                case FilterMonth.JUNE:
+                    requestMonth = "06";
+                    break;
+                case FilterMonth.JULY:
+                    requestMonth = "07";
+                    break;
+                case FilterMonth.AUG:
+                    requestMonth = "08";
+                    break;
+                case FilterMonth.SEPT:
+                    requestMonth = "09";
+                    break;
+                case FilterMonth.OCT:
+                    requestMonth = "10";
+                    break;
+                case FilterMonth.NOV:
+                    requestMonth = "11";
+                    break;
+                case FilterMonth.DEC:
+                    requestMonth = "12";
+                    break;
+
+            }
+            filterAction.setValue("SAVE_FILTER");
+            String requestYear = (String) mainStageController.filterYear.getValue();
+            ApiConnection.getInstance().getFilterData(1,requestYear,requestMonth);
+        }else if(filterAction.get().equals("SAVE_FILTER")){
+            mainStageController.filterPane.setVisible(false);
+            mainStageController.filterImage.setImage(new Image(getClass().getResourceAsStream("/image/controlsBlack.png")));
+            mainStageController.filterButton.setStyle("-fx-cursor: hand; -fx-background-color: #FFF; -fx-background-radius: 5");
+            mainStageController.filterBtn.setStyle("-fx-cursor: hand; -fx-background-color: #FFF");
+            mainStageController.filterBtn.setTextFill(Paint.valueOf("000"));
+            filterAction.setValue("FIRST_SHOW");
+        }
     }
 
 }

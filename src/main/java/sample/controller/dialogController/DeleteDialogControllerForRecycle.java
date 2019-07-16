@@ -23,15 +23,16 @@ public class DeleteDialogControllerForRecycle {
     }
 
     public void updateImageStatus(MouseEvent mouseEvent) {
+        Collection<String> values = recycleBinService.getSelcetedImages().values();
+
+        ApiConnection.getInstance().deleteSelectedImageFromRecycleBin(sample.dataTransferObject.request.ImageData.builder()
+                .picNames(values)
+                .page(recycleBinService.getCurrentPage())
+                .build());
         recycleBinService.closeAllCheckBoxes();
         recycleBinService.clearSelectedImageCollection();
         recycleBinService.recoverControllButtons();
         recycleBinService.getCheckBoxes().clear();
         ((Stage) no_button.getScene().getWindow()).close();
-        Collection<String> values = recycleBinService.getSelcetedImages().values();
-        ApiConnection.getInstance().deleteSelectedImageFromRecycleBin(sample.dataTransferObject.request.ImageData.builder()
-                .picNames(recycleBinService.getSelcetedImages().values())
-                .page(recycleBinService.getCurrentPage())
-                .build());
     }
 }
