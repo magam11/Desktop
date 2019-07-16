@@ -55,7 +55,28 @@ public class SliderServiceImpl implements SliderService {
 
     @Override
     public void openSlider(String picName, int indexOf) {
+        Stage mainStage = (Stage) mainStageController.header.getScene().getWindow();
         AnchorPane slider =(AnchorPane) Main.getScreen("slider");
+        slider.setPrefWidth(mainStage.getWidth());
+        slider.setPrefHeight(mainStage.getHeight());
+
+        //                                                                  entaka e popoxman
+        slideController.menuBar.setLayoutX(mainStage.getWidth()-226);
+        slideController.rightContent.setLayoutX(mainStage.getWidth()-60);
+        slideController.scrollPane.setPrefWidth(mainStage.getWidth()-210);
+        slideController.fraction.setLayoutX(mainStage.getWidth()-271);
+        slideController.shownImage_container.setPrefWidth(mainStage.getWidth()-210);
+        slideController.shownImage.setFitWidth(mainStage.getWidth()-220);
+
+        slideController.nextLabel.setLayoutY(mainStage.getHeight()/2);
+        slideController.previousLabel.setLayoutY(mainStage.getHeight()/2);
+        slideController.scrollPane.setPrefHeight(mainStage.getHeight()-105);
+        slideController.shownImage_container.setPrefHeight(mainStage.getHeight()-105);
+        slideController.shownImage.setFitHeight(mainStage.getHeight()02-120);
+
+
+
+
         mainStageController.mainPane.getChildren().add(1,slider);
         if (indexOf == 0) {
             slideController.previousLabel.setVisible(false);
@@ -70,7 +91,7 @@ public class SliderServiceImpl implements SliderService {
         slideController.fraction.setText(indexOf+1 + "/" + MainStageServiceImpl.myImageCount.get());
         slideController.sliderContent.setVisible(true);
         slideController.sliderPercent.setVisible(false);
-        Stage mainStage = (Stage) mainStageController.header.getScene().getWindow();
+
         mainStage.widthProperty().addListener((observable, oldValue, newValue) -> {
             slider.setPrefWidth(newValue.doubleValue());
             slideController.menuBar.setLayoutX(newValue.doubleValue()-226);

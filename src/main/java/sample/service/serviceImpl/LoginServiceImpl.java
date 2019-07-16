@@ -4,6 +4,7 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -17,6 +18,7 @@ import okhttp3.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import sample.Constant;
+import sample.Main;
 import sample.MessageNotifications;
 import sample.connection.ApiConnection;
 import sample.controller.LoginController;
@@ -28,10 +30,13 @@ import sample.dataTransferObject.response.ImageData;
 import sample.service.LoginService;
 
 import java.io.IOException;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 public class LoginServiceImpl implements LoginService {
@@ -42,8 +47,6 @@ public class LoginServiceImpl implements LoginService {
     ProgressIndicator pb = new ProgressIndicator();
     MainStageController mainStageController;
 
-    public Timeline loader;
-    public BorderPane loaderPane = new BorderPane();
 
     public static LoginServiceImpl getInstance() {
         return instance;
@@ -116,10 +119,71 @@ public class LoginServiceImpl implements LoginService {
         }
     }
 
+//    @Override
+//    public void openMainStage(BaseUserData baseUserData, int loadedPageNumber) {
+//        Platform.runLater(() -> {
+//
+//            ((Stage) loginController.passwordTextField.getScene().getWindow()).close();
+//
+//            Stage mainStage = new Stage();
+//            FXMLLoader fxmlLoader = null;
+//            Parent root = null;
+//            try {
+//                fxmlLoader = new FXMLLoader(getClass().getResource("/view/main.fxml"));
+//                root = fxmlLoader.load();
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//            mainStage.setTitle("Cloud Camera");
+//            mainStage.getIcons().add(new Image(this.getClass().getResourceAsStream("/image/logo.png")));
+//            Scene scene = new Scene(root, 906, 840);
+//            mainStage.setScene(scene);
+//            mainStage.setMinHeight(500);
+//            mainStage.setMinWidth(906.0);
+//
+//            mainStageController = (MainStageController) fxmlLoader.getController();
+////----------------------------------------------------------------------------------------------------------------------------------------
+//            LoaderTasl loaderTask = new LoaderTasl();
+//            Timer timer = new Timer("Loader");
+//            timer.schedule(loaderTask, 0, 999999999);
+//
+//
+////            ExecutorService exService = Executors.newSingleThreadExecutor();
+////            exService.submit(new CopyFileTask());
+////----------------------------------------------------------------------------------------------------------------------------------------------
+//
+//            mainStage.show();
+////            timer.cancel();
+//            FXMLLoader finalFxmlLoader1 = fxmlLoader;
+//
+//            Platform.runLater(() -> {
+//
+//
+//                FXMLLoader finalFxmlLoader = finalFxmlLoader1;
+//                MainStageController controller = (MainStageController) finalFxmlLoader.getController();
+//                Thread  thread = new Thread(() -> {
+////                    Platform.runLater(() -> {
+//                        MainStageServiceImpl.getInstance().loadMainStageData(baseUserData, loadedPageNumber, "general");
+//                        controller.mainStage = mainStage;
+////                    });
+//                });
+//                thread.start();
+//
+//
+//                mainStage.setOnCloseRequest(we -> {
+//                    System.exit(0);
+//                });
+//            });
+//        });
+//
+//    }
+
+
     @Override
     public void openMainStage(BaseUserData baseUserData, int loadedPageNumber) {
-        Platform.runLater(() -> {
 
+
+        Platform.runLater(() -> {
             ((Stage) loginController.passwordTextField.getScene().getWindow()).close();
 
             Stage mainStage = new Stage();
@@ -138,157 +202,78 @@ public class LoginServiceImpl implements LoginService {
             mainStage.setMinHeight(500);
             mainStage.setMinWidth(906.0);
             mainStageController = (MainStageController) fxmlLoader.getController();
-
             mainStage.show();
-//            showLoader(mainStageController, mainStage);
-//
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+//            Thread thread = new Thread(() -> {
+//                mainStageController.mainPane.getChildren().add(Main.getScreen("loader"));
+//            });
+//            thread.setDaemon(true);
+//            Platform.runLater(thread);
+//-----------------------------------------------------------------------------------------------------------------------------------------------------
+            MainStageController controller = (MainStageController) fxmlLoader.getController();
+            MainStageServiceImpl.getInstance().loadMainStageData(baseUserData, loadedPageNumber, "general");
+            controller.mainStage = mainStage;
 
-            FXMLLoader finalFxmlLoader1 = fxmlLoader;
-
-            Platform.runLater(() -> {
-
-
-                FXMLLoader finalFxmlLoader = finalFxmlLoader1;
-                MainStageController controller = (MainStageController) finalFxmlLoader.getController();
-                MainStageServiceImpl.getInstance().loadMainStageData(baseUserData, loadedPageNumber, "general");
-//                closeLoader(mainStageController);
-                controller.mainStage = mainStage;
-//                loader.stop();
-                mainStageController.mainPane.getChildren().remove(loaderPane);
-//                mainStage.widthProperty().addListener((obs, oldVal, newVal) -> {
-//                    ((MainStageController) finalFxmlLoader.getController()).responsivWidth(newVal.doubleValue());
-//                });
-//                mainStage.heightProperty().addListener((obs, oldVal, newVal) -> {
-//                    ((MainStageController) finalFxmlLoader.getController()).responsivHeight(newVal.doubleValue());
-//                });
-                mainStage.setOnCloseRequest(we -> {
-                    System.exit(0);
-                });
-            });
 
 
         });
-
     }
 
-
-    @Override
-    public void showLoader(MainStageController mainStageController, Stage mainStage) {
+    public class LoaderTasl extends TimerTask {
 
 
-//        Task longTask = new Task<Void>() {
-//            @Override
-//            protected Void call() throws Exception {
-////                System.out.println("ashxatec call methody");
-////                StackPane r = new StackPane();
-////                BorderPane loadPane = new BorderPane();
-////                ProgressIndicator pb = new ProgressIndicator();
-////                pb.setStyle("-fx-progress-color: #388e3c;");
-////                pb.setMaxHeight(300);
-////                pb.setMaxWidth(300);
-////                loadPane.setCenter(pb);
-////                r.getChildren().add(loadPane);
-////
-////                Scene scene = new Scene(r);
-////                Stage stage = new Stage();
-////                stage.setScene(scene);
-////                stage.showAndWait();
-////                stage.initOwner(mainStage);
-//
-//                loader = new Timeline(
-//                        new KeyFrame(Duration.seconds(0), event -> {
-//                            System.out.println("---");
-//                            AtomicBoolean firsTime = new AtomicBoolean(true);
-//                            System.out.println("---");
-//                            if (firsTime.get()) {
-//                                System.out.println("if-i mej");
-//                                ProgressIndicator pb = new ProgressIndicator();
-//                                pb.setStyle("-fx-progress-color: #388e3c;");
-//                                pb.setMaxHeight(300);
-//                                pb.setMaxWidth(300);
-//                                loaderPane.setCenter(pb);
-//                                mainStageController.mainPane.getChildren().add(loaderPane);
-//                                firsTime.set(false);
-//                            }
-//                        }),
-//                        new KeyFrame(Duration.seconds(5)));
-//                loader.setCycleCount(Animation.INDEFINITE);
-//                loader.play();
-//                return null;
-//            }
-//        };
-////        longTask.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-////            @Override
-////            public void handle(WorkerStateEvent t) {
-//////                loader.stop();
-//////                mainStageController.mainPane.getChildren().remove(loaderPane);
-////            }
-////        });
-//        Thread thread = new Thread(longTask);
-//        thread.setDaemon(true);
-//        thread.start();
+        @Override
+        public void run() {
+            mainStageController.mainPane.getChildren().add(Main.getScreen("loader"));
 
-
-//        Platform.runLater(() -> {
-
-
-//        final boolean[] b = {true};
-//        loader = new Timeline(
-//                new KeyFrame(Duration.seconds(0), event -> {
-//                    if (b[0]) {
-//                        System.out.println("---");
-//                        System.out.println("ashxatec call methody");
-//                        StackPane r = new StackPane();
-//                        BorderPane loadPane = new BorderPane();
-//                        ProgressIndicator pb = new ProgressIndicator();
-//                        pb.setStyle("-fx-progress-color: #388e3c;");
-//                        pb.setMaxHeight(300);
-//                        pb.setMaxWidth(300);
-//                        loadPane.setCenter(pb);
-//                        r.getChildren().add(loadPane);
-//
-//                        Scene scene = new Scene(r);
-//                        Stage stage = new Stage();
-//                        stage.setScene(scene);
-//                        stage.initOwner(mainStage);
-//                        stage.show();
-//                        b[0] = false;
-//                    }
-//
-//                }),
-//                new KeyFrame(Duration.seconds(5)));
-////
-//        loader.setCycleCount(Animation.INDEFINITE);
-//        loader.play();
-            AtomicBoolean firsTime = new AtomicBoolean(true);
-            System.out.println("---");
-            if (firsTime.get()) {
-                System.out.println("if-i mej");
-                ProgressBar pb = new ProgressBar();
-                pb.setId("pb");
-//                pb.setStyle("-fx-progress-color: #388e3c;");
-                pb.setMaxHeight(300);
-                pb.setProgress(50);
-                pb.setMaxWidth(300);
-                loaderPane.setCenter(pb);
-                mainStageController.mainPane.getChildren().add(loaderPane);
-                firsTime.set(false);
-            }
-//        });
-
+        }
     }
 
-    @Override
-    public void closeLoader(MainStageController mainStageController) {
-        StackPane mainPane = mainStageController.mainPane;
-        StackPane loader = (StackPane) mainPane.getScene().lookup("#loader");
-        showLoader.setValue(false);
-        mainPane.getChildren().remove(loader);
-        timer.cancel();
-        System.out.println("loadery jnjvec");
+//    public class CopyFileTask<Void> extends Task<Void> {
+//
+//        @Override
+//        protected void succeeded() {
+//            System.out.println("thread succeeded");
+////            mainStageController.mainPane.getChildren().add(Main.getScreen("loader"));
+//            super.succeeded();
+//            // e.g. show "copy finished" dialog
+//        }
+//
+//        @Override
+//        protected void running() {
+//            System.out.println("thread running");
+//            mainStageController.mainPane.getChildren().add(Main.getScreen("loader"));
+//            super.running();
+//            // e.g. change mouse courser
+//        }
+//
+//        @Override
+//        protected void failed() {
+//            super.failed();
+//            // do stuff if call threw an excpetion
+//        }
+//
+//        @Override
+//        protected Void call() {
+//            System.out.println("calllllll");
+//            // do expensive the expensive stuff
+////            mainStageController.mainPane.getChildren().add(Main.getScreen("loader"));
+//            return null ;
+//        }
+//    }
 
 
-    }
+//    @Override
+//    public void closeLoader(MainStageController mainStageController) {
+//        StackPane mainPane = mainStageController.mainPane;
+//        StackPane loader = (StackPane) mainPane.getScene().lookup("#loader");
+//        showLoader.setValue(false);
+//        mainPane.getChildren().remove(loader);
+//        timer.cancel();
+//        System.out.println("loadery jnjvec");
+//
+
+//    }
 
     @Override
     public void authenticationFailure(String message) {

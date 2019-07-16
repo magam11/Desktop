@@ -77,29 +77,7 @@ public class MainStageServiceImpl implements MainStageService {
     AnchorPane pageNumbersContainer = new AnchorPane();
 
 
-    @Override
-    public void responsivWidth(double stageWith) {
-//        mainStageController.memoryProgressBar.setLayoutX(81);
-//        mainStageController.memoryHint.setLayoutX(28.0);
-//        +++layoutX="14.0"
-//        mainStageController.flowPane.setPrefWidth(stageWith - 10);
-//        mainStageController.slideController.responsiveWidth(stageWith);
-//        if (stageWith <= 1000.0) {
-//            mainStageController.memoryProgressBar.setPrefWidth((200.0/722.0) * stageWith);
-//            mainStageController.fraction
-//                    .setLayoutX((200.0/722.0) * stageWith + mainStageController.memoryProgressBar.getLayoutX() + 7);
-//        }
-//        mainStageController.logoCamerImageVeiw.setLayoutX(Size.WIDTH_COEFFICENT_FOR_CAMERA_LOGO_CAMERA * stageWith);
-//        mainStageController.delete.setLayoutX(stageWith - 202);
-//        mainStageController.download.setLayoutX(stageWith - 105);
-//        mainStageController.logOut_btn.setLayoutX(stageWith - 130);
-//        mainStageController.recycle_btn.setLayoutX(stageWith - 227);
-//        mainStageController.cell_containerAnchorPane.setPrefWidth(stageWith);
-//        mainStageController.cell_containerAnchorPane.setLayoutX(20);
-//        mainStageController.filterPane.setPrefWidth(stageWith);
-//        mainStageController.pageNumbersPane.setPrefWidth(stageWith);
-//        mainStageController.phoneNumber.setLayoutX(mainStageController.recycle_btn.getLayoutX() - phoneNumberLenth.getValue() - 8);
-    }
+
 
     @Override
     public void initializeMainStageController(MainStageController mainStageController) {
@@ -123,13 +101,6 @@ public class MainStageServiceImpl implements MainStageService {
             pages.clear();
         }
         for (int i = 0; i < totoalPageCount; i++) {  //addes pages
-
-            try {
-                Thread.sleep(5000);
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-
             label = new Label(String.valueOf(i + 1));
             label.setLayoutX(widthPrp.getValue() / 2 - (totoalPageCount - 1) * 20 + i * 20);
             label.setFont(Font.font(null, FontWeight.BOLD, 14));

@@ -21,9 +21,6 @@ public interface LoginService {
 
      void openMainStage(BaseUserData baseUserData,int loadedPageNumber);
 
-     void showLoader(MainStageController mainStageController, Stage stage);
-
-     void closeLoader(MainStageController mainStageController);
 
 
 

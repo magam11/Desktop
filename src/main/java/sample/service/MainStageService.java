@@ -14,7 +14,7 @@ import java.util.List;
 
 public interface MainStageService {
 
-    void responsivWidth(double stageWith);
+
 
     void initializeMainStageController(MainStageController mainStageController);
 
