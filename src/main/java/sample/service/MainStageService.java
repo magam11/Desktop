@@ -2,7 +2,6 @@ package sample.service;
 
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ProgressBar;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import okhttp3.Response;
 import sample.controller.MainStageController;
@@ -14,12 +13,9 @@ import java.util.List;
 
 public interface MainStageService {
 
-
-
     void initializeMainStageController(MainStageController mainStageController);
 
     void loadMainStageData(BaseUserData baseUserData,int loadedPageNumber,String filter_search);
-
 
     void logOut() throws IOException;
 
@@ -28,7 +24,6 @@ public interface MainStageService {
     void downloadImage(String picName, ProgressBar progressBar);
 
     void removeImageFromCellByIndex(int indexOfImageFromCell);
-
 
     void loadPage(Response response, int pageNumber);
 

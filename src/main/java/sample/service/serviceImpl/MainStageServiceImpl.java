@@ -3,6 +3,8 @@ package sample.service.serviceImpl;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.beans.property.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
@@ -93,8 +95,12 @@ public class MainStageServiceImpl implements MainStageService {
         mainStageController.delete.setDisable(false);
         int totoalPageCount = baseUserData.getTotoalPageCount();
         ReadOnlyDoubleProperty widthPrp = mainStageController.pageNumbersPane.widthProperty();
-        pageNumbersContainer.setStyle("-fx-alignment: center");
+//        pageNumbersContainer.setStyle("-fx-alignment: center; -fx-background-color: rgba(0,0,0,0.73)");
+//        pageNumbersContainer.setPrefHeight(70);
+        pageNumbersContainer.setPrefWidth(mainStageController.mainPane.widthProperty().getValue());
         Label label;
+
+//        pageNumbersContainer.setLayoutY(20);
         if (pageNumbersContainer.getChildren() != null && pageNumbersContainer.getChildren().size() > 0) {
             pageNumbersContainer.getChildren().removeAll(pageNumbersContainer.getChildren());
             pageNumbersContainer = new AnchorPane();
@@ -103,10 +109,10 @@ public class MainStageServiceImpl implements MainStageService {
         for (int i = 0; i < totoalPageCount; i++) {  //addes pages
             label = new Label(String.valueOf(i + 1));
             label.setLayoutX(widthPrp.getValue() / 2 - (totoalPageCount - 1) * 20 + i * 20);
-            label.setFont(Font.font(null, FontWeight.BOLD, 14));
+            label.setFont(Font.font(null, FontWeight.BOLD, 16));
             label.setId(String.valueOf("page_" + i + 1));
+            label.setTextFill(Paint.valueOf("#FFF"));
             if ((i + 1) == loadedPageNumber) {
-                label.setTextFill(Paint.valueOf("#388e3c"));
                 label.setUnderline(true);
                 pages.put(label, i + 1);
             }
@@ -125,14 +131,18 @@ public class MainStageServiceImpl implements MainStageService {
             pages.put(label, i + 1);
             pageNumbersContainer.getChildren().add(label);
         }
+//        mainStageController.mainPane.widthProperty().addListener((observable, oldValue, newValue) -> {
+//            pageNumbersContainer.setPrefWidth(newValue.doubleValue());
+//        });
         widthPrp.addListener((observable, oldValue, newValue) -> {
+//
             int numbverIndex;
             for (Label label1 : pages.keySet()) {
                 numbverIndex = pages.get(label1);
                 label1.setLayoutX(newValue.doubleValue() / 2 - (pages.size() - 1) * 20 + numbverIndex * 20);
             }
         });
-        mainStageController.pageNumbersPane.setStyle("-fx-alignment: center");
+        mainStageController.pageNumbersPane.setStyle("-fx-alignment: center; -fx-background-color: rgba(0,0,0,0.73)");
         if (mainStageController.pageNumbersPane.getChildren() != null) {
             mainStageController.pageNumbersPane.getChildren().remove(0, mainStageController.pageNumbersPane.getChildren().size());
         }
@@ -543,8 +553,8 @@ public class MainStageServiceImpl implements MainStageService {
     @Override
     public void changeUserStatusAndUpdatePage() {
         mainStageController.download.setDisable(false);
-        mainStageController.download.setStyle("-fx-cursor: dand;-fx-background-radius: 15; -fx-background-color: #FFFFFF;");
-        mainStageController.delete.setStyle("-fx-cursor: hand; -fx-background-radius: 15; -fx-background-color: #FFFFFF;");
+        mainStageController.download.setStyle("-fx-cursor: dand;-fx-background-radius: 5; -fx-background-color: #FFFFFF;");
+        mainStageController.delete.setStyle("-fx-cursor: hand; -fx-background-radius: 5; -fx-background-color: #FFFFFF;");
         mainStageController.deleteTxt.setTextFill(Paint.valueOf("#000"));
         mainStageController.isShowCheckBox.set(true);
         mainStageController.selectALL_checkBox.setSelected(false);
@@ -563,8 +573,8 @@ public class MainStageServiceImpl implements MainStageService {
         mainStageController.selectALL_checkBox.setVisible(false);
         mainStageController.deleteTxt.setTextFill(Paint.valueOf("#000"));
         mainStageController.downloadTxt.setTextFill(Paint.valueOf("#000"));
-        mainStageController.delete.setStyle("-fx-cursor: hand;-fx-background-radius: 15; -fx-background-color: #FFFFFF;");
-        mainStageController.download.setStyle("-fx-cursor: hand;-fx-background-radius: 15; -fx-background-color: #FFFFFF;");
+        mainStageController.delete.setStyle("-fx-cursor: hand;-fx-background-radius: 5; -fx-background-color: #FFFFFF;");
+        mainStageController.download.setStyle("-fx-cursor: hand;-fx-background-radius: 5; -fx-background-color: #FFFFFF;");
         mainStageController.delete.setDisable(false);
         mainStageController.download.setDisable(false);
         mainStageController.isShowCheckBox.set(true);
@@ -746,11 +756,12 @@ public class MainStageServiceImpl implements MainStageService {
         for (int i = 0; i < totoalPageCount; i++) {
 
             label = new Label(String.valueOf(i + 1));
-            label.setFont(Font.font(null, FontWeight.BOLD, 14));
+            label.setFont(Font.font(null, FontWeight.BOLD, 16));
             label.setLayoutX(widthPrp.getValue() / 2 - (totoalPageCount - 1) * 20 + i * 20);
             label.setId("page_" + (i + 1));
+            label.setTextFill(Paint.valueOf("#FFF"));
             if ((i + 1) == openedPage) {
-                label.setTextFill(Paint.valueOf("#388e3c"));
+
                 label.setUnderline(true);
                 pages.put(label, i + 1);
             } else if ((i + 1) != openedPage) {

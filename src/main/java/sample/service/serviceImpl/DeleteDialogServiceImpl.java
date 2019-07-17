@@ -100,8 +100,8 @@ public class DeleteDialogServiceImpl implements DeleteDialogService {
             e.printStackTrace();
         }
         mainStage.setTitle("Confirmation dialog");
-        mainStage.initModality(Modality.APPLICATION_MODAL);
         mainStage.initStyle(StageStyle.UNDECORATED);
+        mainStage.initModality(Modality.APPLICATION_MODAL);
         Scene scene = new Scene(root, 479.0, 148.0);
         mainStage.setScene(scene);
         mainStage.setMinHeight(148.0);

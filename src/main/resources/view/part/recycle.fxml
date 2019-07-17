@@ -10,12 +10,22 @@
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="recicleBin" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="840.0" prefWidth="906.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.RecycleBinController">
+<AnchorPane fx:id="recicleBin"
+            maxHeight="-Infinity" maxWidth="-Infinity"
+            minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0"
+            prefWidth="906.0"
+
+            xmlns="http://javafx.com/javafx/8.0.172-ea"
+
+            xmlns:fx="http://javafx.com/fxml/1"
+
+            fx:controller="sample.controller.RecycleBinController">
    <children>
-      <AnchorPane fx:id="bin_header" layoutY="2.0" layoutX="0.0001" prefHeight="80.0" prefWidth="906.0" style="-fx-background-color: #fafafa;">
+      <AnchorPane fx:id="bin_header" layoutY="2.0" layoutX="0.0001" prefHeight="80.0" prefWidth="906.0"
+                  style="-fx-background-color: #fafafa;">
          <children>
-            <Button fx:id="backTomain" layoutX="13.0" layoutY="17.0" mnemonicParsing="false" onMouseClicked="#backToMain" prefHeight="56.0" prefWidth="124.0" style="-fx-background-color: #fafafa; -fx-cursor: hand;" text="&lt; Back" textFill="#388e3c">
+            <Button fx:id="backTomain" layoutX="13.0" layoutY="17.0" mnemonicParsing="false" onMouseClicked="#backToMain"
+                    prefHeight="56.0" prefWidth="124.0" style="-fx-background-color: #fafafa; -fx-cursor: hand;" text="&lt; Back" textFill="#388e3c">
                <font>
                   <Font name="System Bold" size="26.0" />
                </font>
@@ -34,12 +44,14 @@
       </AnchorPane>
       <AnchorPane fx:id="menuBar" layoutY="81.0" prefHeight="65.0" prefWidth="906.0" style="-fx-background-color: #fafafa;">
          <children>
-            <CheckBox fx:id="bin_selectAll" layoutX="30.0" layoutY="24.0" onMouseClicked="#selectAllClick" visible="false" mnemonicParsing="false" prefHeight="20.0" prefWidth="89.0" text="Select All">
+            <CheckBox fx:id="bin_selectAll" layoutX="30.0" layoutY="24.0" onMouseClicked="#selectAllClick"
+                      visible="false" mnemonicParsing="false" prefHeight="20.0" prefWidth="89.0" text="Select All">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
             </CheckBox>
-            <AnchorPane fx:id="bin_delete_batch" layoutX="576.0" onMouseClicked="#deleteInBatchClick" layoutY="11.0" prefHeight="44.0" prefWidth="147.0" style="-fx-background-radius: 25; -fx-background-color: #fff; -fx-cursor: hand;">
+            <AnchorPane fx:id="bin_delete_batch" layoutX="576.0" onMouseClicked="#deleteInBatchClick" layoutY="11.0"
+                        prefHeight="44.0" prefWidth="147.0" style="-fx-background-radius: 5; -fx-background-color: #fff; -fx-cursor: hand;">
                <children>
                   <Label layoutX="41.0" layoutY="8.0" prefHeight="27.0" prefWidth="96.0" text="Delete Photoes">
                      <font>
@@ -54,7 +66,7 @@
                </children>
             </AnchorPane>
             <AnchorPane fx:id="recover" layoutX="734.0" onMouseClicked="#recover" layoutY="11.0" prefHeight="44.0"
-                        prefWidth="155.0" style="-fx-background-radius: 25; -fx-background-color: #fff; -fx-cursor: hand;">
+                        prefWidth="155.0" style="-fx-background-radius: 5; -fx-background-color: #fff; -fx-cursor: hand;">
                <children>
                   <ImageView fitHeight="27.0" fitWidth="33.0" layoutX="11.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
                      <image>
@@ -75,6 +87,6 @@
             <FlowPane fx:id="bin_flowPane" prefHeight="690.0" prefWidth="904.0" style="-fx-alignment: center;" />
          </content>
       </ScrollPane>
-      <AnchorPane fx:id="bin_pagination" layoutY="784.0" prefHeight="56.0" prefWidth="906.0" style="-fx-background-color: rgba(17,34,51,0.78);" />
+      <AnchorPane AnchorPane.bottomAnchor="0" fx:id="bin_pagination" layoutY="784.0" prefHeight="40.0" prefWidth="906.0" style="-fx-background-color: rgba(0,0,0,0.73)" />
    </children>
 </AnchorPane>

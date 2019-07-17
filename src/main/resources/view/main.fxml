@@ -8,25 +8,33 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
 <StackPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
-           prefHeight="840.0" prefWidth="906.0" stylesheets="/css/main.css" xmlns="http://javafx.com/javafx/8.0.172-ea"
+           prefHeight="840.0" prefWidth="906.0" stylesheets="/css/main.css" style="-fx-background-color: #fafafa"
+           xmlns="http://javafx.com/javafx/8.0.172-ea"
            xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.MainStageController">
     <children>
-        <AnchorPane fx:id="mainContent" prefHeight="200.0" prefWidth="${mainPane.width}">
+        <AnchorPane fx:id="mainContent" prefHeight="840.0" prefWidth="${mainPane.width}">
             <children>
                 <Label fx:id="currentPageNumber" text="1" visible="false"/>
-                <AnchorPane fx:id="header" prefHeight="63.0" prefWidth="${mainPane.width}"
+                <AnchorPane fx:id="header" prefHeight="60.0" prefWidth="${mainPane.width}"
                             style="-fx-background-color: #fafafa;">
                     <children>
-                        <ImageView fitHeight="50.0" fitWidth="228.0" layoutX="21.0" layoutY="7.0" pickOnBounds="true"
+                        <ImageView fitHeight="50.0" fitWidth="228.0" layoutX="75.0" layoutY="7.0" pickOnBounds="true"
                                    preserveRatio="true">
                             <image>
                                 <Image url="@../image/logocamera.png"/>
                             </image>
                         </ImageView>
+                        <ImageView fx:id="phoneCell" fitHeight="20.0" fitWidth="20.0"
+                                   layoutY="23.0" layoutX="500"
+                                   pickOnBounds="true" preserveRatio="true">
+                            <image>
+                                <Image url="@../image/phone-call.png"/>
+                            </image>
+                        </ImageView>
                         <Label fx:id="phoneNumber" layoutX="-1.0" layoutY="23.0" prefHeight="21.0"
-                               prefWidth="${phoneNumber.maxWidth}" text="+37494704486" AnchorPane.rightAnchor="269.0">
+                               prefWidth="${phoneNumber.maxWidth}" text="** ** ** ** **" AnchorPane.rightAnchor="269.0">
                             <font>
-                                <Font name="System Bold" size="15.0"/>
+                                <Font name="System Bold" size="16.0"/>
                             </font>
                         </Label>
                         <AnchorPane fx:id="recycle_btn" layoutX="100.0" layoutY="13.0"
@@ -41,7 +49,7 @@
                                 </ImageView>
                                 <Label layoutX="24.0" layoutY="4.0" prefHeight="28.0" prefWidth="68.0" text="Recycle">
                                     <font>
-                                        <Font name="System Bold" size="19.0"/>
+                                        <Font name="System Bold" size="16.0"/>
                                     </font>
                                 </Label>
                             </children>
@@ -60,29 +68,29 @@
                                 <Label fx:id="logOut" layoutX="29.0" layoutY="4.0" onMouseClicked="#logOut"
                                        prefHeight="28.0" prefWidth="75.0" text="Log out">
                                     <font>
-                                        <Font name="System Bold" size="19.0"/>
+                                        <Font name="System Bold" size="16.0"/>
                                     </font>
                                 </Label>
                             </children>
                         </AnchorPane>
                     </children>
                 </AnchorPane>
-                <AnchorPane fx:id="row_1" layoutY="64.0" prefHeight="57.0" prefWidth="${mainPane.width}"
+                <AnchorPane fx:id="row_1" layoutY="69.0" prefHeight="57.0" prefWidth="${mainPane.width}"
                             style="-fx-background-color: #fafafa;">
                     <children>
-                        <Label fx:id="memoryHint" layoutX="14.0" layoutY="10.0" prefHeight="26.0" prefWidth="75.0"
+                        <Label fx:id="memoryHint" layoutX="75.0" layoutY="10.0" prefHeight="26.0" prefWidth="75.0"
                                text="Memory">
                             <font>
                                 <Font name="System Bold" size="17.0"/>
                             </font>
                         </Label>
-                        <ProgressBar fx:id="memoryProgressBar" layoutX="89.0" layoutY="16.0" prefWidth="200.0"
+                        <ProgressBar fx:id="memoryProgressBar" layoutX="150.0" layoutY="18.0" prefWidth="200.0"
                                      progress="0.0"/>
-                        <Label fx:id="fraction" layoutX="293.0" layoutY="16.0" prefHeight="17.0" prefWidth="64.0"
+                        <Label fx:id="fraction" layoutX="355.0" layoutY="16" prefHeight="17.0" prefWidth="64.0"
                                text="125/500"/>
                         <AnchorPane fx:id="delete" layoutX="556.0" layoutY="10.0"
                                     onMouseClicked="#showCheckBoxesՕrDelete" prefHeight="37.0" prefWidth="159.0"
-                                    style="-fx-background-radius: 25; -fx-cursor: hand; -fx-background-color: #FFFFFF"
+                                    style="-fx-background-radius: 5; -fx-cursor: hand; -fx-background-color: #FFFFFF"
                                     AnchorPane.rightAnchor="191">
                             <children>
                                 <ImageView fitHeight="21.0" fitWidth="30.0" layoutX="10.0" layoutY="9.0"
@@ -101,7 +109,7 @@
                         </AnchorPane>
                         <AnchorPane fx:id="download" layoutX="724.0" layoutY="10.0"
                                     onMouseClicked="#downloadSelectedImage" prefHeight="37.0" prefWidth="159.0"
-                                    style="-fx-background-color: #fff; -fx-background-radius: 25; -fx-cursor: hand"
+                                    style="-fx-background-color: #fff; -fx-background-radius: 5; -fx-cursor: hand"
                                     AnchorPane.rightAnchor="23">
                             <children>
                                 <ImageView fitHeight="21.0" fitWidth="30.0" layoutX="6.0" layoutY="10.0"
@@ -120,7 +128,7 @@
                         </AnchorPane>
                     </children>
                 </AnchorPane>
-                <AnchorPane fx:id="row_2" layoutY="123.0" prefHeight="97.0" prefWidth="${mainPane.width}"
+                <AnchorPane fx:id="row_2" layoutY="123.0" prefHeight="60.0" prefWidth="${mainPane.width}"
                             style="-fx-background-color: #fafafa;">
                     <children>
                         <CheckBox fx:id="selectALL_checkBox" layoutX="14.0" layoutY="22.0" mnemonicParsing="false"
@@ -130,53 +138,49 @@
                                 <Font name="System Bold" size="14.0"/>
                             </font>
                         </CheckBox>
-
-
-<!--                        <AnchorPane fx:id="filterPane" layoutX="424.0" layoutY="4.0" prefHeight="37.0" prefWidth="340.0"-->
-<!--                                    style="-fx-background-color: #1253; -fx-background-radius: 15;" visible="false"-->
-<!--                                    AnchorPane.rightAnchor="142.0">-->
-<!--                            <children>-->
-<!--                                <ChoiceBox fx:id="filterYear" layoutX="9.0" layoutY="5.0" prefHeight="25.0"-->
-<!--                                           prefWidth="89.0"/>-->
-<!--                                <ChoiceBox fx:id="filterMonth" layoutX="115.0" layoutY="6.0" prefHeight="25.0"-->
-<!--                                           prefWidth="106.0"/>-->
-<!--                                <ChoiceBox fx:id="filterDay" value="ALL" layoutX="233.0" layoutY="7.0" prefHeight="25.0"-->
-<!--                                           prefWidth="96.0"/>-->
-<!--                            </children>-->
-<!--                        </AnchorPane>-->
-                        <AnchorPane fx:id="filterPane" AnchorPane.rightAnchor="142.0" layoutX="526.0" layoutY="2.0" prefHeight="49.0" prefWidth="250.0"
+                        <AnchorPane fx:id="filterPane" AnchorPane.rightAnchor="142.0" layoutX="526.0" layoutY="2.0"
+                                    prefHeight="49.0" prefWidth="250.0"
                                     style="-fx-background-color: #fafafa;" visible="false">
                             <children>
-                                <ChoiceBox fx:id="filterYear" layoutX="15.0" layoutY="19.0" prefHeight="25.0" prefWidth="106.0" />
-                                <ChoiceBox fx:id="filterMonth" layoutX="130.0" layoutY="19.0" prefHeight="25.0" prefWidth="106.0" />
-                                <Label layoutX="15.0" layoutY="3.0" prefHeight="17.0" prefWidth="106.0" text="Year" />
-                                <Label layoutX="130.0" layoutY="3.0" prefHeight="17.0" prefWidth="106.0" text="Month" />
+                                <ChoiceBox fx:id="filterYear" layoutX="15.0" layoutY="19.0" prefHeight="25.0"
+                                           prefWidth="106.0"/>
+                                <ChoiceBox fx:id="filterMonth" layoutX="130.0" layoutY="19.0" prefHeight="25.0"
+                                           prefWidth="106.0"/>
+                                <Label layoutX="15.0" layoutY="3.0" prefHeight="17.0" prefWidth="106.0" text="Year"/>
+                                <Label layoutX="130.0" layoutY="3.0" prefHeight="17.0" prefWidth="106.0" text="Month"/>
                             </children>
                         </AnchorPane>
 
-                        <AnchorPane fx:id="filterButton"  onMouseClicked="#fillerClick" layoutX="780.0" layoutY="15.0" prefHeight="37.0" AnchorPane.rightAnchor="26"
-                                    prefWidth="100.0" style="-fx-background-color: #fff; -fx-background-radius: 25; -fx-cursor: hand;">
+                        <AnchorPane fx:id="filterButton" onMouseClicked="#fillerClick" layoutX="780.0" layoutY="15.0"
+                                    prefHeight="37.0" AnchorPane.rightAnchor="26"
+                                    prefWidth="100.0"
+                                    style="-fx-background-color: #fff; -fx-background-radius: 5; -fx-cursor: hand;">
                             <children>
-                                <ImageView onMouseClicked="#fillerClick" fx:id="filterImage" fitHeight="27.0" fitWidth="31.0"
+                                <ImageView onMouseClicked="#fillerClick" fx:id="filterImage" fitHeight="27.0"
+                                           fitWidth="31.0"
                                            layoutX="6.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
                                     <image>
-                                        <Image url="@../image/controlsBlack.png" />
+                                        <Image url="@../image/controlsBlack.png"/>
                                     </image>
                                 </ImageView>
-                                <Button onMouseClicked="#fillerClick" fx:id="filterBtn" layoutX="42.0" layoutY="3.0" mnemonicParsing="false"
-                                        prefHeight="30.0" prefWidth="52.0" style="-fx-background-color: #FaFaFa; -fx-cursor: hand;" text="Filter">
+                                <Button onMouseClicked="#fillerClick" fx:id="filterBtn" layoutX="42.0" layoutY="3.0"
+                                        mnemonicParsing="false"
+                                        prefHeight="30.0" prefWidth="52.0"
+                                        style="-fx-background-color: #FaFaFa; -fx-cursor: hand;" text="Filter">
                                     <font>
-                                        <Font size="14.0" />
+                                        <Font size="14.0"/>
                                     </font>
                                 </Button>
                             </children>
                         </AnchorPane>
-                        <AnchorPane fx:id="pageNumbersPane" layoutX="54.0" layoutY="52.0" prefHeight="37.0"
-                                    prefWidth="${ mainPane.width-107}" style="-fx-background-color: #5123;"/>
+                        <!--                                                <AnchorPane fx:id="pageNumbersPane" layoutX="54.0" layoutY="52.0" prefHeight="37.0"-->
+                        <!--                                                            prefWidth="${ mainPane.width-107}" style="-fx-background-color: #5123;"/>-->
+
                     </children>
                 </AnchorPane>
-                <ScrollPane fx:id="scrollPane" layoutY="219.0" prefHeight="${ mainPane.height - 220}"
+                <ScrollPane fx:id="scrollPane" layoutY="183.0" prefHeight="${ mainPane.height - 195}"
                             prefWidth="${mainPane.width}">
+                    <!--                <ScrollPane fx:id="scrollPane" layoutY="219.0" prefHeight="${ mainPane.height - 220}"-->
                     <padding>
                         <Insets left="15.0" right="15.0"/>
                     </padding>
@@ -188,10 +192,11 @@
                         </FlowPane>
                     </content>
                 </ScrollPane>
+                <AnchorPane style="-fx-background-color: rgba(0,0,0,0.73)" AnchorPane.bottomAnchor="0"
+                            fx:id="pageNumbersPane" layoutY="803.0" prefHeight="40.0"
+                            prefWidth="${mainPane.width}"/>
             </children>
         </AnchorPane>
-
-
     </children>
 
 </StackPane>

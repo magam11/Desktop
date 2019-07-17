@@ -19,9 +19,6 @@ public interface RecycleBinService {
 
     void animationForPagination();
 
-    void stopAnimationForPagination();
-
-
     void showCheckBoxes();
 
     void selecetAllClick();

@@ -66,9 +66,9 @@ public class SliderServiceImpl implements SliderService {
         slideController.scrollPane.setPrefWidth(mainStage.getWidth()-120);
         slideController.shownImage_container.setPrefWidth(mainStage.getWidth()-210);
         slideController.shownImage.setFitWidth(mainStage.getWidth()-120);
+        slideController.previousButton.setLayoutY(mainStage.getHeight()/2-30);
+        slideController.nextButton.setLayoutY(mainStage.getHeight()/2-30);
 
-        slideController.nextLabel.setLayoutY(mainStage.getHeight()/2);
-        slideController.previousLabel.setLayoutY(mainStage.getHeight()/2);
         slideController.scrollPane.setPrefHeight(mainStage.getHeight()-120);
         slideController.shownImage_container.setPrefHeight(mainStage.getHeight()-105);
         slideController.shownImage.setFitHeight(mainStage.getHeight()-120);
@@ -76,12 +76,12 @@ public class SliderServiceImpl implements SliderService {
 
         mainStageController.mainPane.getChildren().add(1,slider);
         if (indexOf == 0) {
-            slideController.previousLabel.setVisible(false);
+            slideController.previousButton.setVisible(false);
         } else {
-            slideController.previousLabel.setVisible(true);
+            slideController.previousButton.setVisible(true);
         }
         slideController.sliderProgressBar.setVisible(false);
-        slideController.nextLabel.setVisible(true);
+        slideController.nextButton.setVisible(true);
         Image image = new Image(Constant.SERVER_ADDRESS + Constant.IMAGE_URI + picName);
         slideController.shownImageName.setText(picName);
         slideController.shownImage.setImage(image);
@@ -90,6 +90,7 @@ public class SliderServiceImpl implements SliderService {
         slideController.sliderPercent.setVisible(false);
 
         mainStage.widthProperty().addListener((observable, oldValue, newValue) -> {
+
             slider.setPrefWidth(newValue.doubleValue());
             slideController.menuBar.setLayoutX((newValue.doubleValue()-slideController.menuBar.getPrefWidth())/2);
             slideController.rightContent.setLayoutX(newValue.doubleValue()-60);
@@ -99,14 +100,22 @@ public class SliderServiceImpl implements SliderService {
         });
         mainStage.heightProperty().addListener((observable, oldValue, newValue) -> {
             slider.setPrefHeight(newValue.doubleValue());
-            slideController.nextLabel.setLayoutY(newValue.doubleValue()/2);
-            slideController.previousLabel.setLayoutY(newValue.doubleValue()/2);
+            slideController.previousButton.setLayoutY(newValue.doubleValue()/2-30);
+            slideController.nextButton.setLayoutY(newValue.doubleValue()/2-30);
+//            slideController.nextLabel.setLayoutY(newValue.doubleValue()/2);
+//            slideController.previousLabel.setLayoutY(newValue.doubleValue()/2);
             slideController.scrollPane.setPrefHeight(newValue.doubleValue()-120);
             slideController.shownImage_container.setPrefHeight(newValue.doubleValue()-105);
             slideController.shownImage.setFitHeight(newValue.doubleValue()-120);
 
 
         });
+//        slideController.sliderPercent.widthProperty().addListener(new ChangeListener<Number>() {
+//            @Override
+//            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+//
+//            }
+//        });
     }
 
     @Override
@@ -133,8 +142,8 @@ public class SliderServiceImpl implements SliderService {
                 System.out.println("json pars error");
             }
             JSONArray picturesData = responseJson.getJSONArray("picturesData");
-            slideController.previousLabel.setVisible(true);
-            slideController.nextLabel.setVisible(true);
+            slideController.previousButton.setVisible(true);
+            slideController.nextButton.setVisible(true);
             if (picturesData != null && picturesData.length() > 0) {
                 JSONObject imageDataJson = picturesData.getJSONObject(0);
                 String picName = imageDataJson.getString("picName");
@@ -153,11 +162,11 @@ public class SliderServiceImpl implements SliderService {
                 }
             } else {
                 if(previous_next.equals("next")) {
-                    slideController.nextLabel.setVisible(false);
-                    slideController.previousLabel.setVisible(true);
+                    slideController.nextButton.setVisible(false);
+                    slideController.previousButton.setVisible(true);
                 }else {
-                    slideController.nextLabel.setVisible(true);
-                    slideController.previousLabel.setVisible(false);
+                    slideController.nextButton.setVisible(true);
+                    slideController.previousButton.setVisible(false);
                 }
             }
         } else {

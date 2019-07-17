@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.control.ScrollPane?>
@@ -16,7 +17,8 @@
    <children>
       <AnchorPane layoutX="62.0" layoutY="44.0" prefHeight="340.0" prefWidth="782.0">
          <children>
-            <ScrollPane fx:id="scrollPane" layoutX="2.0" layoutY="-1.0" prefHeight="729.0" prefWidth="782.0" style="-fx-background-color: rgba(0,0,0,0) rgba(0,0,0,0.18);">
+            <ScrollPane fx:id="scrollPane" layoutX="2.0" layoutY="-1.0" prefHeight="729.0" prefWidth="782.0"
+                        style="-fx-background-color: rgba(0,0,0,0) rgba(0,0,0,0.18);-fx-alignment: center">
                <content>
                   <StackPane fx:id="shownImage_container" prefHeight="726.0" prefWidth="781.0">
                      <children>
@@ -39,20 +41,13 @@
       </AnchorPane>
       <AnchorPane fx:id="leftContent" prefHeight="861.0" prefWidth="60.0">
          <children>
-            <Label fx:id="previousLabel" layoutX="11.0" layoutY="420.0" onMouseClicked="#openPreviousImage" prefHeight="122.0" prefWidth="38.0" style="-fx-cursor: hand;" text="&lt;" textFill="#ededed">
-               <font>
-                  <Font name="System Bold" size="50.0" />
-               </font>
-            </Label>
+            <Button fx:id="previousButton" layoutX="27.0" layoutY="390.0" mnemonicParsing="false" prefHeight="60.0"
+                    prefWidth="19.85"  onMouseClicked="#openPreviousImage"
+                    style="-fx-background-image: url('/image/previous.png'); -fx-background-size:  19.85px 60px; -fx-background-color:  rgba(255,255,255,0) #000000;-fx-cursor: hand" />
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="rightContent" layoutX="846.0" layoutY="1.0" prefHeight="811.0" prefWidth="50.0">
+      <AnchorPane fx:id="rightContent" layoutX="846.0" prefHeight="811.0" prefWidth="50.0">
          <children>
-            <Label fx:id="nextLabel" layoutX="6.0" layoutY="420.0" onMouseClicked="#openNextImage" prefHeight="122.0" prefWidth="38.0" style="-fx-cursor: hand;" text="&gt;" textFill="#ededed">
-               <font>
-                  <Font name="System Bold" size="50.0" />
-               </font>
-            </Label>
             <Label fx:id="closeLabel" layoutX="16.0" layoutY="9.0" onMouseClicked="#closeSlide" prefHeight="34.0" prefWidth="26.0" style="-fx-cursor: hand;" text="X" textFill="#ededed">
                <font>
                   <Font name="System Bold" size="23.0" />
@@ -61,11 +56,14 @@
                   <Insets left="5.0" top="10.0" />
                </padding>
             </Label>
+            <Button fx:id="nextButton"  onMouseClicked="#openNextImage" layoutX="15.0" layoutY="390.0" mnemonicParsing="false" prefHeight="60.0"
+                    prefWidth="19.85"
+                    style="-fx-background-image: url('/image/next.png'); -fx-background-size:  19.85px 60px; -fx-background-color:  rgba(255,255,255,0) #000000; -fx-cursor: hand" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="header" layoutX="62.0" prefHeight="45.0" prefWidth="782.0">
          <children>
-            <Label fx:id="fraction" layoutX="143.0" layoutY="13.0" prefHeight="34.0" prefWidth="60.0" text="1/127" textFill="#d7d7d7">
+            <Label fx:id="fraction" layoutX="143.0" layoutY="13.0" prefHeight="34.0" prefWidth="60.0" text="1/127" textFill="#fff">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
@@ -73,7 +71,7 @@
                   <Insets top="15.0" />
                </padding>
             </Label>
-            <Label fx:id="dateInfo" layoutX="4.0" layoutY="13.0" prefHeight="19.0" prefWidth="112.0" text="30.01.2017 13:00" textFill="#d7d7d7">
+            <Label fx:id="dateInfo" layoutX="4.0" layoutY="13.0" prefHeight="19.0" prefWidth="112.0" text="30.01.2017 13:00" textFill="#fff">
                <font>
                   <Font name="System Bold" size="13.0" />
                </font>
@@ -88,7 +86,8 @@
             <Label fx:id="shownImageName" layoutX="12.0" layoutY="21.0" text="Label" visible="false" />
             <HBox fx:id="menuBar" layoutX="305.0" layoutY="18.0" prefHeight="34.0" prefWidth="297.0">
                <children>
-                  <AnchorPane fx:id="download_btn" onMouseClicked="#downloadImageFromSlidePage" onMouseEntered="#downLoadBtnMouseEntered" onMouseExited="#downLoadBtnMouseExited" prefHeight="15.0" prefWidth="96.0" style="-fx-background-color: #D7D7D7; -fx-cursor: hand; -fx-background-radius: 5;">
+                  <AnchorPane fx:id="download_btn" onMouseClicked="#downloadImageFromSlidePage" onMouseEntered="#downLoadBtnMouseEntered"
+                              onMouseExited="#downLoadBtnMouseExited" prefHeight="15.0" prefWidth="96.0" style="-fx-background-color: #fff; -fx-cursor: hand; -fx-background-radius: 5;">
                      <children>
                         <ImageView fx:id="downLoadImage" fitHeight="22.0" fitWidth="22.0" layoutX="7.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -105,7 +104,8 @@
                         <Insets right="5.0" />
                      </HBox.margin>
                   </AnchorPane>
-                  <AnchorPane fx:id="delete_btn" onMouseClicked="#deleteImageFromSlidePage" onMouseEntered="#deleteBtnMouseEntered" onMouseExited="#deleteBtnMouseExited" prefHeight="42.0" prefWidth="96.0" style="-fx-background-color: #D7D7D7; -fx-cursor: hand; -fx-background-radius: 5;">
+                  <AnchorPane fx:id="delete_btn" onMouseClicked="#deleteImageFromSlidePage" onMouseEntered="#deleteBtnMouseEntered"
+                              onMouseExited="#deleteBtnMouseExited" prefHeight="42.0" prefWidth="96.0" style="-fx-background-color: #fff; -fx-cursor: hand; -fx-background-radius: 5;">
                      <children>
                         <ImageView fx:id="deleteImage" fitHeight="22.0" fitWidth="22.0" layoutX="8.0" layoutY="5.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -122,7 +122,8 @@
                         <Insets right="5.0" />
                      </HBox.margin>
                   </AnchorPane>
-                  <AnchorPane fx:id="share_btn" onMouseEntered="#shareMouseEntered" onMouseExited="#shareMouseExited" onMouseClicked="#openShareDialog" prefHeight="44.0" prefWidth="96.0" style="-fx-background-color: #D7D7D7; -fx-cursor: hand; -fx-background-radius: 5;">
+                  <AnchorPane fx:id="share_btn" onMouseClicked="#openShareDialog" onMouseEntered="#shareMouseEntered"
+                              onMouseExited="#shareMouseExited" prefHeight="44.0" prefWidth="96.0" style="-fx-background-color: #fff; -fx-cursor: hand; -fx-background-radius: 5;">
                      <children>
                         <ImageView fx:id="shareImage" fitHeight="22.0" fitWidth="22.0" layoutX="9.0" layoutY="6.0" pickOnBounds="true" preserveRatio="true">
                            <image>

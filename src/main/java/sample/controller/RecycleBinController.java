@@ -8,6 +8,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.StackPane;
 import sample.connection.ApiConnection;
 import sample.service.MainStageService;
 import sample.service.RecycleBinService;
@@ -43,11 +44,11 @@ public class RecycleBinController {
 
 
     public void initialize() {
-        bin_flowPane.setOnScroll(this::onScroll);
+//        bin_flowPane.setOnScroll(this::onScroll);
         bin_scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         bin_scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
 //        bin_scroll.setOnScroll(this::onScroll);
-        bin_pagination.setVisible(false);
+//        bin_pagination.setVisible(false);
         recycleBinService.initializeRecycleController(this);
 
 //        bin_pagination.setOnMouseEntered(event -> {
@@ -63,15 +64,13 @@ public class RecycleBinController {
     }
 
 
-    public void responsiveHeight(double height) {
-        recicleBin.setPrefHeight(height);
-    }
-
     @FXML
     public void backToMain(MouseEvent mouseEvent) {
         String text = mainStageService.getMainStageController().currentPageNumber.getText();
         ApiConnection.getInstance().loadBaseData(text);
-        mainStageService.getMainPane().getChildren().remove(1);
+//        mainStageService.getMainPane().getChildren().remove(1);
+        StackPane mainPane = mainStageService.getMainPane();
+        bin_selectAll.getScene().setRoot(mainPane);
         bin_selectAll.setSelected(false);
         bin_selectAll.setVisible(false);
         recycleBinService.recoverControllButtons();
@@ -80,6 +79,7 @@ public class RecycleBinController {
 
 
     }
+
 
     private void onScroll(ScrollEvent event) {
       recycleBinService.animationForPagination();
@@ -92,7 +92,7 @@ public class RecycleBinController {
             bin_selectAll.setSelected(false);
             bin_selectAll.setVisible(true);
             bin_delete_batch.setDisable(true);
-            bin_delete_batch.setStyle("-fx-background-radius: 25; -fx-background-color: #fff; -fx-cursor: none;");
+            bin_delete_batch.setStyle("-fx-background-radius: 5; -fx-background-color: #fff; -fx-cursor: none;");
             recycleBinService.showCheckBoxes();
         }else {
             recycleBinService.recoverSelectedImages();
@@ -110,7 +110,7 @@ public class RecycleBinController {
             bin_selectAll.setSelected(false);
             bin_selectAll.setVisible(true);
             recover.setDisable(true);
-            recover.setStyle("-fx-background-radius: 25; -fx-background-color: #fff; -fx-cursor: none;");
+            recover.setStyle("-fx-background-radius: 5; -fx-background-color: #fff; -fx-cursor: none;");
             recycleBinService.showCheckBoxes();
         }else {
             recycleBinService.deleteSelectedImage();

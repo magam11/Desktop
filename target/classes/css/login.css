@@ -15,7 +15,7 @@
     -fx-cursor: hand;
     -fx-background-color: #388e3c;
     -fx-border-radius: 5;
-    -fx-background-radius: 25;
+    -fx-background-radius: 5;
 }
 #textField{
     -fx-border-color: white  white #388e3c white;

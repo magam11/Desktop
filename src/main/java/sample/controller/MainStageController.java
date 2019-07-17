@@ -78,40 +78,22 @@ public class MainStageController {
     public AnchorPane mainContent;
     @FXML
     public Label currentPageNumber;
-    //    @FXML
-//    public Label selectAllHint;
     @FXML
     public CheckBox selectALL_checkBox;
     @FXML
     public Label deleteTxt;
-    //    @FXML
-//    public Label cancel;
+    @FXML
     public Label downloadTxt;
     @FXML
     public BooleanProperty isShowCheckBox = new SimpleBooleanProperty(true); //else go to action
     @FXML
     public StackPane mainPane;
     @FXML
-    public ImageView search;
-    @FXML
-    public DatePicker toDate;
-
-    @FXML
-    public DatePicker fromDate;
-
-    @FXML
-    public Button fromDateCancel;
-    public Button toDateCancel;
-    @FXML
-    public AnchorPane recycleBinContainer;
-    @FXML
     public AnchorPane header;
     @FXML
     public AnchorPane row_1;
     @FXML
     public AnchorPane row_2;
-    @FXML
-    public AnchorPane slideContainer;
     @FXML
     public ImageView filterImage;
     @FXML
@@ -122,19 +104,15 @@ public class MainStageController {
     public ChoiceBox filterYear;
     @FXML
     public ChoiceBox filterMonth;
-
-
-    StringProperty startDate = new SimpleStringProperty();
-    StringProperty endDate = new SimpleStringProperty();
-
-
-    private Text title;
+    @FXML
+    public ImageView phoneCell;
 
 
     //services
     private MainStageService mainStageService = MainStageServiceImpl.getInstance();
 
     public void initialize() {
+        phoneCell.setImage(new Image(getClass().getResourceAsStream("/image/phone-call.png")));
         filterMonth.setValue(FilterMonth.ALL);
 
         filterMonth.getItems().addAll(FilterMonth.list());
@@ -152,13 +130,12 @@ public class MainStageController {
         recycleImageView.setImage(new Image(this.getClass().getResourceAsStream("/image/recicleBin.png")));
         logoutImageView.setImage(new Image(this.getClass().getResourceAsStream("/image/logout.png")));
         mainStageService.initializeMainStageController(this);
-//        slideController.sliderContent.setVisible(false);
         memoryProgressBar.setProgress(125.0 / 400.0);
         download.setEffect(new DropShadow(19, Color.rgb(0, 0, 0, 0.1)));
         delete.setEffect(new DropShadow(19, Color.rgb(0, 0, 0, 0.1)));
-        header.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.2)));
-        row_1.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.2)));
-        row_2.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.2)));
+        header.setEffect(new DropShadow(10, Color.rgb(0, 0, 0, 0.25)));
+//        row_1.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.2)));
+//        row_2.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.2)));
         filterYear.valueProperty().addListener((observable, oldValue, newValue) -> {
             mainStageService.setFilterAction("NEW_FILTER");
         });
@@ -177,8 +154,8 @@ public class MainStageController {
     public void showCheckBoxesՕrDelete(MouseEvent mouseEvent) {
         if (isShowCheckBox.get()) {
             download.setDisable(true);
-            download.setStyle("-fx-cursor: default;-fx-background-radius: 15; -fx-background-color: #FFFFFF;");
-            delete.setStyle("-fx-cursor: hand;-fx-background-radius: 15; -fx-background-color: #388e3c;");
+            download.setStyle("-fx-cursor: default;-fx-background-radius: 5; -fx-background-color: #FFFFFF;");
+            delete.setStyle("-fx-cursor: hand;-fx-background-radius: 5; -fx-background-color: #388e3c;");
             deleteTxt.setTextFill(Paint.valueOf("#FAFAFA"));
             mainStageService.showCheckBoxes();
             isShowCheckBox.set(false);
@@ -186,7 +163,6 @@ public class MainStageController {
             mainStageService.deleteSelectedImages();
 //            action
         }
-
     }
 
     @FXML
@@ -195,39 +171,18 @@ public class MainStageController {
     }
 
     @FXML
-    public void cancelSelected(MouseEvent mouseEvent) {
-        mainStageService.cancelSelect();
-    }
-
-    @FXML
     public void downloadSelectedImage(MouseEvent mouseEvent) {
         if (isShowCheckBox.get()) {
             delete.setDisable(true);
             downloadTxt.setTextFill(Paint.valueOf("#FAFAFA"));
-            delete.setStyle("-fx-cursor: default;-fx-background-radius: 15; -fx-background-color: #FFFFFF;");
-            download.setStyle("-fx-cursor: hand;-fx-background-radius: 15; -fx-background-color: #388e3c;");
+            delete.setStyle("-fx-cursor: default;-fx-background-radius: 5; -fx-background-color: #FFFFFF;");
+            download.setStyle("-fx-cursor: hand;-fx-background-radius: 5; -fx-background-color: #388e3c;");
             mainStageService.showCheckBoxes();
             isShowCheckBox.set(false);
         } else {
             mainStageService.downloadSelectedImages();
 //            action
         }
-    }
-
-    @FXML
-    public void cancelFromDate(MouseEvent mouseEvent) {
-        fromDateCancel.setVisible(false);
-        startDate.setValue(null);
-        fromDate.setValue(null);
-
-    }
-
-    @FXML
-    public void cancelToDate(MouseEvent mouseEvent) {
-        toDateCancel.setVisible(false);
-        endDate.setValue(null);
-        toDate.setValue(null);
-
     }
 
 
@@ -237,11 +192,15 @@ public class MainStageController {
     public void openRecycleBinPage(MouseEvent mouseEvent) {
         AnchorPane recycle = (AnchorPane) Main.getScreen("recycle");
         Stage mainStage = (Stage) header.getScene().getWindow();
-        mainPane.getChildren().add(1, recycle);
-        recycle.setLayoutX(0);
-        recycle.setLayoutY(0);
-        recycle.setPrefWidth(mainPane.getWidth());
-        recycle.setPrefHeight(mainPane.getHeight());
+        header.getScene().setRoot(recycle);
+//        mainPane.getChildren().add(1, recycle);
+//        recycle.setLayoutX(0);
+//        recycle.setLayoutY(0);
+        recycle.setMinHeight(mainStage.getHeight());
+        recycle.setMinWidth(mainStage.getWidth());
+        recycle.widthProperty().add(mainStage.getWidth());
+        recycle.heightProperty().add(mainStage.getHeight());
+
         ApiConnection.getInstance().getDeletedImagePage(1);
 
     }

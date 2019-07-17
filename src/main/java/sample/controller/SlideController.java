@@ -2,7 +2,10 @@ package sample.controller;
 
 import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
@@ -42,10 +45,9 @@ public class SlideController {
     public AnchorPane header;
     @FXML
     public AnchorPane flutter;
-    @FXML
-    public Label nextLabel;
-    @FXML
-    public Label previousLabel;
+//    @FXML
+//    public Label nextLabel;
+
     @FXML
     public Label closeLabel;
     @FXML
@@ -76,15 +78,15 @@ public class SlideController {
     public ImageView shareImage;
     @FXML
     public Label shareLabel;
+    @FXML
+    public Button previousButton;
+    @FXML
+    public Button nextButton;
 
     //services
     SliderService sliderService = SliderServiceImpl.getInstance();
 
     // local variables
-    private DoubleProperty halfHeghtOfNextLabel;
-    private DoubleProperty halfHeghtOfPreviousLabel;
-    private DoubleProperty fractionWidth;
-    private DoubleProperty sliderPercentWidth;
     private MainStageService mainStageService = MainStageServiceImpl.getInstance();
 
 
@@ -92,18 +94,11 @@ public class SlideController {
         downLoadImage.setImage(new Image(getClass().getResourceAsStream("/image/downloadBlack.png")));
         deleteImage.setImage(new Image(getClass().getResourceAsStream("/image/deleteBlack.png")));
         shareImage.setImage(new Image(getClass().getResourceAsStream("/image/share_white.png")));
-
-        halfHeghtOfNextLabel = new SimpleDoubleProperty(nextLabel.getPrefHeight() / 2);
-        halfHeghtOfPreviousLabel = new SimpleDoubleProperty(previousLabel.getPrefHeight() / 2);
-        Text fractionText = new Text("1/127");
-        Text sliderPercentText = new Text("1/127");
-        sliderPercentWidth = new SimpleDoubleProperty(sliderPercentText.getLayoutBounds().getWidth());
-        fractionWidth = new SimpleDoubleProperty(fractionText.getLayoutBounds().getWidth());
         scrollPane.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         scrollPane.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         sliderService.initializeSliderController(this);
-    }
 
+    }
 
     @FXML
     public void closeSlide(MouseEvent mouseEvent) {

@@ -102,17 +102,18 @@ public class RecycleBinServiceImpl implements RecycleBinService {
         recycleBinController.countData.setText("( " + count + " )");
         drawPagination(baseUserData, page);
         drawRecycleContent(baseUserData);
-        Stage mainStage = (Stage) recycleBinController.countData.getScene().getWindow();
+        Stage mainStage = (Stage) recycleBinController.recicleBin.getScene().getWindow();
+
         double countDiwth = new Text(recycleBinController.countData.getText()).getLayoutBounds().getWidth();
         double titleWidth = new Text("Recycle Bin").getLayoutBounds().getWidth();
-        animationForPagination();
+//        animationForPagination();
         mainStage.widthProperty().addListener((observable, oldValue, newValue) -> {
-            recycleBinController.recicleBin.setPrefWidth(newValue.doubleValue());
-            recycleBinController.bin_scroll.setPrefWidth(newValue.doubleValue());
-            recycleBinController.bin_pagination.setPrefWidth(newValue.doubleValue());
-            recycleBinController.bin_flowPane.setPrefWidth(newValue.doubleValue());
-            recycleBinController.menuBar.setPrefWidth(newValue.doubleValue());
-            recycleBinController.bin_header.setPrefWidth(newValue.doubleValue());
+            recycleBinController.recicleBin.setPrefWidth(newValue.doubleValue());                             //
+            recycleBinController.bin_scroll.setPrefWidth(newValue.doubleValue());                              //
+            recycleBinController.bin_pagination.setPrefWidth(newValue.doubleValue());                           //
+            recycleBinController.bin_flowPane.setPrefWidth(newValue.doubleValue());                              //
+            recycleBinController.menuBar.setPrefWidth(newValue.doubleValue());                                   //
+            recycleBinController.bin_header.setPrefWidth(newValue.doubleValue());                               //
             recycleBinController.bin_delete_batch.setLayoutX(newValue.doubleValue() - 330);
             recycleBinController.recover.setLayoutX(newValue.doubleValue() - 172);
             recycleBinController.countData.setLayoutX((newValue.doubleValue() - countDiwth) / 2 - 3);
@@ -126,6 +127,21 @@ public class RecycleBinServiceImpl implements RecycleBinService {
             recycleBinController.bin_flowPane.setPrefHeight(newValue.doubleValue() - 155);
 //            recycleBinController.bin_pagination.setPrefHeight(newValue.doubleValue());
         });
+        recycleBinController.bin_header.setPrefWidth(mainStage.getWidth());
+        recycleBinController.bin_scroll.setPrefWidth(mainStage.getWidth());
+        recycleBinController.bin_scroll.setPrefHeight(mainStage.getHeight() - 150);
+        recycleBinController.bin_pagination.setPrefWidth(mainStage.getWidth());
+        recycleBinController.bin_flowPane.setPrefWidth(mainStage.getWidth());
+        recycleBinController.recicleBin.setPrefHeight(mainStage.getHeight());
+        recycleBinController.menuBar.setPrefWidth(mainStage.getWidth());
+        recycleBinController.recicleBin.setPrefWidth(mainStage.getWidth());
+        recycleBinController.bin_pagination.setLayoutY(mainStage.getHeight() - 60);
+        recycleBinController.recycleTitle.setLayoutX((mainStage.getWidth() - titleWidth) / 2 - 3);
+        recycleBinController.countData.setLayoutX((mainStage.getWidth() - countDiwth) / 2 - 3);
+        recycleBinController.bin_delete_batch.setLayoutX(mainStage.getWidth() - 330);
+        recycleBinController.recover.setLayoutX(mainStage.getWidth()  - 172);
+        recycleBinController.bin_flowPane.setPrefHeight(mainStage.getHeight() - 155);
+
 
 
     }
@@ -162,12 +178,6 @@ public class RecycleBinServiceImpl implements RecycleBinService {
                     }
                 }, new KeyValue(opacity, 1.0)));
         anim.play();
-    }
-
-    @Override
-    public void stopAnimationForPagination() {
-        this.fadeIn.stop();
-        this.anim.stop();
     }
 
     @Override
@@ -360,7 +370,7 @@ public class RecycleBinServiceImpl implements RecycleBinService {
         pageNumbersContainer.setStyle("-fx-alignment: center");
         Label label;
 
-        ReadOnlyDoubleProperty widthPrp = mainStageService.getMainPane().widthProperty();
+        ReadOnlyDoubleProperty widthPrp = recycleBinController.recicleBin.widthProperty();
 //        ReadOnlyDoubleProperty widthPrp = recycleBinController.bin_pagination.widthProperty();
         if (pageNumbersContainer.getChildren() != null && pageNumbersContainer.getChildren().size() > 0) {
             pageNumbersContainer.getChildren().removeAll(pageNumbersContainer.getChildren());
@@ -369,15 +379,16 @@ public class RecycleBinServiceImpl implements RecycleBinService {
         for (int i = 0; i < baseUserData.getTotoalPageCount(); i++) {  //addes pages
             label = new Label(String.valueOf(i + 1));
             label.setLayoutX(widthPrp.getValue() / 2 - (baseUserData.getTotoalPageCount() - 1) * 20 + (i - 1) * 20);
-            label.setFont(Font.font(null, FontWeight.BOLD, 14));
+            label.setFont(Font.font(null, FontWeight.BOLD, 16));
             label.setId(String.valueOf("page_" + i + 1));
+            label.setTextFill(Paint.valueOf("#fff"));
             if ((i + 1) == page) {
-                label.setTextFill(Paint.valueOf("#fff"));
+
                 label.setStyle("font-weight: bold");
                 label.setUnderline(true);
             }
             if ((i + 1) != page) {
-                label.setStyle("-fx-cursor: hand; -fx-background-color: #fff; -fx-font-weight: regular");
+                label.setStyle("-fx-cursor: hand; -fx-font-weight: regular");
             }
             int finalI = i;
             label.setOnMouseClicked(mouseEvent -> {

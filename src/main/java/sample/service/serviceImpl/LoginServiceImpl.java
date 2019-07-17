@@ -197,10 +197,10 @@ public class LoginServiceImpl implements LoginService {
             }
             mainStage.setTitle("Cloud Camera");
             mainStage.getIcons().add(new Image(this.getClass().getResourceAsStream("/image/logo.png")));
-            Scene scene = new Scene(root, 906, 840);
+            Scene scene = new Scene(root, 910, 840);
             mainStage.setScene(scene);
             mainStage.setMinHeight(500);
-            mainStage.setMinWidth(906.0);
+            mainStage.setMinWidth(920);
             mainStageController = (MainStageController) fxmlLoader.getController();
             mainStage.show();
 //-----------------------------------------------------------------------------------------------------------------------------------------------------
