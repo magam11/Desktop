@@ -236,14 +236,12 @@ public class MainStageController {
     @FXML
     public void openRecycleBinPage(MouseEvent mouseEvent) {
         AnchorPane recycle = (AnchorPane) Main.getScreen("recycle");
-//        mainPane.getScene().setRoot(recycle);
-
-
+        Stage mainStage = (Stage) header.getScene().getWindow();
         mainPane.getChildren().add(1, recycle);
         recycle.setLayoutX(0);
         recycle.setLayoutY(0);
-        recycle.setPrefHeight(mainPane.getPrefHeight());
-        recycle.setPrefWidth(mainPane.getPrefWidth());
+        recycle.setPrefWidth(mainPane.getWidth());
+        recycle.setPrefHeight(mainPane.getHeight());
         ApiConnection.getInstance().getDeletedImagePage(1);
 
     }

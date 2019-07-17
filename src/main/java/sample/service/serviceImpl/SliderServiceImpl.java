@@ -51,7 +51,7 @@ public class SliderServiceImpl implements SliderService {
     }
 
     public BooleanProperty isIncrementFructionNumbering = new SimpleBooleanProperty(false);
-
+//    private double menuBarWidth =  slideController.menuBar.getWidth();
 
     @Override
     public void openSlider(String picName, int indexOf) {
@@ -61,20 +61,17 @@ public class SliderServiceImpl implements SliderService {
         slider.setPrefHeight(mainStage.getHeight());
 
         //                                                                  entaka e popoxman
-        slideController.menuBar.setLayoutX(mainStage.getWidth()-226);
+        slideController.menuBar.setLayoutX((mainStage.getWidth()-slideController.menuBar.getPrefWidth())/2);
         slideController.rightContent.setLayoutX(mainStage.getWidth()-60);
-        slideController.scrollPane.setPrefWidth(mainStage.getWidth()-210);
-        slideController.fraction.setLayoutX(mainStage.getWidth()-271);
+        slideController.scrollPane.setPrefWidth(mainStage.getWidth()-120);
         slideController.shownImage_container.setPrefWidth(mainStage.getWidth()-210);
-        slideController.shownImage.setFitWidth(mainStage.getWidth()-220);
+        slideController.shownImage.setFitWidth(mainStage.getWidth()-120);
 
         slideController.nextLabel.setLayoutY(mainStage.getHeight()/2);
         slideController.previousLabel.setLayoutY(mainStage.getHeight()/2);
-        slideController.scrollPane.setPrefHeight(mainStage.getHeight()-105);
+        slideController.scrollPane.setPrefHeight(mainStage.getHeight()-120);
         slideController.shownImage_container.setPrefHeight(mainStage.getHeight()-105);
-        slideController.shownImage.setFitHeight(mainStage.getHeight()02-120);
-
-
+        slideController.shownImage.setFitHeight(mainStage.getHeight()-120);
 
 
         mainStageController.mainPane.getChildren().add(1,slider);
@@ -94,18 +91,17 @@ public class SliderServiceImpl implements SliderService {
 
         mainStage.widthProperty().addListener((observable, oldValue, newValue) -> {
             slider.setPrefWidth(newValue.doubleValue());
-            slideController.menuBar.setLayoutX(newValue.doubleValue()-226);
+            slideController.menuBar.setLayoutX((newValue.doubleValue()-slideController.menuBar.getPrefWidth())/2);
             slideController.rightContent.setLayoutX(newValue.doubleValue()-60);
-            slideController.scrollPane.setPrefWidth(newValue.doubleValue()-210);
-            slideController.fraction.setLayoutX(newValue.doubleValue()-271);
+            slideController.scrollPane.setPrefWidth(newValue.doubleValue()-120);
             slideController.shownImage_container.setPrefWidth(newValue.doubleValue()-210);
-            slideController.shownImage.setFitWidth(newValue.doubleValue()-220);
+            slideController.shownImage.setFitWidth(newValue.doubleValue()-120);
         });
         mainStage.heightProperty().addListener((observable, oldValue, newValue) -> {
             slider.setPrefHeight(newValue.doubleValue());
             slideController.nextLabel.setLayoutY(newValue.doubleValue()/2);
             slideController.previousLabel.setLayoutY(newValue.doubleValue()/2);
-            slideController.scrollPane.setPrefHeight(newValue.doubleValue()-105);
+            slideController.scrollPane.setPrefHeight(newValue.doubleValue()-120);
             slideController.shownImage_container.setPrefHeight(newValue.doubleValue()-105);
             slideController.shownImage.setFitHeight(newValue.doubleValue()-120);
 

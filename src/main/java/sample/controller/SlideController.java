@@ -6,11 +6,14 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import javafx.scene.text.Text;
 import sample.service.MainStageService;
 import sample.service.SliderService;
@@ -30,7 +33,7 @@ public class SlideController {
     @FXML
     public ImageView shownImage;
     @FXML
-    public VBox menuBar;
+    public HBox menuBar;
     @FXML
     public AnchorPane leftContent;
     @FXML
@@ -59,6 +62,20 @@ public class SlideController {
     public AnchorPane delete_btn;
     @FXML
     public AnchorPane download_btn;
+    @FXML
+    public ImageView downLoadImage;
+    @FXML
+    public Label downloadLabel;
+    @FXML
+    public ImageView deleteImage;
+    @FXML
+    public Label deleteLabel;
+    @FXML
+    public AnchorPane share_btn;
+    @FXML
+    public ImageView shareImage;
+    @FXML
+    public Label shareLabel;
 
     //services
     SliderService sliderService = SliderServiceImpl.getInstance();
@@ -72,6 +89,10 @@ public class SlideController {
 
 
     public void initialize() {
+        downLoadImage.setImage(new Image(getClass().getResourceAsStream("/image/downloadBlack.png")));
+        deleteImage.setImage(new Image(getClass().getResourceAsStream("/image/deleteBlack.png")));
+        shareImage.setImage(new Image(getClass().getResourceAsStream("/image/share_white.png")));
+
         halfHeghtOfNextLabel = new SimpleDoubleProperty(nextLabel.getPrefHeight() / 2);
         halfHeghtOfPreviousLabel = new SimpleDoubleProperty(previousLabel.getPrefHeight() / 2);
         Text fractionText = new Text("1/127");
@@ -83,35 +104,6 @@ public class SlideController {
         sliderService.initializeSliderController(this);
     }
 
-
-    public void responsiveWidth(double stageWidth) {
-        shownImage.setFitWidth(stageWidth - 230);
-        shownImage.setFitHeight(shownImage.getFitWidth() * (439.0 / 596.0));
-        shownImage_container.setPrefWidth(stageWidth - 230);
-        shownImage_container.setPrefHeight(shownImage.getFitHeight());
-        header.setPrefWidth(stageWidth - 120);
-        scrollPane.setPrefWidth(stageWidth - 225);
-        sliderContent.setPrefWidth(stageWidth);
-        rightContent.setLayoutX(stageWidth - 60);
-        menuBar.setLayoutX(shownImage_container.getLayoutX() + shownImage_container.getPrefWidth() + 5);
-        flutter.setPrefWidth(stageWidth - 120);
-        fraction.setLayoutX(scrollPane.getPrefWidth() + scrollPane.getLayoutX() - fractionWidth.getValue());
-        sliderProgressBar.setLayoutX((stageWidth - sliderProgressBar.getPrefWidth()) / 2);
-        sliderPercent.setLayoutX((stageWidth - sliderPercentWidth.getValue()) / 2);
-
-    }
-
-//    public void responsiveHeght(double stageHeight) {
-//        scrollPane.setPrefHeight(stageHeight - 100);
-//        rightContent.setLayoutY(0);
-//        flutter.setLayoutY(stageHeight - 60);
-//        nextLabel.setLayoutY(stageHeight / 2 - halfHeghtOfNextLabel.getValue());
-//        previousLabel.setLayoutY(stageHeight / 2 - halfHeghtOfPreviousLabel.getValue());
-//        sliderContent.setPrefHeight(stageHeight);
-//        rightContent.setPrefHeight(stageHeight);
-//        leftContent.setPrefHeight(stageHeight);
-//
-//    }
 
     @FXML
     public void closeSlide(MouseEvent mouseEvent) {
@@ -143,5 +135,47 @@ public class SlideController {
     @FXML
     public void openShareDialog(MouseEvent mouseEvent) {
         MainStageServiceImpl.getInstance().shareImage(shownImageName.getText());
+    }
+
+    @FXML
+    public void downLoadBtnMouseEntered(MouseEvent mouseEvent) {
+        download_btn.setStyle("-fx-cursor: hand; -fx-background-color: #388e3c; -fx-background-radius: 5");
+        downLoadImage.setImage(new Image(getClass().getResourceAsStream("/image/downloadWhite_WithoutContur.png")));
+//        downLoadImage.setImage(new Image(getClass().getResourceAsStream("/image/downloadBlack.png")));
+        downloadLabel.setTextFill(Paint.valueOf("#fff"));
+    }
+
+    @FXML
+    public void downLoadBtnMouseExited(MouseEvent mouseEvent) {
+        download_btn.setStyle("-fx-cursor: hand; -fx-background-color: #fafafa; -fx-background-radius: 5");
+        downLoadImage.setImage(new Image(getClass().getResourceAsStream("/image/downloadBlack.png")));
+        downloadLabel.setTextFill(Paint.valueOf("#000"));
+    }
+
+    @FXML
+    public void deleteBtnMouseEntered(MouseEvent mouseEvent) {
+        delete_btn.setStyle("-fx-cursor: hand; -fx-background-color: #388e3c; -fx-background-radius: 5");
+        deleteImage.setImage(new Image(getClass().getResourceAsStream("/image/deleteWhite.png")));
+        deleteLabel.setTextFill(Paint.valueOf("#fff"));
+    }
+
+    public void deleteBtnMouseExited(MouseEvent mouseEvent) {
+        delete_btn.setStyle("-fx-cursor: hand; -fx-background-color: #Fafafa; -fx-background-radius: 5");
+        deleteImage.setImage(new Image(getClass().getResourceAsStream("/image/deleteBlack.png")));
+        deleteLabel.setTextFill(Paint.valueOf("#000"));
+    }
+
+    @FXML
+    public void shareMouseEntered(MouseEvent mouseEvent) {
+        share_btn.setStyle("-fx-cursor: hand; -fx-background-color: #388e3c; -fx-background-radius: 5");
+        shareImage.setImage(new Image(getClass().getResourceAsStream("/image/share_white.png")));
+        shareLabel.setTextFill(Paint.valueOf("#fff"));
+    }
+
+    @FXML
+    public void shareMouseExited(MouseEvent mouseEvent) {
+        share_btn.setStyle("-fx-cursor: hand; -fx-background-color: #Fafafa; -fx-background-radius: 5");
+        shareImage.setImage(new Image(getClass().getResourceAsStream("/image/shareBlack.png")));
+        shareLabel.setTextFill(Paint.valueOf("#000"));
     }
 }
