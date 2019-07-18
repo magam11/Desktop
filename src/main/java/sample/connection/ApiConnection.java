@@ -3,6 +3,7 @@ package sample.connection;
 
 import javafx.application.Platform;
 import javafx.beans.property.StringProperty;
+import javafx.concurrent.Task;
 import okhttp3.*;
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -131,7 +132,16 @@ public class ApiConnection {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                MainStageServiceImpl.getInstance().loadPage(response, pageNumber);
+                Task task = new Task() {
+                    @Override
+                    protected Object call() throws Exception {
+                        MainStageServiceImpl.getInstance().loadPage(response, pageNumber);
+                        return null;
+                    }
+                };
+                Thread thread = new Thread(task);
+                thread.start();
+
             }
         });
     }

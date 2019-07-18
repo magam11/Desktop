@@ -34,7 +34,7 @@ public class Main extends Application {
         primaryStage.getIcons().add(logo);
         loadScreen("slider","/view/part/slid.fxml");
         loadScreen("recycle","/view/part/recycle.fxml");
-        loadScreen("loader","/view/loader.fxml");
+        loadScreen("loader","/view/part/loader.fxml");
         primaryStage.setResizable(false);
         Scene scene = new Scene(root);
         primaryStage.setScene(scene);

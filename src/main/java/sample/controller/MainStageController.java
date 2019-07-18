@@ -2,38 +2,31 @@ package sample.controller;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
-import javafx.scene.effect.InnerShadow;
-import javafx.scene.effect.Shadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import sample.Main;
 import sample.connection.ApiConnection;
+import sample.model.animation.OpeningAnimation;
 import sample.model.viewModel.FilterMonth;
 import sample.service.MainStageService;
 import sample.service.serviceImpl.MainStageServiceImpl;
 import sample.service.serviceImpl.SliderServiceImpl;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class MainStageController {
     @FXML
@@ -117,12 +110,21 @@ public class MainStageController {
     @FXML
     public Label recycleTxt;
     Font openSans = null;
+    private static OpeningAnimation openingAnimation;
+    private LocalDateTime lastScroledDate;
 
 
     //services
     private MainStageService mainStageService = MainStageServiceImpl.getInstance();
 
+    private  void showPagination(ScrollEvent scrolEvent) {
+        openingAnimation.stop();
+        openingAnimation.start();
+    }
+
     public void initialize() {
+        flowPane.setOnScroll(this::showPagination);
+//        scrollPane.setOnScroll(this::showPagination);
         openSans = Font.loadFont( getClass().getResourceAsStream("/font/OpenSans-Regular.ttf"),16);
         logOut.setFont(openSans);
         memoryHint.setFont(openSans);
@@ -164,7 +166,9 @@ public class MainStageController {
         filterMonth.valueProperty().addListener((observable, oldValue, newValue) -> {
             mainStageService.setFilterAction("NEW_FILTER");
         });
+        openingAnimation = OpeningAnimation.getInstance();
     }
+
 
 
     @FXML

@@ -1,11 +1,15 @@
 package sample.service.serviceImpl;
 
+import javafx.animation.Animation;
+import javafx.animation.KeyFrame;
 import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.*;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
@@ -29,10 +33,12 @@ import okhttp3.Response;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import sample.Constant;
+import sample.Main;
 import sample.connection.ApiConnection;
 import sample.controller.MainStageController;
 import sample.dataTransferObject.response.BaseUserData;
 import sample.dataTransferObject.response.ImageData;
+import sample.model.animation.ClosingAnimation;
 import sample.model.viewModel.FilterMonth;
 import sample.service.MainStageService;
 import sample.storage.Storage;
@@ -79,13 +85,12 @@ public class MainStageServiceImpl implements MainStageService {
     AnchorPane pageNumbersContainer = new AnchorPane();
 
 
-
-
     @Override
     public void initializeMainStageController(MainStageController mainStageController) {
         this.mainStageController = mainStageController;
     }
 
+    StackPane loaderContainer = new StackPane();
 
     @Override
     public void loadMainStageData(BaseUserData baseUserData, int loadedPageNumber, String filter_search) {
@@ -122,18 +127,51 @@ public class MainStageServiceImpl implements MainStageService {
             int finalI = i;
             label.setOnMouseClicked(mouseEvent -> {
                 if (currentPageIndex.get() != (finalI + 1)) {
+//                    Node loader = Main.getScreen("loader");
+//
+//                    mainStageController.mainPane.getChildren().add(loader);
+                    loaderContainer.setPrefWidth(500);
+                    loaderContainer.setPrefHeight(500);
+                    ProgressIndicator progressBar = new ProgressIndicator();
+                    loaderContainer.getChildren().add(progressBar);
+                    mainStageController.mainPane.getChildren().add(loaderContainer);
+
                     mainStageController.currentPageNumber.setText("" + (finalI + 1));
-                    ApiConnection.getInstance().getPage(Constant.BASE_DATA_URI, finalI + 1,
-                            Storage.getInstance().getCurrentToken());
                     currentPageIndex.set(finalI + 1);
+
+                    LoaderServiceImpl instance = LoaderServiceImpl.getInstance();
+                    class Load extends Task{
+                        @Override
+                        protected Object call() throws Exception {
+
+                            ApiConnection.getInstance().getPage(Constant.BASE_DATA_URI, finalI + 1,
+                                    Storage.getInstance().getCurrentToken());
+                            return null;
+                        }
+                    }
+                    Thread thread = new Thread(new Load());
+                    thread.setDaemon(true);
+                    thread.start();
+
+
+
+
+//                    Timeline animation = new Timeline(
+//                            new KeyFrame(Duration.seconds(0), event -> {
+////                                progressBar.setProgress(new Random().nextDouble());
+//                            }),
+//                            new KeyFrame(Duration.seconds(0.1)));
+//                    animation.setCycleCount(Animation.INDEFINITE);
+//                    animation.play();
                 }
             });
             pages.put(label, i + 1);
             pageNumbersContainer.getChildren().add(label);
+            ClosingAnimation closingAnimation = ClosingAnimation.getInstance();
+            closingAnimation.start();
+
         }
-//        mainStageController.mainPane.widthProperty().addListener((observable, oldValue, newValue) -> {
-//            pageNumbersContainer.setPrefWidth(newValue.doubleValue());
-//        });
+
         widthPrp.addListener((observable, oldValue, newValue) -> {
 //
             int numbverIndex;
@@ -177,6 +215,11 @@ public class MainStageServiceImpl implements MainStageService {
     }
 
     @Override
+    public AnchorPane getNumbersPane(){
+        return mainStageController.pageNumbersPane;
+    }
+
+    @Override
     public void logOut() throws IOException {
         Storage storage = Storage.getInstance();
         storage.setCurrentToken("");
@@ -206,7 +249,6 @@ public class MainStageServiceImpl implements MainStageService {
         checkboxes.clear();
         int index = 0;
         for (ImageData pictureData : picturesData) {
-
             AnchorPane cellContent = new AnchorPane();
             cellContent.setPrefWidth(308);
             cellContent.setPrefHeight(208);
@@ -216,6 +258,7 @@ public class MainStageServiceImpl implements MainStageService {
 
             Image image = new Image(Constant.SERVER_ADDRESS + Constant.IMAGE_URI + pictureData.getPicName());
             ImageView imageView = new ImageView(image);
+            imageView.setCache(true);
             imageView.setId("" + index);                               //ամեն նկարի որպես id տրվում է իր ինդեքսի համարը
             imageView.setFitWidth(cellContent.getPrefWidth());
             imageView.setFitHeight(cellContent.getPrefHeight());
@@ -462,33 +505,42 @@ public class MainStageServiceImpl implements MainStageService {
 
     @Override
     public void loadPage(Response response, int loadedPageNumber) {
-        Platform.runLater(() -> {
+//        Platform.runLater(() -> {
             if (response.isSuccessful()) { //HttpStatusCode = 200
+
                 JSONObject responseJson = null;
                 try {
                     responseJson = new JSONObject(new String(response.body().bytes()));
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                List<ImageData> imageData = new ArrayList<>();
                 JSONArray picturesData = responseJson.getJSONArray("picturesData");
+                List<ImageData> imageData = new ArrayList<>();
                 JSONObject imageDataJson = null;
                 if (picturesData != null) {
                     for (int i = 0; i < picturesData.length(); i++) {
                         imageDataJson = picturesData.getJSONObject(i);
                         imageData.add(ImageData.builder()
                                 .createdAt(imageDataJson.getString("createdAt"))
-                                .picName(imageDataJson.getString("picName"))
                                 .picSize(imageDataJson.getDouble("picSize"))
+                                .picName(imageDataJson.getString("picName"))
                                 .build());
                     }
                 }
-                loadMainStageData(BaseUserData.builder()
-                        .fruction(responseJson.getString("fruction"))
-                        .totoalPageCount(responseJson.getInt("totoalPageCount"))
-                        .picturesData(imageData)
-                        .phoneNumber(responseJson.getString("phoneNumber"))
-                        .build(), loadedPageNumber, "general");
+                JSONObject finalResponseJson = responseJson;
+                Platform.runLater(()->{
+                    loadMainStageData(BaseUserData.builder()
+                            .fruction(finalResponseJson.getString("fruction"))
+                            .totoalPageCount(finalResponseJson.getInt("totoalPageCount"))
+                            .picturesData(imageData)
+                            .phoneNumber(finalResponseJson.getString("phoneNumber"))
+                            .build(), loadedPageNumber, "general");
+                    mainStageController.mainPane.getChildren().remove(loaderContainer);
+                });
+                //hide loader
+                System.out.println("hide loader");
+
+
             } else if (response.code() == 401) {
 //          TODO something
             } else if (response.code() == 403) {
@@ -498,9 +550,15 @@ public class MainStageServiceImpl implements MainStageService {
             } else {
 //          TODO something
             }
-        });
+//        });
     }
 
+
+
+    @Override
+    public DoubleProperty getPaginationPageOpacity(){
+        return mainStageController.pageNumbersPane.opacityProperty();
+    }
     @Override
     public void showCheckBoxes() {
         for (CheckBox checkBox : checkboxes.keySet()) {

@@ -313,6 +313,8 @@ public class RecycleBinServiceImpl implements RecycleBinService {
 
             });
 
+
+
             cellContainer.getChildren().addAll(imageView, fone, checkBox, imageDate, revoverButton, delete);
             FlowPane.setMargin(cellContainer, new Insets(5, 5, 5, 5));
 
@@ -338,6 +340,8 @@ public class RecycleBinServiceImpl implements RecycleBinService {
                     delete.setVisible(true);
                     revoverButton.setVisible(true);
                     imageDate.setVisible(true);
+                }else {
+                    cellContainer.setStyle("-fx-cursor: hand");
                 }
             });
             cellContainer.setOnMouseExited(mouseEvent -> {
@@ -347,6 +351,16 @@ public class RecycleBinServiceImpl implements RecycleBinService {
                 revoverButton.setVisible(false);
             });
 
+            cellContainer.setOnMouseClicked(event -> {
+                if(recycleBinController.bin_selectAll.isVisible()){
+                    if(checkBox.isSelected()){
+                        checkBox.setSelected(false);
+                    }else {
+                        checkBox.setSelected(true);
+                    }
+                    singleSelecOrCancelItem(checkBox, finalIndex, pictureData.getPicName());
+                }
+            });
             recycleBinController.bin_flowPane.getChildren().add(cellContainer);
             index++;
         }

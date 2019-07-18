@@ -1,7 +1,9 @@
 package sample.service;
 
+import javafx.beans.property.DoubleProperty;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ProgressBar;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import okhttp3.Response;
 import sample.controller.MainStageController;
@@ -54,4 +56,8 @@ public interface MainStageService {
     void loadStageDataFilterTime(BaseUserData totoalPageCount, int page);
 
     void setFilterAction(String actionType);
+
+    DoubleProperty getPaginationPageOpacity();
+
+    AnchorPane getNumbersPane();
 }
