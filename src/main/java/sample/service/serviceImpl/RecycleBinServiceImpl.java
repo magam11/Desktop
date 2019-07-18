@@ -143,7 +143,6 @@ public class RecycleBinServiceImpl implements RecycleBinService {
         recycleBinController.bin_flowPane.setPrefHeight(mainStage.getHeight() - 155);
 
 
-
     }
 
 

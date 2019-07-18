@@ -38,6 +38,7 @@ sample\dataTransferObject\request\AuthenticationRequest$AuthenticationRequestBui
 sample\test\DragSelectionTable$DragSelectionCell.class
 sample\dataTransferObject\response\BaseUserData$BaseUserDataBuilder.class
 sample\Constant.class
+sample\controller\MainStageController.class
 sample\controller\dialogController\DeleteDialogController.class
 sample\Main.class
 sample\connection\ApiConnection$7.class

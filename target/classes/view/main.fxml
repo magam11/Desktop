@@ -7,6 +7,7 @@
 <?import javafx.scene.image.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.text.*?>
+<?import javafx.scene.shape.Line?>
 <StackPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
            prefHeight="840.0" prefWidth="906.0" stylesheets="/css/main.css" style="-fx-background-color: #fafafa"
            xmlns="http://javafx.com/javafx/8.0.172-ea"
@@ -25,21 +26,25 @@
                             </image>
                         </ImageView>
                         <ImageView fx:id="phoneCell" fitHeight="20.0" fitWidth="20.0"
-                                   layoutY="23.0" layoutX="500"
-                                   pickOnBounds="true" preserveRatio="true">
+                                   layoutY="21.0" layoutX="500"
+                                   pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="435">
                             <image>
                                 <Image url="@../image/phone-call.png"/>
                             </image>
                         </ImageView>
-                        <Label fx:id="phoneNumber" layoutX="-1.0" layoutY="23.0" prefHeight="21.0"
-                               prefWidth="${phoneNumber.maxWidth}" text="** ** ** ** **" AnchorPane.rightAnchor="269.0">
+                        <Label fx:id="phoneNumber" layoutX="-1.0" layoutY="19.0" prefHeight="21.0"
+                               prefWidth="${phoneNumber.maxWidth}" text="** ** ** ** **" AnchorPane.rightAnchor="319.0">
                             <font>
                                 <Font name="System Bold" size="16.0"/>
                             </font>
                         </Label>
+
+
+                        <Line endX="1.0" endY="13.0" layoutX="700.0" layoutY="34.0" startX="1.0" startY="-17.0"
+                              AnchorPane.rightAnchor="303" style="-fx-stroke: rgba(0,0,0,0.2)#707070;"/>
                         <AnchorPane fx:id="recycle_btn" layoutX="100.0" layoutY="13.0"
                                     onMouseClicked="#openRecycleBinPage" prefHeight="37.0" prefWidth="96.0"
-                                    AnchorPane.rightAnchor="155.0" style="-fx-cursor: hand">
+                                    AnchorPane.rightAnchor="196.0" style="-fx-cursor: hand">
                             <children>
                                 <ImageView fx:id="recycleImageView" fitHeight="21.0" fitWidth="24.0" layoutX="1.0"
                                            layoutY="8.0" pickOnBounds="true" preserveRatio="true">
@@ -47,17 +52,19 @@
                                         <Image url="@../image/recicleBin.png"/>
                                     </image>
                                 </ImageView>
-                                <Label layoutX="24.0" layoutY="4.0" prefHeight="28.0" prefWidth="68.0" text="Recycle">
+                                <Label fx:id="recycleTxt" layoutX="24.0" layoutY="4.0" prefHeight="28.0" prefWidth="68.0" text="Recycle">
                                     <font>
-                                        <Font name="System Bold" size="16.0"/>
+                                        <Font name="OpenSans Bold" size="16.0"/>
                                     </font>
                                 </Label>
                             </children>
                         </AnchorPane>
+                        <Line endX="1.0" endY="13.0" layoutX="700.0" layoutY="34.0" startX="1.0" startY="-17.0"
+                              AnchorPane.rightAnchor="197" style="-fx-stroke: rgba(0,0,0,0.2)#707070;"/>
                         <AnchorPane fx:id="logOut_btn" layoutX="785.0" layoutY="13.0" onMouseClicked="#logOut"
                                     prefHeight="37.0" prefWidth="96.0"
                                     style="-fx-cursor: hand; -fx-border-color: #000; -fx-background-radius: 5; -fx-border-radius: 5"
-                                    AnchorPane.rightAnchor="25">
+                                    AnchorPane.rightAnchor="75">
                             <children>
                                 <ImageView fx:id="logoutImageView" fitHeight="21.0" fitWidth="24.0" layoutX="4.0"
                                            layoutY="8.0" pickOnBounds="true" preserveRatio="true">
@@ -68,7 +75,8 @@
                                 <Label fx:id="logOut" layoutX="29.0" layoutY="4.0" onMouseClicked="#logOut"
                                        prefHeight="28.0" prefWidth="75.0" text="Log out">
                                     <font>
-                                        <Font name="System Bold" size="16.0"/>
+                                        <Font name="OpenSans Regular" size="16.0"/>
+<!--                                        <Font size="16.0"/>-->
                                     </font>
                                 </Label>
                             </children>
@@ -81,17 +89,18 @@
                         <Label fx:id="memoryHint" layoutX="75.0" layoutY="10.0" prefHeight="26.0" prefWidth="75.0"
                                text="Memory">
                             <font>
-                                <Font name="System Bold" size="17.0"/>
+<!--                                <Font name="System Regular" size="16.0"/>-->
+                                <Font size="16.0"/>
                             </font>
                         </Label>
-                        <ProgressBar fx:id="memoryProgressBar" layoutX="150.0" layoutY="18.0" prefWidth="200.0"
+                        <ProgressBar fx:id="memoryProgressBar" layoutX="150.0" layoutY="17.0" prefWidth="200.0"
                                      progress="0.0"/>
                         <Label fx:id="fraction" layoutX="355.0" layoutY="16" prefHeight="17.0" prefWidth="64.0"
                                text="125/500"/>
                         <AnchorPane fx:id="delete" layoutX="556.0" layoutY="10.0"
                                     onMouseClicked="#showCheckBoxesՕrDelete" prefHeight="37.0" prefWidth="159.0"
                                     style="-fx-background-radius: 5; -fx-cursor: hand; -fx-background-color: #FFFFFF"
-                                    AnchorPane.rightAnchor="191">
+                                    AnchorPane.rightAnchor="245">
                             <children>
                                 <ImageView fitHeight="21.0" fitWidth="30.0" layoutX="10.0" layoutY="9.0"
                                            pickOnBounds="true" preserveRatio="true">
@@ -110,7 +119,7 @@
                         <AnchorPane fx:id="download" layoutX="724.0" layoutY="10.0"
                                     onMouseClicked="#downloadSelectedImage" prefHeight="37.0" prefWidth="159.0"
                                     style="-fx-background-color: #fff; -fx-background-radius: 5; -fx-cursor: hand"
-                                    AnchorPane.rightAnchor="23">
+                                    AnchorPane.rightAnchor="75">
                             <children>
                                 <ImageView fitHeight="21.0" fitWidth="30.0" layoutX="6.0" layoutY="10.0"
                                            pickOnBounds="true" preserveRatio="true">
@@ -119,9 +128,9 @@
                                     </image>
                                 </ImageView>
                                 <Label fx:id="downloadTxt" layoutX="31.0" layoutY="5.0" prefHeight="27.0"
-                                       prefWidth="121.0" text="Download Photoes">
+                                       prefWidth="125.0" text="Download Photoes">
                                     <font>
-                                        <Font size="14.0"/>
+<!--                                        <Font size="14.0"/>-->
                                     </font>
                                 </Label>
                             </children>
@@ -131,15 +140,15 @@
                 <AnchorPane fx:id="row_2" layoutY="123.0" prefHeight="60.0" prefWidth="${mainPane.width}"
                             style="-fx-background-color: #fafafa;">
                     <children>
-                        <CheckBox fx:id="selectALL_checkBox" layoutX="14.0" layoutY="22.0" mnemonicParsing="false"
+                        <CheckBox fx:id="selectALL_checkBox" layoutX="75.0" layoutY="22.0" mnemonicParsing="false"
                                   onMouseClicked="#selectOrCancelItems" prefHeight="20.0" prefWidth="96.0"
                                   text=" Select All">
                             <font>
                                 <Font name="System Bold" size="14.0"/>
                             </font>
                         </CheckBox>
-                        <AnchorPane fx:id="filterPane" AnchorPane.rightAnchor="142.0" layoutX="526.0" layoutY="2.0"
-                                    prefHeight="49.0" prefWidth="250.0"
+                        <AnchorPane fx:id="filterPane" AnchorPane.rightAnchor="155.0" layoutX="526.0" layoutY="2.0"
+                                    prefHeight="49.0" prefWidth="265.0"
                                     style="-fx-background-color: #fafafa;" visible="false">
                             <children>
                                 <ChoiceBox fx:id="filterYear" layoutX="15.0" layoutY="19.0" prefHeight="25.0"
@@ -152,7 +161,7 @@
                         </AnchorPane>
 
                         <AnchorPane fx:id="filterButton" onMouseClicked="#fillerClick" layoutX="780.0" layoutY="15.0"
-                                    prefHeight="37.0" AnchorPane.rightAnchor="26"
+                                    prefHeight="37.0" AnchorPane.rightAnchor="75"
                                     prefWidth="100.0"
                                     style="-fx-background-color: #fff; -fx-background-radius: 5; -fx-cursor: hand;">
                             <children>
@@ -163,10 +172,10 @@
                                         <Image url="@../image/controlsBlack.png"/>
                                     </image>
                                 </ImageView>
-                                <Button onMouseClicked="#fillerClick" fx:id="filterBtn" layoutX="42.0" layoutY="3.0"
+                                <Button  onMouseClicked="#fillerClick" fx:id="filterBtn" layoutX="42.0" layoutY="3.0"
                                         mnemonicParsing="false"
-                                        prefHeight="30.0" prefWidth="52.0"
-                                        style="-fx-background-color: #FaFaFa; -fx-cursor: hand;" text="Filter">
+                                        prefHeight="30.0" prefWidth="60.0"
+                                        style="-fx-background-color: #fff; -fx-cursor: hand;" textFill="#424242" text="Filter">
                                     <font>
                                         <Font size="14.0"/>
                                     </font>

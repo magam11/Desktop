@@ -9,6 +9,8 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
+import javafx.scene.effect.InnerShadow;
+import javafx.scene.effect.Shadow;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
@@ -17,6 +19,7 @@ import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.paint.Paint;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import sample.Main;
@@ -26,6 +29,9 @@ import sample.service.MainStageService;
 import sample.service.serviceImpl.MainStageServiceImpl;
 import sample.service.serviceImpl.SliderServiceImpl;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
 
@@ -106,12 +112,27 @@ public class MainStageController {
     public ChoiceBox filterMonth;
     @FXML
     public ImageView phoneCell;
+    @FXML
+    public Label logOut;
+    @FXML
+    public Label recycleTxt;
+    Font openSans = null;
 
 
     //services
     private MainStageService mainStageService = MainStageServiceImpl.getInstance();
 
     public void initialize() {
+        openSans = Font.loadFont( getClass().getResourceAsStream("/font/OpenSans-Regular.ttf"),16);
+        logOut.setFont(openSans);
+        memoryHint.setFont(openSans);
+        phoneNumber.setFont(openSans);
+        memoryHint.setFont(openSans);
+        recycleTxt.setFont(openSans);
+        openSans = Font.loadFont( getClass().getResourceAsStream("/font/OpenSans-Regular.ttf"),14);
+        deleteTxt.setFont(openSans);
+        downloadTxt.setFont(openSans);
+        filterBtn.setFont(openSans);
         phoneCell.setImage(new Image(getClass().getResourceAsStream("/image/phone-call.png")));
         filterMonth.setValue(FilterMonth.ALL);
 
@@ -134,6 +155,7 @@ public class MainStageController {
         download.setEffect(new DropShadow(19, Color.rgb(0, 0, 0, 0.1)));
         delete.setEffect(new DropShadow(19, Color.rgb(0, 0, 0, 0.1)));
         header.setEffect(new DropShadow(10, Color.rgb(0, 0, 0, 0.25)));
+        memoryProgressBar.setEffect(new DropShadow(20, Color.rgb(0, 0, 0, 0.1)));
 //        row_1.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.2)));
 //        row_2.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.2)));
         filterYear.valueProperty().addListener((observable, oldValue, newValue) -> {
@@ -193,16 +215,11 @@ public class MainStageController {
         AnchorPane recycle = (AnchorPane) Main.getScreen("recycle");
         Stage mainStage = (Stage) header.getScene().getWindow();
         header.getScene().setRoot(recycle);
-//        mainPane.getChildren().add(1, recycle);
-//        recycle.setLayoutX(0);
-//        recycle.setLayoutY(0);
         recycle.setMinHeight(mainStage.getHeight());
         recycle.setMinWidth(mainStage.getWidth());
         recycle.widthProperty().add(mainStage.getWidth());
         recycle.heightProperty().add(mainStage.getHeight());
-
         ApiConnection.getInstance().getDeletedImagePage(1);
-
     }
 
 

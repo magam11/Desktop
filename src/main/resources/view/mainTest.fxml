@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.FlowPane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
 <StackPane fx:id="mainPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="840.0" prefWidth="906.0" stylesheets="/css/main.css" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.MainStageController">
@@ -60,6 +61,7 @@
                                 </Label>
                             </children>
                         </AnchorPane>
+                  <Line endX="1.0" endY="13.0" layoutX="749.0" layoutY="34.0" startX="1.0" startY="-17.0" />
                     </children>
                 </AnchorPane>
                 <AnchorPane fx:id="row_1" layoutY="64.0" prefHeight="57.0" prefWidth="906" style="-fx-background-color: #fafafa;">
