@@ -5,10 +5,10 @@
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.StackPane?>
 
-<BorderPane fx:id="loaderContent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
+<BorderPane cache="false" fx:id="loaderContent" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="700.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/8.0.171" xmlns:fx="http://javafx.com/fxml/1">
    <center>
       <StackPane prefHeight="200.0" prefWidth="200.0" style="-fx-alignment: center; -fx-background-color: #fff;" BorderPane.alignment="CENTER">
-            <ImageView fitHeight="456.0" fitWidth="599.0" layoutX="95.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="456.0" cache="false" fitWidth="599.0" layoutX="95.0" layoutY="56.0" pickOnBounds="true" preserveRatio="true">
                <Image url="@../image/loader/loaderBlue.gif" />
             </ImageView>
       </StackPane>

@@ -29,11 +29,10 @@ public class OpeningAnimation extends AnimationTimer {
     private void doHandle() {
         if(opacity.getValue() <1){
             pageNumbersPane.setVisible(true);
-            opacity.setValue(opacity.get() + 0.02);
+            opacity.setValue(opacity.get() + 0.1);
         }
         if (opacity.getValue() >=1) {
              ClosingAnimation.getInstance().start();
-//            opacity.setValue(opacity.get() - 0.0055);
             stop();
             firstTime = false;
         }

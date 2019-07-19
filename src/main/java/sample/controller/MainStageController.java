@@ -2,7 +2,10 @@ package sample.controller;
 
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.effect.DropShadow;
 import javafx.scene.image.Image;
@@ -10,6 +13,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
@@ -223,6 +227,19 @@ public class MainStageController {
         recycle.setMinWidth(mainStage.getWidth());
         recycle.widthProperty().add(mainStage.getWidth());
         recycle.heightProperty().add(mainStage.getHeight());
+//        StackPane loader = (StackPane) Main.getScreen("loader");
+
+        BorderPane loader = (BorderPane) Main.getScreen("loader");
+        loader.setPrefWidth(mainStage.getWidth());
+        loader.setPrefHeight(mainStage.getHeight());
+        mainStage.widthProperty().addListener((observable, oldValue, newValue) -> {
+            loader.setPrefWidth(newValue.doubleValue());
+        });
+        mainStage.heightProperty().addListener((observable, oldValue, newValue) -> {
+            loader.setPrefHeight(newValue.doubleValue());
+        });
+
+        recycle.getChildren().add(loader);
         ApiConnection.getInstance().getDeletedImagePage(1);
     }
 

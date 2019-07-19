@@ -32,6 +32,7 @@ import javafx.stage.StageStyle;
 import javafx.util.Duration;
 import lombok.Data;
 import sample.Constant;
+import sample.Main;
 import sample.connection.ApiConnection;
 import sample.controller.RecycleBinController;
 import sample.dataTransferObject.request.ImageManagerRequest;
@@ -141,6 +142,7 @@ public class RecycleBinServiceImpl implements RecycleBinService {
         recycleBinController.bin_delete_batch.setLayoutX(mainStage.getWidth() - 330);
         recycleBinController.recover.setLayoutX(mainStage.getWidth()  - 172);
         recycleBinController.bin_flowPane.setPrefHeight(mainStage.getHeight() - 155);
+        recycleBinController.recicleBin.getChildren().remove(Main.getScreen("loader"));
 
 
     }
@@ -234,9 +236,12 @@ public class RecycleBinServiceImpl implements RecycleBinService {
         }
     }
 
-
+    List<ImageData> picturesData;
     public void drawRecycleContent(BaseUserData baseUserData) {
-        List<ImageData> picturesData = baseUserData.getPicturesData();
+        System.gc();
+        picturesData = baseUserData.getPicturesData();
+        recycleBinController.bin_flowPane.getChildren().clear();
+        recycleBinController.bin_flowPane.getChildren().removeAll();
         if (recycleBinController.bin_flowPane.getChildren() != null) {
             recycleBinController.bin_flowPane.getChildren().remove(0, recycleBinController.bin_flowPane.getChildren().size());
         }
@@ -254,10 +259,12 @@ public class RecycleBinServiceImpl implements RecycleBinService {
 
             Image image = new Image(Constant.SERVER_ADDRESS + Constant.IMAGE_URI + pictureData.getPicName());
             ImageView imageView = new ImageView(image);
+            imageView.setCache(false);
             imageView.setFitWidth(cellContainer.getPrefWidth());
             imageView.setFitHeight(cellContainer.getPrefHeight());
             imageView.setId("bin" + index);
 
+//            Label imageDate = new Label(pictureData.getDeletedAt());
             Label imageDate = new Label(pictureData.getDeletedAt().split("T")[0]);
             imageDate.setFont(Font.font(null, FontWeight.BOLD, 13));
             imageDate.setTextFill(Paint.valueOf("#F7001D"));
@@ -268,6 +275,7 @@ public class RecycleBinServiceImpl implements RecycleBinService {
 
             Image recoverImage = new Image(this.getClass().getResourceAsStream("/image/restore.png"));
             ImageView recoverButtonImageIco = new ImageView(recoverImage);
+            recoverButtonImageIco.setCache(false);
             recoverButtonImageIco.setFitHeight(25.0);
             recoverButtonImageIco.setFitWidth(35.0);
             Label revoverButton = new Label();
@@ -280,6 +288,7 @@ public class RecycleBinServiceImpl implements RecycleBinService {
             Image deleteWհiteIco = new Image(this.getClass().getResourceAsStream("/image/deleteWhiteIco.png"));
             Image deleteGreen = new Image(this.getClass().getResourceAsStream("/image/delete_green.png"));
             ImageView deleteIco = new ImageView(deleteWհiteIco);
+            deleteIco.setCache(false);
             deleteIco.setFitHeight(36.0);
             deleteIco.setFitWidth(36.0);
             Label delete = new Label();
@@ -314,8 +323,8 @@ public class RecycleBinServiceImpl implements RecycleBinService {
             });
 
 
-
-            cellContainer.getChildren().addAll(imageView, fone, checkBox, imageDate, revoverButton, delete);
+//            -Xmx1024m
+            cellContainer.getChildren().addAll( imageView, fone, checkBox, imageDate, revoverButton, delete);
             FlowPane.setMargin(cellContainer, new Insets(5, 5, 5, 5));
 
             revoverButton.setTooltip(recover);
@@ -406,6 +415,7 @@ public class RecycleBinServiceImpl implements RecycleBinService {
             int finalI = i;
             label.setOnMouseClicked(mouseEvent -> {
                 if (page != (finalI + 1)) {
+                    recycleBinController.recicleBin.getChildren().add(Main.getScreen("loader"));
                     ApiConnection.getInstance().getDeletedImagePage(finalI + 1);
                 }
             });

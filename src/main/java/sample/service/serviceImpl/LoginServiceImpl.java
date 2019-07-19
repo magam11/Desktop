@@ -6,6 +6,7 @@ import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ProgressBar;
@@ -203,12 +204,13 @@ public class LoginServiceImpl implements LoginService {
             mainStage.setMinWidth(920);
             mainStageController = (MainStageController) fxmlLoader.getController();
             mainStage.show();
+//            StackPane loader =(StackPane) Main.getScreen("loader");
+            BorderPane loader =(BorderPane) Main.getScreen("loader");
+            loader.setPrefWidth(mainStageController.mainPane.getWidth());
+            loader.setPrefHeight(mainStageController.mainPane.getHeight());
+            mainStageController.mainPane.getChildren().add(loader);
 //-----------------------------------------------------------------------------------------------------------------------------------------------------
-//            Thread thread = new Thread(() -> {
-//                mainStageController.mainPane.getChildren().add(Main.getScreen("loader"));
-//            });
-//            thread.setDaemon(true);
-//            Platform.runLater(thread);
+
 //-----------------------------------------------------------------------------------------------------------------------------------------------------
             MainStageController controller = (MainStageController) fxmlLoader.getController();
             MainStageServiceImpl.getInstance().loadMainStageData(baseUserData, loadedPageNumber, "general");
@@ -229,51 +231,8 @@ public class LoginServiceImpl implements LoginService {
         }
     }
 
-//    public class CopyFileTask<Void> extends Task<Void> {
-//
-//        @Override
-//        protected void succeeded() {
-//            System.out.println("thread succeeded");
-////            mainStageController.mainPane.getChildren().add(Main.getScreen("loader"));
-//            super.succeeded();
-//            // e.g. show "copy finished" dialog
-//        }
-//
-//        @Override
-//        protected void running() {
-//            System.out.println("thread running");
-//            mainStageController.mainPane.getChildren().add(Main.getScreen("loader"));
-//            super.running();
-//            // e.g. change mouse courser
-//        }
-//
-//        @Override
-//        protected void failed() {
-//            super.failed();
-//            // do stuff if call threw an excpetion
-//        }
-//
-//        @Override
-//        protected Void call() {
-//            System.out.println("calllllll");
-//            // do expensive the expensive stuff
-////            mainStageController.mainPane.getChildren().add(Main.getScreen("loader"));
-//            return null ;
-//        }
-//    }
 
 
-//    @Override
-//    public void closeLoader(MainStageController mainStageController) {
-//        StackPane mainPane = mainStageController.mainPane;
-//        StackPane loader = (StackPane) mainPane.getScene().lookup("#loader");
-//        showLoader.setValue(false);
-//        mainPane.getChildren().remove(loader);
-//        timer.cancel();
-//        System.out.println("loadery jnjvec");
-//
-
-//    }
 
     @Override
     public void authenticationFailure(String message) {

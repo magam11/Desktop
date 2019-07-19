@@ -1,14 +1,17 @@
 package sample.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.input.ScrollEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
+import sample.Main;
 import sample.connection.ApiConnection;
 import sample.service.MainStageService;
 import sample.service.RecycleBinService;
@@ -68,9 +71,13 @@ public class RecycleBinController {
     public void backToMain(MouseEvent mouseEvent) {
         String text = mainStageService.getMainStageController().currentPageNumber.getText();
         ApiConnection.getInstance().loadBaseData(text);
-//        mainStageService.getMainPane().getChildren().remove(1);
         StackPane mainPane = mainStageService.getMainPane();
         bin_selectAll.getScene().setRoot(mainPane);
+//        StackPane loader =(StackPane) Main.getScreen("loader");
+        BorderPane loader =(BorderPane) Main.getScreen("loader");
+        loader.setPrefHeight(mainPane.getHeight());
+        loader.setPrefWidth(mainPane.getWidth());
+        mainPane.getChildren().add(loader);
         bin_selectAll.setSelected(false);
         bin_selectAll.setVisible(false);
         recycleBinService.recoverControllButtons();
@@ -80,10 +87,6 @@ public class RecycleBinController {
 
     }
 
-
-    private void onScroll(ScrollEvent event) {
-      recycleBinService.animationForPagination();
-    }
 
     @FXML
     public void recover(MouseEvent mouseEvent) {

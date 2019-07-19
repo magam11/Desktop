@@ -87,6 +87,7 @@ public class ApiConnection {
                      * */
                     System.out.println("no  success");
                 }
+                response.body().close();
             }
         });
     }
@@ -110,6 +111,7 @@ public class ApiConnection {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 loginService.onRespoinseOfDataApiAnalysis(response);
+                response.body().close();
             }
         });
     }
@@ -132,16 +134,16 @@ public class ApiConnection {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                Task task = new Task() {
-                    @Override
-                    protected Object call() throws Exception {
+//                Task task = new Task() {
+//                    @Override
+//                    protected Object call() throws Exception {
                         MainStageServiceImpl.getInstance().loadPage(response, pageNumber);
-                        return null;
-                    }
-                };
-                Thread thread = new Thread(task);
-                thread.start();
-
+//                        return null;
+//                    }
+//                };
+//                Thread thread = new Thread(task);
+//                thread.start();
+                response.body().close();
             }
         });
     }
@@ -174,6 +176,7 @@ public class ApiConnection {
                     DeleteDialogServiceImpl.getInstance().closeDeleteDialog();
 
                 });
+                response.body().close();
 
             }
         });
@@ -200,6 +203,7 @@ public class ApiConnection {
                 Platform.runLater(() -> {
                     SliderServiceImpl.getInstance().showpPreviousNextImageData(response, next_previous);
                 });
+                response.body().close();
 
             }
         });
@@ -257,7 +261,7 @@ public class ApiConnection {
                         //TODO something
                     }
                 });
-
+                response.body().close();
             }
         });
     }
@@ -285,6 +289,7 @@ public class ApiConnection {
                 } else {
                     //TODO something
                 }
+                response.body().close();
             }
         });
     }
@@ -398,6 +403,7 @@ public class ApiConnection {
                 }else {
                     System.out.println("");
                 }
+                response.body().close();
             }
         });
     }
@@ -445,6 +451,7 @@ public class ApiConnection {
                                     .totoalPageCount(responseJson.getInt("totoalPageCount"))
                                     .picturesData(imageData)
                                     .build(), page);
+
                         });
 
 
@@ -457,6 +464,7 @@ public class ApiConnection {
 //                  TODO something
                     System.out.println("image/deleted/page/{page} else block");
                 }
+                response.body().close();
 
             }
         });
@@ -503,6 +511,7 @@ public class ApiConnection {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 System.out.println("deleteImage -onresponse " + response.code());
+                response.body().close();
 
             }
         });
@@ -561,6 +570,7 @@ public class ApiConnection {
                     System.out.println("image/page/{page}?fromDate=%s&toDate=%s else blok");
                     System.out.println(response.code());
                 }
+                response.body().close();
             }
         });
     }
@@ -589,6 +599,7 @@ public class ApiConnection {
                 }else {
                     System.out.println("else blok ~~ /image/many ");
                 }
+                response.body().close();
             }
         });
 

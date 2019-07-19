@@ -19,6 +19,7 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
@@ -90,22 +91,22 @@ public class MainStageServiceImpl implements MainStageService {
         this.mainStageController = mainStageController;
     }
 
-    StackPane loaderContainer = new StackPane();
 
     @Override
     public void loadMainStageData(BaseUserData baseUserData, int loadedPageNumber, String filter_search) {
         Scene scene = mainStageController.flowPane.getScene();
+        mainStageController.selectALL_checkBox.setSelected(false);
+        mainStageController.selectALL_checkBox.setVisible(false);
+        clearCheckBoxesCollection();
+        clearSelectedImageCollection();
+        buttonsControl();
         selectedImage.clear();
         mainStageController.download.setDisable(false);
         mainStageController.delete.setDisable(false);
         int totoalPageCount = baseUserData.getTotoalPageCount();
         ReadOnlyDoubleProperty widthPrp = mainStageController.pageNumbersPane.widthProperty();
-//        pageNumbersContainer.setStyle("-fx-alignment: center; -fx-background-color: rgba(0,0,0,0.73)");
-//        pageNumbersContainer.setPrefHeight(70);
         pageNumbersContainer.setPrefWidth(mainStageController.mainPane.widthProperty().getValue());
         Label label;
-
-//        pageNumbersContainer.setLayoutY(20);
         if (pageNumbersContainer.getChildren() != null && pageNumbersContainer.getChildren().size() > 0) {
             pageNumbersContainer.getChildren().removeAll(pageNumbersContainer.getChildren());
             pageNumbersContainer = new AnchorPane();
@@ -115,7 +116,7 @@ public class MainStageServiceImpl implements MainStageService {
             label = new Label(String.valueOf(i + 1));
             label.setLayoutX(widthPrp.getValue() / 2 - (totoalPageCount - 1) * 20 + i * 20);
             label.setFont(Font.font(null, FontWeight.BOLD, 16));
-            label.setId(String.valueOf("page_" + i + 1));
+            label.setId(String.valueOf("page_" + (i + 1)));
             label.setTextFill(Paint.valueOf("#FFF"));
             if ((i + 1) == loadedPageNumber) {
                 label.setUnderline(true);
@@ -127,42 +128,16 @@ public class MainStageServiceImpl implements MainStageService {
             int finalI = i;
             label.setOnMouseClicked(mouseEvent -> {
                 if (currentPageIndex.get() != (finalI + 1)) {
-//                    Node loader = Main.getScreen("loader");
-//
-//                    mainStageController.mainPane.getChildren().add(loader);
-                    loaderContainer.setPrefWidth(500);
-                    loaderContainer.setPrefHeight(500);
-                    ProgressIndicator progressBar = new ProgressIndicator();
-                    loaderContainer.getChildren().add(progressBar);
-                    mainStageController.mainPane.getChildren().add(loaderContainer);
+//                    StackPane loader = (StackPane) Main.getScreen("loader");
+                    BorderPane loader = (BorderPane) Main.getScreen("loader");
+                    loader.setPrefWidth(mainStageController.mainPane.getWidth());
+                    loader.setPrefHeight(mainStageController.mainPane.getHeight());
+                    mainStageController.mainPane.getChildren().add(loader);
 
                     mainStageController.currentPageNumber.setText("" + (finalI + 1));
                     currentPageIndex.set(finalI + 1);
-
-                    LoaderServiceImpl instance = LoaderServiceImpl.getInstance();
-                    class Load extends Task{
-                        @Override
-                        protected Object call() throws Exception {
-
-                            ApiConnection.getInstance().getPage(Constant.BASE_DATA_URI, finalI + 1,
-                                    Storage.getInstance().getCurrentToken());
-                            return null;
-                        }
-                    }
-                    Thread thread = new Thread(new Load());
-                    thread.setDaemon(true);
-                    thread.start();
-
-
-
-
-//                    Timeline animation = new Timeline(
-//                            new KeyFrame(Duration.seconds(0), event -> {
-////                                progressBar.setProgress(new Random().nextDouble());
-//                            }),
-//                            new KeyFrame(Duration.seconds(0.1)));
-//                    animation.setCycleCount(Animation.INDEFINITE);
-//                    animation.play();
+                    ApiConnection.getInstance().getPage(Constant.BASE_DATA_URI, finalI + 1,
+                            Storage.getInstance().getCurrentToken());
                 }
             });
             pages.put(label, i + 1);
@@ -172,6 +147,7 @@ public class MainStageServiceImpl implements MainStageService {
 
         }
 
+//        -Xmx4096m
         widthPrp.addListener((observable, oldValue, newValue) -> {
 //
             int numbverIndex;
@@ -212,10 +188,11 @@ public class MainStageServiceImpl implements MainStageService {
                 mainStageController.flowPane.getChildren().remove(0, mainStageController.flowPane.getChildren().size());
             // TODO something when user does not have pictures ...
         }
+        mainStageController.mainPane.getChildren().remove(Main.getScreen("loader"));
     }
 
     @Override
-    public AnchorPane getNumbersPane(){
+    public AnchorPane getNumbersPane() {
         return mainStageController.pageNumbersPane;
     }
 
@@ -252,10 +229,8 @@ public class MainStageServiceImpl implements MainStageService {
             AnchorPane cellContent = new AnchorPane();
             cellContent.setPrefWidth(308);
             cellContent.setPrefHeight(208);
-            FlowPane.setMargin(cellContent, new Insets(5.0, 5.0, 5.0, 5.0));
+            FlowPane.setMargin(cellContent, new Insets(16, 8.0, 0, 8.0));
             cellContent.setId(pictureData.getPicName());
-//            cellContent.setStyle("-fx-cursor: hand");
-
             Image image = new Image(Constant.SERVER_ADDRESS + Constant.IMAGE_URI + pictureData.getPicName());
             ImageView imageView = new ImageView(image);
             imageView.setCache(true);
@@ -272,6 +247,7 @@ public class MainStageServiceImpl implements MainStageService {
 
             Image deleteWհiteIco = new Image(this.getClass().getResourceAsStream("/image/deleteWhiteIco.png"));
             ImageView deleteIco = new ImageView(deleteWհiteIco);
+            deleteIco.setCache(false);
             deleteIco.setFitHeight(36.0);
             deleteIco.setFitWidth(36.0);
             Label delete = new Label();
@@ -506,59 +482,60 @@ public class MainStageServiceImpl implements MainStageService {
     @Override
     public void loadPage(Response response, int loadedPageNumber) {
 //        Platform.runLater(() -> {
-            if (response.isSuccessful()) { //HttpStatusCode = 200
+        if (response.isSuccessful()) { //HttpStatusCode = 200
 
-                JSONObject responseJson = null;
-                try {
-                    responseJson = new JSONObject(new String(response.body().bytes()));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                JSONArray picturesData = responseJson.getJSONArray("picturesData");
-                List<ImageData> imageData = new ArrayList<>();
-                JSONObject imageDataJson = null;
-                if (picturesData != null) {
-                    for (int i = 0; i < picturesData.length(); i++) {
-                        imageDataJson = picturesData.getJSONObject(i);
-                        imageData.add(ImageData.builder()
-                                .createdAt(imageDataJson.getString("createdAt"))
-                                .picSize(imageDataJson.getDouble("picSize"))
-                                .picName(imageDataJson.getString("picName"))
-                                .build());
-                    }
-                }
-                JSONObject finalResponseJson = responseJson;
-                Platform.runLater(()->{
-                    loadMainStageData(BaseUserData.builder()
-                            .fruction(finalResponseJson.getString("fruction"))
-                            .totoalPageCount(finalResponseJson.getInt("totoalPageCount"))
-                            .picturesData(imageData)
-                            .phoneNumber(finalResponseJson.getString("phoneNumber"))
-                            .build(), loadedPageNumber, "general");
-                    mainStageController.mainPane.getChildren().remove(loaderContainer);
-                });
-                //hide loader
-                System.out.println("hide loader");
-
-
-            } else if (response.code() == 401) {
-//          TODO something
-            } else if (response.code() == 403) {
-//          TODO something
-            } else if (response.code() == 410) {
-//          TODO something
-            } else {
-//          TODO something
+            JSONObject responseJson = null;
+            try {
+                responseJson = new JSONObject(new String(response.body().bytes()));
+            } catch (IOException e) {
+                e.printStackTrace();
             }
+            JSONArray picturesData = responseJson.getJSONArray("picturesData");
+            List<ImageData> imageData = new ArrayList<>();
+            JSONObject imageDataJson = null;
+            if (picturesData != null) {
+                for (int i = 0; i < picturesData.length(); i++) {
+                    imageDataJson = picturesData.getJSONObject(i);
+                    imageData.add(ImageData.builder()
+                            .createdAt(imageDataJson.getString("createdAt"))
+                            .picSize(imageDataJson.getDouble("picSize"))
+                            .picName(imageDataJson.getString("picName"))
+                            .build());
+                }
+            }
+            JSONObject finalResponseJson = responseJson;
+            Platform.runLater(() -> {
+                loadMainStageData(BaseUserData.builder()
+                        .fruction(finalResponseJson.getString("fruction"))
+                        .totoalPageCount(finalResponseJson.getInt("totoalPageCount"))
+                        .picturesData(imageData)
+                        .phoneNumber(finalResponseJson.getString("phoneNumber"))
+                        .build(), loadedPageNumber, "general");
+
+                mainStageController.mainPane.getChildren().remove(Main.getScreen("loader"));
+            });
+            //hide loader
+            System.out.println("hide loader");
+
+
+        } else if (response.code() == 401) {
+//          TODO something
+        } else if (response.code() == 403) {
+//          TODO something
+        } else if (response.code() == 410) {
+//          TODO something
+        } else {
+//          TODO something
+        }
 //        });
     }
 
 
-
     @Override
-    public DoubleProperty getPaginationPageOpacity(){
+    public DoubleProperty getPaginationPageOpacity() {
         return mainStageController.pageNumbersPane.opacityProperty();
     }
+
     @Override
     public void showCheckBoxes() {
         for (CheckBox checkBox : checkboxes.keySet()) {

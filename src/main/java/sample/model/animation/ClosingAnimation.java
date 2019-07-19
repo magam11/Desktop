@@ -16,13 +16,11 @@ public class ClosingAnimation extends AnimationTimer {
         return instance;
     }
 
-
     private DoubleProperty opacity = MainStageServiceImpl.getInstance().getPaginationPageOpacity();
     private AnchorPane pageNumbersPane = MainStageServiceImpl.getInstance().getNumbersPane();
 
     @Override
     public void handle(long now) {
-
         doHandle();
     }
 
