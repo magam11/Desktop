@@ -3,10 +3,9 @@ package sample.service.serviceImpl;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.beans.property.DoubleProperty;
-import javafx.beans.property.IntegerProperty;
-import javafx.beans.property.ReadOnlyDoubleProperty;
-import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -40,9 +39,11 @@ import sample.dataTransferObject.response.BaseUserData;
 import sample.dataTransferObject.response.ImageData;
 import sample.service.MainStageService;
 import sample.service.RecycleBinService;
+import sample.util.Helper;
 
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -76,25 +77,30 @@ public class RecycleBinServiceImpl implements RecycleBinService {
     }
 
     @Override
-    public  Map<Integer, String> getSelcetedImages() {
+    public Map<Integer, String> getSelcetedImages() {
         return selectedImage;
     }
 
     @Override
-    public int getCurrentPage(){
+    public int getCurrentPage() {
         return currentPage.get();
     }
+
+    ReadOnlyDoubleProperty widthPrp;
 
     @Override
     public void initializeRecycleController(RecycleBinController recycleBinController) {
         this.recycleBinController = recycleBinController;
+        widthPrp = recycleBinController.recicleBin.widthProperty();
     }
 
 
     @Override
     public void loadDataInRecycleBin(BaseUserData baseUserData, int page) {
+        currentPage.unbind();
         currentPage.set(page);
         recoverControllButtons();
+        checkboxes.clear();
         clearSelectedImageCollection();
         recycleBinController.bin_selectAll.setVisible(false);
         recycleBinController.bin_selectAll.setSelected(false);
@@ -103,30 +109,33 @@ public class RecycleBinServiceImpl implements RecycleBinService {
         recycleBinController.countData.setText("( " + count + " )");
         drawPagination(baseUserData, page);
         drawRecycleContent(baseUserData);
+
         Stage mainStage = (Stage) recycleBinController.recicleBin.getScene().getWindow();
 
         double countDiwth = new Text(recycleBinController.countData.getText()).getLayoutBounds().getWidth();
         double titleWidth = new Text("Recycle Bin").getLayoutBounds().getWidth();
-//        animationForPagination();
         mainStage.widthProperty().addListener((observable, oldValue, newValue) -> {
-            recycleBinController.recicleBin.setPrefWidth(newValue.doubleValue());                             //
-            recycleBinController.bin_scroll.setPrefWidth(newValue.doubleValue());                              //
-            recycleBinController.bin_pagination.setPrefWidth(newValue.doubleValue());                           //
-            recycleBinController.bin_flowPane.setPrefWidth(newValue.doubleValue());                              //
-            recycleBinController.menuBar.setPrefWidth(newValue.doubleValue());                                   //
-            recycleBinController.bin_header.setPrefWidth(newValue.doubleValue());                               //
-            recycleBinController.bin_delete_batch.setLayoutX(newValue.doubleValue() - 330);
-            recycleBinController.recover.setLayoutX(newValue.doubleValue() - 172);
-            recycleBinController.countData.setLayoutX((newValue.doubleValue() - countDiwth) / 2 - 3);
-            recycleBinController.recycleTitle.setLayoutX((newValue.doubleValue() - titleWidth) / 2 - 3);
+            if (observable != null) {
+                recycleBinController.recicleBin.setPrefWidth(newValue.doubleValue());                             //
+                recycleBinController.bin_scroll.setPrefWidth(newValue.doubleValue());                              //
+                recycleBinController.bin_pagination.setPrefWidth(newValue.doubleValue());                           //
+                recycleBinController.bin_flowPane.setPrefWidth(newValue.doubleValue());                              //
+                recycleBinController.menuBar.setPrefWidth(newValue.doubleValue());                                   //
+                recycleBinController.bin_header.setPrefWidth(newValue.doubleValue());                               //
+                recycleBinController.bin_delete_batch.setLayoutX(newValue.doubleValue() - 330);
+                recycleBinController.recover.setLayoutX(newValue.doubleValue() - 172);
+                recycleBinController.countData.setLayoutX((newValue.doubleValue() - countDiwth) / 2 - 3);
+                recycleBinController.recycleTitle.setLayoutX((newValue.doubleValue() - titleWidth) / 2 - 3);
+            }
 
         });
         mainStage.heightProperty().addListener((observable, oldValue, newValue) -> {
-            recycleBinController.bin_pagination.setLayoutY(newValue.doubleValue() - 60);
-            recycleBinController.recicleBin.setPrefHeight(newValue.doubleValue());
-            recycleBinController.bin_scroll.setPrefHeight(newValue.doubleValue() - 150);
-            recycleBinController.bin_flowPane.setPrefHeight(newValue.doubleValue() - 155);
-//            recycleBinController.bin_pagination.setPrefHeight(newValue.doubleValue());
+            if (observable != null) {
+                recycleBinController.bin_pagination.setLayoutY(newValue.doubleValue() - 60);
+                recycleBinController.recicleBin.setPrefHeight(newValue.doubleValue());
+                recycleBinController.bin_scroll.setPrefHeight(newValue.doubleValue() - 150);
+                recycleBinController.bin_flowPane.setPrefHeight(newValue.doubleValue() - 155);
+            }
         });
         recycleBinController.bin_header.setPrefWidth(mainStage.getWidth());
         recycleBinController.bin_scroll.setPrefWidth(mainStage.getWidth());
@@ -140,7 +149,7 @@ public class RecycleBinServiceImpl implements RecycleBinService {
         recycleBinController.recycleTitle.setLayoutX((mainStage.getWidth() - titleWidth) / 2 - 3);
         recycleBinController.countData.setLayoutX((mainStage.getWidth() - countDiwth) / 2 - 3);
         recycleBinController.bin_delete_batch.setLayoutX(mainStage.getWidth() - 330);
-        recycleBinController.recover.setLayoutX(mainStage.getWidth()  - 172);
+        recycleBinController.recover.setLayoutX(mainStage.getWidth() - 172);
         recycleBinController.bin_flowPane.setPrefHeight(mainStage.getHeight() - 155);
         recycleBinController.recicleBin.getChildren().remove(Main.getScreen("loader"));
 
@@ -152,20 +161,6 @@ public class RecycleBinServiceImpl implements RecycleBinService {
     public void animationForPagination() {
         recycleBinController.bin_pagination.setVisible(true);
         final DoubleProperty opacity = recycleBinController.bin_pagination.opacityProperty();
-//        Timeline showPage = new Timeline(
-//                new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
-//                new KeyFrame(new Duration(1000), new EventHandler<ActionEvent>() {
-//                    @Override
-//                    public void handle(ActionEvent t) {
-////
-//
-//                        Timeline fadeIn = new Timeline(
-//                                new KeyFrame(Duration.ZERO, new KeyValue(opacity, 0.0)),
-//                                new KeyFrame(new Duration(800), new KeyValue(opacity, 1.0)));
-//                        fadeIn.play();
-//                    }
-//                }, new KeyValue(opacity, 0.0)));
-//        showPage.play();
         anim = new Timeline(
                 new KeyFrame(Duration.ZERO, new KeyValue(opacity, 1.0)),
                 new KeyFrame(new Duration(5000), new EventHandler<ActionEvent>() {
@@ -237,8 +232,10 @@ public class RecycleBinServiceImpl implements RecycleBinService {
     }
 
     List<ImageData> picturesData;
+
     public void drawRecycleContent(BaseUserData baseUserData) {
         System.gc();
+        Runtime.getRuntime().gc();
         picturesData = baseUserData.getPicturesData();
         recycleBinController.bin_flowPane.getChildren().clear();
         recycleBinController.bin_flowPane.getChildren().removeAll();
@@ -250,6 +247,7 @@ public class RecycleBinServiceImpl implements RecycleBinService {
         hackTooltipStartTiming(recover);
         hackTooltipStartTiming(deleteTooltip);
         int index = 0;
+        List<AnchorPane> cells = new ArrayList<>();
         for (ImageData pictureData : picturesData) {
             AnchorPane cellContainer = new AnchorPane();
             cellContainer.setPrefWidth(308.0);
@@ -321,27 +319,34 @@ public class RecycleBinServiceImpl implements RecycleBinService {
                 singleSelecOrCancelItem(checkBox, finalIndex, pictureData.getPicName());
 
             });
-
-
-//            -Xmx1024m
-            cellContainer.getChildren().addAll( imageView, fone, checkBox, imageDate, revoverButton, delete);
+            cellContainer.getChildren().addAll(imageView, fone, checkBox, imageDate, revoverButton, delete);
             FlowPane.setMargin(cellContainer, new Insets(5, 5, 5, 5));
 
             revoverButton.setTooltip(recover);
             delete.setTooltip(deleteTooltip);
 
             delete.setOnMouseClicked(mouseEvent -> {
-                ApiConnection.getInstance().deleteImage(pictureData.getPicName());
-                recycleBinController.bin_flowPane.getChildren().remove(cellContainer);
+                if (Helper.getInstance().isInternetAvailable()) {
+                    NoInternetModalServiceImpl.getInstance().closeOldOpenedNotification();
+                    ApiConnection.getInstance().deleteImage(pictureData.getPicName());
+                    recycleBinController.bin_flowPane.getChildren().remove(cellContainer);
+                } else {
+                    NoInternetModalServiceImpl.getInstance().openNoInternetModal();
+                }
 
             });
 
             revoverButton.setOnMouseClicked(mouseEvent -> {
-                ApiConnection.getInstance().recoverImageStatus(ImageManagerRequest.builder()
-                        .picName(pictureData.getPicName())
-                        .actionType("remake")
-                        .build());
-                recycleBinController.bin_flowPane.getChildren().remove(cellContainer);
+                if (Helper.getInstance().isInternetAvailable()) {
+                    NoInternetModalServiceImpl.getInstance().closeOldOpenedNotification();
+                    ApiConnection.getInstance().recoverImageStatus(ImageManagerRequest.builder()
+                            .picName(pictureData.getPicName())
+                            .actionType("remake")
+                            .build());
+                    recycleBinController.bin_flowPane.getChildren().remove(cellContainer);
+                }{
+                    NoInternetModalServiceImpl.getInstance().openNoInternetModal();
+                }
             });
             cellContainer.setOnMouseEntered(mouseEvent -> {
                 if (!recycleBinController.bin_selectAll.isVisible()) {
@@ -349,7 +354,7 @@ public class RecycleBinServiceImpl implements RecycleBinService {
                     delete.setVisible(true);
                     revoverButton.setVisible(true);
                     imageDate.setVisible(true);
-                }else {
+                } else {
                     cellContainer.setStyle("-fx-cursor: hand");
                 }
             });
@@ -361,20 +366,22 @@ public class RecycleBinServiceImpl implements RecycleBinService {
             });
 
             cellContainer.setOnMouseClicked(event -> {
-                if(recycleBinController.bin_selectAll.isVisible()){
-                    if(checkBox.isSelected()){
+                if (recycleBinController.bin_selectAll.isVisible()) {
+                    if (checkBox.isSelected()) {
                         checkBox.setSelected(false);
-                    }else {
+                    } else {
                         checkBox.setSelected(true);
                     }
                     singleSelecOrCancelItem(checkBox, finalIndex, pictureData.getPicName());
                 }
             });
-            recycleBinController.bin_flowPane.getChildren().add(cellContainer);
+
+            cells.add(cellContainer);
             index++;
         }
+        recycleBinController.bin_flowPane.getChildren().addAll(cells);
 
-
+        Runtime.getRuntime().gc();
     }
 
     private void singleSelecOrCancelItem(CheckBox checkBox, int index, String picName) {
@@ -388,11 +395,12 @@ public class RecycleBinServiceImpl implements RecycleBinService {
 
     @Override
     public void drawPagination(BaseUserData baseUserData, int page) {
+
         pages.clear();
         pageNumbersContainer.setStyle("-fx-alignment: center");
         Label label;
 
-        ReadOnlyDoubleProperty widthPrp = recycleBinController.recicleBin.widthProperty();
+        widthPrp.removeListener(changeListener);
 //        ReadOnlyDoubleProperty widthPrp = recycleBinController.bin_pagination.widthProperty();
         if (pageNumbersContainer.getChildren() != null && pageNumbersContainer.getChildren().size() > 0) {
             pageNumbersContainer.getChildren().removeAll(pageNumbersContainer.getChildren());
@@ -415,8 +423,13 @@ public class RecycleBinServiceImpl implements RecycleBinService {
             int finalI = i;
             label.setOnMouseClicked(mouseEvent -> {
                 if (page != (finalI + 1)) {
-                    recycleBinController.recicleBin.getChildren().add(Main.getScreen("loader"));
-                    ApiConnection.getInstance().getDeletedImagePage(finalI + 1);
+                    if (Helper.getInstance().isInternetAvailable()) {
+                        NoInternetModalServiceImpl.getInstance().closeOldOpenedNotification();
+                        recycleBinController.recicleBin.getChildren().add(Main.getScreen("loader"));
+                        ApiConnection.getInstance().getDeletedImagePage(finalI + 1);
+                    } else {
+                        NoInternetModalServiceImpl.getInstance().openNoInternetModal();
+                    }
                 }
             });
 
@@ -427,6 +440,8 @@ public class RecycleBinServiceImpl implements RecycleBinService {
             recycleBinController.bin_pagination.getChildren().add(pageNumbersContainer);
             pages.put(label, i + 1);
         }
+        if (widthPrp != null)
+            widthPrp.addListener(changeListener);
         widthPrp.addListener((observable, oldValue, newValue) -> {
             int numbverIndex;
             for (Label label1 : pages.keySet()) {
@@ -436,6 +451,16 @@ public class RecycleBinServiceImpl implements RecycleBinService {
         });
     }
 
+    ChangeListener<Number> changeListener = new ChangeListener<Number>() {
+        @Override
+        public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+            int numbverIndex;
+            for (Label label1 : pages.keySet()) {
+                numbverIndex = pages.get(label1);
+                label1.setLayoutX(newValue.doubleValue() / 2 - (pages.size() - 1) * 20 + (numbverIndex - 1) * 20);
+            }
+        }
+    };
 
     private void hackTooltipStartTiming(Tooltip tooltip) {
         try {
@@ -471,7 +496,7 @@ public class RecycleBinServiceImpl implements RecycleBinService {
     }
 
     private void openConfirmationDialogForRecycleDeleteInBatch(String recycleMany) {
-        if(recycleMany.equals("recycleMany")){
+        if (recycleMany.equals("recycleMany")) {
             Stage mainStage = new Stage();
             FXMLLoader fxmlLoader = null;
             Parent root = null;

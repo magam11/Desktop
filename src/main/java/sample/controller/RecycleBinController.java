@@ -16,7 +16,9 @@ import sample.connection.ApiConnection;
 import sample.service.MainStageService;
 import sample.service.RecycleBinService;
 import sample.service.serviceImpl.MainStageServiceImpl;
+import sample.service.serviceImpl.NoInternetModalServiceImpl;
 import sample.service.serviceImpl.RecycleBinServiceImpl;
+import sample.util.Helper;
 
 public class RecycleBinController {
     @FXML
@@ -42,11 +44,13 @@ public class RecycleBinController {
     @FXML
     public CheckBox bin_selectAll;
 
-    private   RecycleBinService recycleBinService = RecycleBinServiceImpl.getInstance();
+    private RecycleBinService recycleBinService = RecycleBinServiceImpl.getInstance();
     private MainStageService mainStageService = MainStageServiceImpl.getInstance();
 
 
     public void initialize() {
+        bin_flowPane.setCache(false);
+        bin_scroll.setCache(false);
 //        bin_flowPane.setOnScroll(this::onScroll);
         bin_scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
         bin_scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.NEVER);
@@ -69,20 +73,24 @@ public class RecycleBinController {
 
     @FXML
     public void backToMain(MouseEvent mouseEvent) {
-        String text = mainStageService.getMainStageController().currentPageNumber.getText();
-        ApiConnection.getInstance().loadBaseData(text);
-        StackPane mainPane = mainStageService.getMainPane();
-        bin_selectAll.getScene().setRoot(mainPane);
-//        StackPane loader =(StackPane) Main.getScreen("loader");
-        BorderPane loader =(BorderPane) Main.getScreen("loader");
-        loader.setPrefHeight(mainPane.getHeight());
-        loader.setPrefWidth(mainPane.getWidth());
-        mainPane.getChildren().add(loader);
-        bin_selectAll.setSelected(false);
-        bin_selectAll.setVisible(false);
-        recycleBinService.recoverControllButtons();
-        recycleBinService.closeAllCheckBoxes();
-        recycleBinService.clearSelectedImageCollection();
+        if (Helper.getInstance().isInternetAvailable()) {
+            NoInternetModalServiceImpl.getInstance().closeOldOpenedNotification();
+            String text = mainStageService.getMainStageController().currentPageNumber.getText();
+            ApiConnection.getInstance().loadBaseData(text);
+            StackPane mainPane = mainStageService.getMainPane();
+            bin_selectAll.getScene().setRoot(mainPane);
+            BorderPane loader = (BorderPane) Main.getScreen("loader");
+            loader.setPrefHeight(mainPane.getHeight());
+            loader.setPrefWidth(mainPane.getWidth());
+            mainPane.getChildren().add(loader);
+            bin_selectAll.setSelected(false);
+            bin_selectAll.setVisible(false);
+            recycleBinService.recoverControllButtons();
+            recycleBinService.closeAllCheckBoxes();
+            recycleBinService.clearSelectedImageCollection();
+        }else {
+            NoInternetModalServiceImpl.getInstance().openNoInternetModal();
+        }
 
 
     }
@@ -91,14 +99,20 @@ public class RecycleBinController {
     @FXML
     public void recover(MouseEvent mouseEvent) {
         System.out.println("recoverClick");
-        if(!bin_selectAll.isVisible()){
+        if (!bin_selectAll.isVisible()) {
             bin_selectAll.setSelected(false);
             bin_selectAll.setVisible(true);
             bin_delete_batch.setDisable(true);
             bin_delete_batch.setStyle("-fx-background-radius: 5; -fx-background-color: #fff; -fx-cursor: none;");
             recycleBinService.showCheckBoxes();
-        }else {
-            recycleBinService.recoverSelectedImages();
+        } else {
+            if(Helper.getInstance().isInternetAvailable()){
+                NoInternetModalServiceImpl.getInstance().closeOldOpenedNotification();
+                recycleBinService.recoverSelectedImages();
+            }else {
+                NoInternetModalServiceImpl.getInstance().openNoInternetModal();
+            }
+
         }
 
 
@@ -109,14 +123,19 @@ public class RecycleBinController {
     }
 
     public void deleteInBatchClick(MouseEvent mouseEvent) {
-        if(!bin_selectAll.isVisible()){
+        if (!bin_selectAll.isVisible()) {
             bin_selectAll.setSelected(false);
             bin_selectAll.setVisible(true);
             recover.setDisable(true);
             recover.setStyle("-fx-background-radius: 5; -fx-background-color: #fff; -fx-cursor: none;");
             recycleBinService.showCheckBoxes();
-        }else {
-            recycleBinService.deleteSelectedImage();
+        } else {
+            if(Helper.getInstance().isInternetAvailable()){
+                NoInternetModalServiceImpl.getInstance().closeOldOpenedNotification();
+                recycleBinService.deleteSelectedImage();
+            }else {
+                NoInternetModalServiceImpl.getInstance().openNoInternetModal();
+            }
         }
     }
 }

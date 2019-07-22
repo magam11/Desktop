@@ -20,7 +20,7 @@ import java.util.HashMap;
 
 public class Main extends Application {
 
-    private static  HashMap<String, Node> screens = new HashMap<>();
+    private volatile static  HashMap<String, Node> screens = new HashMap<>();
 
     @Override
     public void start(Stage primaryStage) throws Exception{

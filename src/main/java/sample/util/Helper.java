@@ -4,6 +4,10 @@ import okhttp3.HttpUrl;
 import sample.Constant;
 
 import java.io.File;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.net.UnknownHostException;
 
 public class Helper {
     private static Helper ourInstance = new Helper();
@@ -49,6 +53,21 @@ public class Helper {
             dirPath = home + "\\Downloads\\Foto_Cloud\\";
         }
         return dirPath;
+    }
+
+    public boolean isInternetAvailable(){
+        try {
+            URL url = new URL("http://www.google.com");
+            HttpURLConnection urlConnect = (HttpURLConnection)url.openConnection();
+            Object objData = urlConnect.getContent();
+            urlConnect.disconnect();
+        } catch (UnknownHostException e) {
+            return false;
+        }
+        catch (IOException e) {
+            return false;
+        }
+        return true;
     }
 
 

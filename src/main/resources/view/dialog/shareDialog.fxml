@@ -8,7 +8,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="333.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.dialogController.ShareDialogController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="333.0"
+            prefWidth="600.0"
+            xmlns="http://javafx.com/javafx/8.0.172-ea"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="sample.controller.dialogController.ShareDialogController">
    <children>
       <TextField fx:id="sharedImageLink" layoutX="14.0" layoutY="116.0" prefHeight="44.0" prefWidth="423.0" />
       <Label layoutX="14.0" layoutY="28.0" prefHeight="44.0" prefWidth="222.0" text="Share">

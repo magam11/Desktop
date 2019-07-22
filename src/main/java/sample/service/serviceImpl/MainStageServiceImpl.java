@@ -198,6 +198,7 @@ public class MainStageServiceImpl implements MainStageService {
 
     @Override
     public void logOut() throws IOException {
+        System.out.println("kanchvum e logout");
         Storage storage = Storage.getInstance();
         storage.setCurrentToken("");
         storage.setToken("");
@@ -390,25 +391,40 @@ public class MainStageServiceImpl implements MainStageService {
             firstTime = false;
 
             fone.setOnMouseClicked(mouseEvent -> {
-                SliderServiceImpl.getInstance().openSlider(pictureData.getPicName(), (
-                        currentPageIndex.getValue() - 1) * 50 + mainStageController.flowPane.getChildren().indexOf(cellContent));
+                if (Helper.getInstance().isInternetAvailable()) {
+                    NoInternetModalServiceImpl.getInstance().closeOldOpenedNotification();
+                    SliderServiceImpl.getInstance().openSlider(pictureData.getPicName(), (
+                            currentPageIndex.getValue() - 1) * 50 + mainStageController.flowPane.getChildren().indexOf(cellContent));
+                } else
+                    NoInternetModalServiceImpl.getInstance().openNoInternetModal();
             });
 
             delete.setOnMouseClicked(mouseEvent -> {
-                DeleteDialogServiceImpl.getInstance().openConfirmationDialog(pictureData.getPicName(), "cell",
-                        mainStageController.flowPane.getChildren().indexOf(cellContent));
+                if (Helper.getInstance().isInternetAvailable()) {
+                    NoInternetModalServiceImpl.getInstance().closeOldOpenedNotification();
+                    DeleteDialogServiceImpl.getInstance().openConfirmationDialog(pictureData.getPicName(), "cell",
+                            mainStageController.flowPane.getChildren().indexOf(cellContent));
+                } else
+                    NoInternetModalServiceImpl.getInstance().openNoInternetModal();
             });
             download.setOnMouseClicked(mouseEvent -> {
-                downloadImage(pictureData.getPicName(), progressBar);
+                if (Helper.getInstance().isInternetAvailable()) {
+                    NoInternetModalServiceImpl.getInstance().closeOldOpenedNotification();
+                    downloadImage(pictureData.getPicName(), progressBar);
+                } else
+                    NoInternetModalServiceImpl.getInstance().openNoInternetModal();
             });
             share.setOnMouseClicked(mouseEvent -> {
                 shareImage(pictureData.getPicName());
             });
             imageView.setOnMouseClicked(mouseEvent -> {
                 if (!checkBox.isVisible()) {
-                    System.out.println("----");
-                    SliderServiceImpl.getInstance().openSlider(pictureData.getPicName(),
-                            (currentPageIndex.getValue() - 1) * 50 + mainStageController.flowPane.getChildren().indexOf(cellContent));
+                    if (Helper.getInstance().isInternetAvailable()) {
+                        NoInternetModalServiceImpl.getInstance().closeOldOpenedNotification();
+                        SliderServiceImpl.getInstance().openSlider(pictureData.getPicName(),
+                                (currentPageIndex.getValue() - 1) * 50 + mainStageController.flowPane.getChildren().indexOf(cellContent));
+                    } else
+                        NoInternetModalServiceImpl.getInstance().openNoInternetModal();
                 } else {
                     if (checkBox.isSelected()) {
                         checkBox.setSelected(false);
@@ -682,55 +698,59 @@ public class MainStageServiceImpl implements MainStageService {
             mainStageController.filterBtn.setTextFill(Paint.valueOf("fff"));
             filterAction.setValue("SAVE_FILTER");
         } else if (filterAction.get().equals("NEW_FILTER")) {
-            String month = (String) mainStageController.filterMonth.getValue();
-            String requestMonth = "ALL";
-            switch (month) {
-                case FilterMonth.ALL:
-                    requestMonth = FilterMonth.ALL;
-                    break;
-                case FilterMonth.JAN:
-                    requestMonth = "01";
-                    break;
-                case FilterMonth.FEB:
-                    requestMonth = "02";
-                    break;
-                case FilterMonth.MAR:
-                    requestMonth = "03";
-                    break;
-                case FilterMonth.APR:
-                    requestMonth = "04";
-                    break;
-                case FilterMonth.MAY:
-                    requestMonth = "05";
-                    break;
-                case FilterMonth.JUNE:
-                    requestMonth = "06";
-                    break;
-                case FilterMonth.JULY:
-                    requestMonth = "07";
-                    break;
-                case FilterMonth.AUG:
-                    requestMonth = "08";
-                    break;
-                case FilterMonth.SEPT:
-                    requestMonth = "09";
-                    break;
-                case FilterMonth.OCT:
-                    requestMonth = "10";
-                    break;
-                case FilterMonth.NOV:
-                    requestMonth = "11";
-                    break;
-                case FilterMonth.DEC:
-                    requestMonth = "12";
-                    break;
+            if (Helper.getInstance().isInternetAvailable()) {
+                NoInternetModalServiceImpl.getInstance().closeOldOpenedNotification();
+                String month = (String) mainStageController.filterMonth.getValue();
+                String requestMonth = "ALL";
+                switch (month) {
+                    case FilterMonth.ALL:
+                        requestMonth = FilterMonth.ALL;
+                        break;
+                    case FilterMonth.JAN:
+                        requestMonth = "01";
+                        break;
+                    case FilterMonth.FEB:
+                        requestMonth = "02";
+                        break;
+                    case FilterMonth.MAR:
+                        requestMonth = "03";
+                        break;
+                    case FilterMonth.APR:
+                        requestMonth = "04";
+                        break;
+                    case FilterMonth.MAY:
+                        requestMonth = "05";
+                        break;
+                    case FilterMonth.JUNE:
+                        requestMonth = "06";
+                        break;
+                    case FilterMonth.JULY:
+                        requestMonth = "07";
+                        break;
+                    case FilterMonth.AUG:
+                        requestMonth = "08";
+                        break;
+                    case FilterMonth.SEPT:
+                        requestMonth = "09";
+                        break;
+                    case FilterMonth.OCT:
+                        requestMonth = "10";
+                        break;
+                    case FilterMonth.NOV:
+                        requestMonth = "11";
+                        break;
+                    case FilterMonth.DEC:
+                        requestMonth = "12";
+                        break;
+                }
+                filterAction.setValue("SAVE_FILTER");
+                String requestYear = String.valueOf((int) mainStageController.filterYear.getValue());
+                ApiConnection.getInstance().getFilterData(1, requestYear, requestMonth);
+                filterYear.set(requestYear);
+                filterMonth.setValue(requestMonth);
+            } else {
+                NoInternetModalServiceImpl.getInstance().openNoInternetModal();
             }
-            filterAction.setValue("SAVE_FILTER");
-            String requestYear = String.valueOf((int) mainStageController.filterYear.getValue());
-
-            ApiConnection.getInstance().getFilterData(1, requestYear, requestMonth);
-            filterYear.set(requestYear);
-            filterMonth.setValue(requestMonth);
         } else if (filterAction.get().equals("SAVE_FILTER")) {
             mainStageController.filterPane.setVisible(false);
             mainStageController.filterImage.setImage(new Image(getClass().getResourceAsStream("/image/controlsBlack.png")));
@@ -805,11 +825,16 @@ public class MainStageServiceImpl implements MainStageService {
             int finalI = i;
             label.setOnMouseClicked(mouseEvent -> {
                 if (currentPageIndex.get() != (finalI + 1)) {
-                    ApiConnection.getInstance().getFilterData(finalI + 1, filterYear.get(), filterMonth.get());
-                    mainStageController.currentPageNumber.setText("" + (finalI + 1));
-                    ApiConnection.getInstance().getPage(Constant.BASE_DATA_URI, finalI + 1,
-                            Storage.getInstance().getCurrentToken());
-                    currentPageIndex.set(finalI + 1);
+                    if (Helper.getInstance().isInternetAvailable()) {
+                        NoInternetModalServiceImpl.getInstance().closeOldOpenedNotification();
+                        ApiConnection.getInstance().getFilterData(finalI + 1, filterYear.get(), filterMonth.get());
+                        mainStageController.currentPageNumber.setText("" + (finalI + 1));
+                        ApiConnection.getInstance().getPage(Constant.BASE_DATA_URI, finalI + 1,
+                                Storage.getInstance().getCurrentToken());
+                        currentPageIndex.set(finalI + 1);
+                    }else {
+                        NoInternetModalServiceImpl.getInstance().openNoInternetModal();
+                    }
                 }
             });
             pageNumbersContainer.getChildren().add(label);

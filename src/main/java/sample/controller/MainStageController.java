@@ -26,7 +26,9 @@ import sample.model.animation.OpeningAnimation;
 import sample.model.viewModel.FilterMonth;
 import sample.service.MainStageService;
 import sample.service.serviceImpl.MainStageServiceImpl;
+import sample.service.serviceImpl.NoInternetModalServiceImpl;
 import sample.service.serviceImpl.SliderServiceImpl;
+import sample.util.Helper;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -190,7 +192,12 @@ public class MainStageController {
             mainStageService.showCheckBoxes();
             isShowCheckBox.set(false);
         } else {
-            mainStageService.deleteSelectedImages();
+            if(Helper.getInstance().isInternetAvailable()){
+                NoInternetModalServiceImpl.getInstance().closeOldOpenedNotification();
+                mainStageService.deleteSelectedImages();
+            }else {
+                NoInternetModalServiceImpl.getInstance().openNoInternetModal();
+            }
 //            action
         }
     }
@@ -210,7 +217,12 @@ public class MainStageController {
             mainStageService.showCheckBoxes();
             isShowCheckBox.set(false);
         } else {
-            mainStageService.downloadSelectedImages();
+            if(Helper.getInstance().isInternetAvailable()){
+                NoInternetModalServiceImpl.getInstance().closeOldOpenedNotification();
+                mainStageService.downloadSelectedImages();
+            }else {
+                NoInternetModalServiceImpl.getInstance().openNoInternetModal();
+            }
 //            action
         }
     }
@@ -220,27 +232,36 @@ public class MainStageController {
 
     @FXML
     public void openRecycleBinPage(MouseEvent mouseEvent) {
-        AnchorPane recycle = (AnchorPane) Main.getScreen("recycle");
-        Stage mainStage = (Stage) header.getScene().getWindow();
-        header.getScene().setRoot(recycle);
-        recycle.setMinHeight(mainStage.getHeight());
-        recycle.setMinWidth(mainStage.getWidth());
-        recycle.widthProperty().add(mainStage.getWidth());
-        recycle.heightProperty().add(mainStage.getHeight());
+        if(Helper.getInstance().isInternetAvailable()){
+            flowPane.setCache(false);
+            flowPane.getChildren().clear();
+            flowPane.getChildren().removeAll();
+            scrollPane.setCache(false);
+            AnchorPane recycle = (AnchorPane) Main.getScreen("recycle");
+            Stage mainStage = (Stage) header.getScene().getWindow();
+            header.getScene().setRoot(recycle);
+            recycle.setMinHeight(mainStage.getHeight());
+            recycle.setMinWidth(mainStage.getWidth());
+            recycle.widthProperty().add(mainStage.getWidth());
+            recycle.heightProperty().add(mainStage.getHeight());
 //        StackPane loader = (StackPane) Main.getScreen("loader");
 
-        BorderPane loader = (BorderPane) Main.getScreen("loader");
-        loader.setPrefWidth(mainStage.getWidth());
-        loader.setPrefHeight(mainStage.getHeight());
-        mainStage.widthProperty().addListener((observable, oldValue, newValue) -> {
-            loader.setPrefWidth(newValue.doubleValue());
-        });
-        mainStage.heightProperty().addListener((observable, oldValue, newValue) -> {
-            loader.setPrefHeight(newValue.doubleValue());
-        });
+            BorderPane loader = (BorderPane) Main.getScreen("loader");
+            loader.setPrefWidth(mainStage.getWidth());
+            loader.setPrefHeight(mainStage.getHeight());
+            mainStage.widthProperty().addListener((observable, oldValue, newValue) -> {
+                loader.setPrefWidth(newValue.doubleValue());
+            });
+            mainStage.heightProperty().addListener((observable, oldValue, newValue) -> {
+                loader.setPrefHeight(newValue.doubleValue());
+            });
 
-        recycle.getChildren().add(loader);
-        ApiConnection.getInstance().getDeletedImagePage(1);
+            recycle.getChildren().add(loader);
+            ApiConnection.getInstance().getDeletedImagePage(1);
+        }else {
+            NoInternetModalServiceImpl.getInstance().openNoInternetModal();
+        }
+
     }
 
 

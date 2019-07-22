@@ -22,7 +22,9 @@ import sample.service.MainStageService;
 import sample.service.SliderService;
 import sample.service.serviceImpl.DeleteDialogServiceImpl;
 import sample.service.serviceImpl.MainStageServiceImpl;
+import sample.service.serviceImpl.NoInternetModalServiceImpl;
 import sample.service.serviceImpl.SliderServiceImpl;
+import sample.util.Helper;
 
 
 public class SlideController {
@@ -107,24 +109,46 @@ public class SlideController {
 
     @FXML
     public void openNextImage(MouseEvent mouseEvent) {
-        sliderService.openNextImage();
+        if (Helper.getInstance().isInternetAvailable()) {
+            NoInternetModalServiceImpl.getInstance().closeOldOpenedNotification();
+            sliderService.openNextImage();
+        } else {
+            NoInternetModalServiceImpl.getInstance().openNoInternetModal();
+        }
     }
 
     @FXML
     public void openPreviousImage(MouseEvent mouseEvent) {
-        sliderService.openPreviousImage();
+        if (Helper.getInstance().isInternetAvailable()) {
+            NoInternetModalServiceImpl.getInstance().closeOldOpenedNotification();
+            sliderService.openPreviousImage();
+        } else {
+            NoInternetModalServiceImpl.getInstance().openNoInternetModal();
+        }
     }
 
     @FXML
     public void deleteImageFromSlidePage(MouseEvent mouseEvent) {
-        DeleteDialogServiceImpl
-                .getInstance()
-                .openConfirmationDialog(shownImageName.getText(), "slide",
-                        Integer.parseInt(fraction.getText().split("/")[0]) - (MainStageServiceImpl.getInstance().currentPageIndex.get()-1)*50);
+        if (Helper.getInstance().isInternetAvailable()) {
+            NoInternetModalServiceImpl.getInstance().closeOldOpenedNotification();
+            DeleteDialogServiceImpl
+                    .getInstance()
+                    .openConfirmationDialog(shownImageName.getText(), "slide",
+                            Integer.parseInt(fraction.getText().split("/")[0]) - (MainStageServiceImpl.getInstance().currentPageIndex.get() - 1) * 50);
+        } else {
+            NoInternetModalServiceImpl.getInstance().openNoInternetModal();
+        }
+
     }
+
     @FXML
     public void downloadImageFromSlidePage(MouseEvent mouseEvent) {
-        sliderService.downloadImage();
+        if (Helper.getInstance().isInternetAvailable()) {
+            NoInternetModalServiceImpl.getInstance().closeOldOpenedNotification();
+            sliderService.downloadImage();
+        }else {
+            NoInternetModalServiceImpl.getInstance().openNoInternetModal();
+        }
     }
 
     @FXML
@@ -136,7 +160,6 @@ public class SlideController {
     public void downLoadBtnMouseEntered(MouseEvent mouseEvent) {
         download_btn.setStyle("-fx-cursor: hand; -fx-background-color: #388e3c; -fx-background-radius: 5");
         downLoadImage.setImage(new Image(getClass().getResourceAsStream("/image/downloadWhite_WithoutContur.png")));
-//        downLoadImage.setImage(new Image(getClass().getResourceAsStream("/image/downloadBlack.png")));
         downloadLabel.setTextFill(Paint.valueOf("#fff"));
     }
 

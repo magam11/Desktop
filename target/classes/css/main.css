@@ -2,11 +2,12 @@
 .progress-bar .bar {
     -fx-background-color: #388e3c;
     -fx-background-radius: 6;
-    /*-fx-padding: 0.5em;*/
+    -fx-padding: 0.5em;
 }
 .progress-bar > .track {
-    /*-fx-border-color: #fff;*/
+    -fx-border-color: #388e3c;
     -fx-background-radius: 6;
+    -fx-border-radius: 6;
     /*-fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.31), 50, 0, 0, 0);*/
     -fx-control-inner-background: #fff;
     /*-fx-text-box-border: none;*/
