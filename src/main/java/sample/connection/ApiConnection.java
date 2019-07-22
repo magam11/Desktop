@@ -60,10 +60,6 @@ public class ApiConnection {
                 Platform.runLater(() -> {
                     noInternetModalService.openNoInternetModal();
                 });
-                /**
-                 * TODO  something
-                 * */
-                System.out.println("failure");
             }
 
             @Override
@@ -102,6 +98,7 @@ public class ApiConnection {
 
     @Connection(uri = "user/data/page/{pageNumber}", method = "GET", pathVariable = "pageNumber")
     public void baseData(String uri, int pageNumber, String token) {
+        System.out.println("token "+token);
         Request request = new Request.Builder()
                 .url(Constant.SERVER_ADDRESS + uri + pageNumber)
                 .addHeader(Constant.AUTHORIZATION, token)

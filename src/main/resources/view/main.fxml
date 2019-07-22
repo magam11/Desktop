@@ -96,7 +96,7 @@
                         <ProgressBar fx:id="memoryProgressBar" layoutX="150.0" layoutY="17.0" prefWidth="200.0"
                                      progress="0.0"/>
                         <Label fx:id="fraction" layoutX="355.0" layoutY="16" prefHeight="17.0" prefWidth="64.0"
-                               text="125/500"/>
+                               text="*/*"/>
                         <AnchorPane fx:id="delete" layoutX="556.0" layoutY="10.0"
                                     onMouseClicked="#showCheckBoxesՕrDelete" prefHeight="37.0" prefWidth="159.0"
                                     style="-fx-background-radius: 5; -fx-cursor: hand; -fx-background-color: #FFFFFF"

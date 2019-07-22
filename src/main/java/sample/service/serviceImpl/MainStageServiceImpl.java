@@ -166,7 +166,7 @@ public class MainStageServiceImpl implements MainStageService {
             mainStageController.phoneNumber.setText(baseUserData.getPhoneNumber());
             phoneNumberLenth = new SimpleDoubleProperty(mainStageController.phoneNumber.getLayoutBounds().getWidth());
             mainStageController.phoneNumber.setLayoutX(mainStageController.recycle_btn.getLayoutX() - phoneNumberLenth.getValue() - 8);
-            mainStageController.fraction.setText(baseUserData.getFruction());
+            mainStageController.fraction.setText(""+baseUserData.getFruction());
             myImageCount = new SimpleIntegerProperty(Integer.parseInt(baseUserData.getFruction().split("/")[0]));
             mainStageController.memoryProgressBar.setProgress((double) imagesConunt / 500.0);
         }

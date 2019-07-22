@@ -4,6 +4,8 @@ import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.concurrent.Task;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
@@ -185,7 +187,10 @@ public class LoginServiceImpl implements LoginService {
 
 
         Platform.runLater(() -> {
-            ((Stage) loginController.passwordTextField.getScene().getWindow()).close();
+            if (loginController != null) {
+                System.out.println("null-i ifi mej");
+                ((Stage) loginController.passwordTextField.getScene().getWindow()).close();
+            }
 
             Stage mainStage = new Stage();
             FXMLLoader fxmlLoader = null;
@@ -203,9 +208,14 @@ public class LoginServiceImpl implements LoginService {
             mainStage.setMinHeight(500);
             mainStage.setMinWidth(920);
             mainStageController = (MainStageController) fxmlLoader.getController();
+//            mainStage.iconifiedProperty().addListener((ov, t, t1) -> System.out.println("minimized:" + t1.booleanValue()));
+
+            mainStage.maximizedProperty().addListener((ov, t, t1) -> {
+//                mainStageController.header.setPrefWidth(mainStage.widthProperty().getValue());
+                System.out.println("maximized:" + t1.booleanValue());
+            });
             mainStage.show();
-//            StackPane loader =(StackPane) Main.getScreen("loader");
-            BorderPane loader =(BorderPane) Main.getScreen("loader");
+            BorderPane loader = (BorderPane) Main.getScreen("loader");
             loader.setPrefWidth(mainStageController.mainPane.getWidth());
             loader.setPrefHeight(mainStageController.mainPane.getHeight());
             mainStageController.mainPane.getChildren().add(loader);
@@ -215,7 +225,6 @@ public class LoginServiceImpl implements LoginService {
             MainStageController controller = (MainStageController) fxmlLoader.getController();
             MainStageServiceImpl.getInstance().loadMainStageData(baseUserData, loadedPageNumber, "general");
             controller.mainStage = mainStage;
-
 
 
         });
@@ -232,16 +241,11 @@ public class LoginServiceImpl implements LoginService {
     }
 
 
-
-
     @Override
     public void authenticationFailure(String message) {
-        Platform.runLater(new Runnable() {
-            @Override
-            public void run() {
-                loginController.failureMessage.setText("* " + message);
-                loginController.failureMessage.setVisible(true);
-            }
+        Platform.runLater(() -> {
+            loginController.failureMessage.setText("* " + message);
+            loginController.failureMessage.setVisible(true);
         });
 
 
