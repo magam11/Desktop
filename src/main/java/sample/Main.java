@@ -27,9 +27,9 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception{
         Font.loadFont("/font/OpenSans-Regular.ttf", 16);
-        String token ="eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIrMzc0OTExMDMzNTQiLCJwYXNzd29yZCI6IiQyYSQxMCRzTlplc0Z0TUJxWFZraUJJMGlBVjVPdVZnWG1aYjZqaHkwRGdTdDVHdTBiQ0oyRnltY1ovVyIsImlkIjoyLCJleHAiOjE1NzY4MDQ4MjksImlhdCI6MTU2MzgwNDgyOX0.p5y24EfT_LLLe6vTgbsq81XRzm5ZP7PJQBJcNuVW6VrrLRVvrek6wqfhHP6txZNG0nDFa77IMCIIWBpxwJQTmA";
-        Storage.getInstance().setToken(token);
-        Storage.getInstance().setCurrentToken(token);
+//        String token ="eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIrMzc0OTExMDMzNTQiLCJwYXNzd29yZCI6IiQyYSQxMCRzTlplc0Z0TUJxWFZraUJJMGlBVjVPdVZnWG1aYjZqaHkwRGdTdDVHdTBiQ0oyRnltY1ovVyIsImlkIjoyLCJleHAiOjE1NzY4MDQ4MjksImlhdCI6MTU2MzgwNDgyOX0.p5y24EfT_LLLe6vTgbsq81XRzm5ZP7PJQBJcNuVW6VrrLRVvrek6wqfhHP6txZNG0nDFa77IMCIIWBpxwJQTmA";
+//        Storage.getInstance().setToken(token);
+//        Storage.getInstance().setCurrentToken(token);
         javafx.scene.image.Image logo = new Image(this.getClass().getResourceAsStream("/image/logo.png"));
         primaryStage.getIcons().add(logo);
         loadScreen("slider","/view/part/slid.fxml");

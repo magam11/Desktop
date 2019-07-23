@@ -159,7 +159,7 @@ public class MainStageController {
         recycleImageView.setImage(new Image(this.getClass().getResourceAsStream("/image/recicleBin.png")));
         logoutImageView.setImage(new Image(this.getClass().getResourceAsStream("/image/logout.png")));
         mainStageService.initializeMainStageController(this);
-        memoryProgressBar.setProgress(125.0 / 400.0);
+//        memoryProgressBar.setProgress(125.0 / 400.0);
         download.setEffect(new DropShadow(19, Color.rgb(0, 0, 0, 0.1)));
         delete.setEffect(new DropShadow(19, Color.rgb(0, 0, 0, 0.1)));
         header.setEffect(new DropShadow(10, Color.rgb(0, 0, 0, 0.25)));

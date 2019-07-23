@@ -208,6 +208,8 @@ public class LoginServiceImpl implements LoginService {
             mainStage.setMinHeight(500);
             mainStage.setMinWidth(920);
             mainStageController = (MainStageController) fxmlLoader.getController();
+            mainStageController.header.prefWidthProperty().bind(mainStage.widthProperty());
+            mainStageController.scrollPane.prefWidthProperty().bind(mainStage.widthProperty());
 //            mainStage.iconifiedProperty().addListener((ov, t, t1) -> System.out.println("minimized:" + t1.booleanValue()));
 
             mainStage.maximizedProperty().addListener((ov, t, t1) -> {

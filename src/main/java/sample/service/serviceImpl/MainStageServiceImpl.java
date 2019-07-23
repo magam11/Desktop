@@ -168,7 +168,7 @@ public class MainStageServiceImpl implements MainStageService {
             mainStageController.phoneNumber.setLayoutX(mainStageController.recycle_btn.getLayoutX() - phoneNumberLenth.getValue() - 8);
             mainStageController.fraction.setText(""+baseUserData.getFruction());
             myImageCount = new SimpleIntegerProperty(Integer.parseInt(baseUserData.getFruction().split("/")[0]));
-            mainStageController.memoryProgressBar.setProgress((double) imagesConunt / 500.0);
+            mainStageController.memoryProgressBar.setProgress(Double.valueOf(baseUserData.getFruction().split("/")[0] )/ 500.0);
         }
         if (imagesConunt != 0) {
             drawImagesInMainStage(baseUserData.getPicturesData(), Storage.getInstance().getCurrentToken());
@@ -269,7 +269,7 @@ public class MainStageServiceImpl implements MainStageService {
 
             ProgressBar progressBar = new ProgressBar();
             progressBar.setProgress(0);
-            progressBar.setPrefWidth(150);
+            progressBar.setPrefWidth(258);
             progressBar.setLayoutX(cellContent.getLayoutX() + 25); // in the middle of thecellContent
             progressBar.setLayoutY(cellContent.getLayoutY() + cellContent.getPrefHeight() / 2);
             progressBar.setId("progressBar_" + index);   //progressbarin drubum e progressBar_id
